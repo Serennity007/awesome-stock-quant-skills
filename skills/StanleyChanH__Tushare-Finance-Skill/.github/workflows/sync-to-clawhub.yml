@@ -1,0 +1,85 @@
+name: Sync to ClawHub
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'SKILL.md'
+      - 'metadata.json'
+      - 'README.md'
+      - 'scripts/**'
+      - 'reference/**'
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10  # 增加超时时间到 10 分钟
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install ClawHub CLI
+      run: npm install -g clawhub
+
+    - name: Authenticate ClawHub
+      env:
+        CLAWHUB_TOKEN: ${{ secrets.CLAWHUB_TOKEN }}
+      run: |
+        clawhub login --token "$CLAWHUB_TOKEN" --no-browser
+
+    - name: Get version from metadata
+      id: version
+      run: |
+        VERSION=$(node -p "require('./metadata.json').version")
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+    - name: Publish to ClawHub
+      env:
+        NODE_OPTIONS: "--max-old-space-size=4096"
+      run: |
+        echo "Publishing to ClawHub..."
+        
+        # 尝试发布（允许失败）
+        clawhub publish . \
+          --slug tushare-finance \
+          --name "tushare-finance" \
+          --version ${{ steps.version.outputs.version }} \
+          --changelog "Automated sync from GitHub commit ${{ github.sha }}" \
+          --no-input || true
+        
+        # 等待一段时间让 ClawHub 处理
+        echo "Waiting for ClawHub to process..."
+        sleep 30
+        
+        # 验证是否发布成功
+        echo "Verifying publication..."
+        if clawhub search tushare-finance | grep -q "v${{ steps.version.outputs.version }}"; then
+          echo "✅ Successfully published v${{ steps.version.outputs.version }} to ClawHub!"
+        else
+          echo "⚠️ Could not verify publication, but this may be due to ClawHub processing delay"
+          echo "ℹ️ Please check ClawHub manually: https://clawhub.com/skill/tushare-finance"
+        fi
+
+    - name: Create GitHub Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.version.outputs.version }}
+        release_name: Release v${{ steps.version.outputs.version }}
+        body: |
+          ## Changes
+          Automated release synced to ClawHub
+
+          Commit: ${{ github.sha }}
+        draft: false
+        prerelease: false

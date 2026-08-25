@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Secrets
+.env
+*.pem
+*.key
+
+# User data (never commit)
+~/.ibkr_wheel_journal.json
+~/.ibkr_alerts.yaml
+~/.ibkr_flex/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Streamlit
+.streamlit/secrets.toml

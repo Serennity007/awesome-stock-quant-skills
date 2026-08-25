@@ -1,0 +1,1765 @@
+"""Tests for check_circuit_breaker.py."""
+
+from __future__ import annotations
+
+import importlib.util
+import json
+import math
+from pathlib import Path
+
+import pytest
+import yaml
+from check_circuit_breaker import (
+    CircuitConfig,
+    evaluate_circuit_breaker,
+    generate_markdown_report,
+    load_theses,
+    main,
+    parse_as_of,
+    write_reports,
+)
+
+
+def load_thesis_store_module():
+    module_path = (
+        Path(__file__).resolve().parents[3] / "trader-memory-core" / "scripts" / "thesis_store.py"
+    )
+    spec = importlib.util.spec_from_file_location("thesis_store_for_circuit_tests", module_path)
+    assert spec is not None
+    assert spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def register_producer_thesis(state_dir: Path, *, ticker: str, source_date: str = "2026-07-01"):
+    thesis_store = load_thesis_store_module()
+    thesis_id = thesis_store.register(
+        state_dir,
+        {
+            "ticker": ticker,
+            "thesis_type": "growth_momentum",
+            "thesis_statement": f"{ticker} producer-backed thesis",
+            "origin": {
+                "skill": "drawdown-circuit-breaker-test",
+                "output_file": f"{ticker.lower()}-fixture.json",
+            },
+            "_source_date": source_date,
+        },
+    )
+    return thesis_store, thesis_id
+
+
+def write_thesis(
+    state_dir: Path,
+    thesis_id: str,
+    *,
+    ticker: str = "TEST",
+    status: str = "CLOSED",
+    history: list[dict] | None = None,
+    pnl_dollars: float | None = None,
+    exit_date: str | None = None,
+) -> Path:
+    state_dir.mkdir(parents=True, exist_ok=True)
+    if history is None:
+        default_history = []
+        if status in {"CLOSED", "INVALIDATED"}:
+            default_history = [
+                {
+                    "status": status,
+                    "at": exit_date or "2026-07-02T16:00:00-04:00",
+                    "reason": "manual",
+                }
+            ]
+    else:
+        default_history = history
+    thesis = {
+        "thesis_id": thesis_id,
+        "ticker": ticker,
+        "created_at": "2026-06-01T09:30:00-04:00",
+        "updated_at": exit_date or "2026-07-02T16:00:00-04:00",
+        "thesis_type": "growth_momentum",
+        "status": status,
+        "status_history": default_history,
+        "thesis_statement": f"{ticker} test thesis",
+        "origin": {"skill": "test", "output_file": "fixture.json"},
+    }
+    if pnl_dollars is not None:
+        thesis["outcome"] = {"pnl_dollars": pnl_dollars, "pnl_pct": pnl_dollars / 1000}
+    if exit_date is not None:
+        thesis["exit"] = {"actual_date": exit_date, "actual_price": 100.0, "exit_reason": "manual"}
+    if status in {"ACTIVE", "PARTIALLY_CLOSED"}:
+        thesis["entry"] = {
+            "actual_price": 100.0,
+            "actual_date": "2026-07-01T09:30:00-04:00",
+        }
+        thesis["position"] = {
+            "shares": 100.0,
+            "shares_remaining": 100.0 if status == "ACTIVE" else 50.0,
+            "position_value": 10_000.0,
+        }
+
+    path = state_dir / f"{thesis_id}.yaml"
+    path.write_text(yaml.safe_dump(thesis, sort_keys=False), encoding="utf-8")
+    return path
+
+
+def evaluate_state(
+    state_dir: Path,
+    *,
+    as_of: str = "2026-07-02",
+    account_size: float = 100_000,
+    config: CircuitConfig | None = None,
+) -> dict:
+    theses, quality, warnings = load_theses(state_dir)
+    return evaluate_circuit_breaker(
+        theses,
+        account_size,
+        parse_as_of(as_of),
+        config or CircuitConfig(),
+        initial_quality=quality,
+        initial_warnings=warnings,
+    )
+
+
+def test_empty_state_is_allowed_with_empty_state_quality(tmp_path: Path):
+    result = evaluate_state(tmp_path / "missing")
+
+    assert result["recommendation"] == "TRADING_ALLOWED"
+    assert result["data_quality"] == "EMPTY_STATE"
+    assert result["metrics"]["theses_scanned"] == 0
+
+
+def test_existing_state_path_that_is_not_directory_halts(tmp_path: Path):
+    state_path = tmp_path / "theses"
+    state_path.write_text("not a directory", encoding="utf-8")
+
+    result = evaluate_state(state_path)
+
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["theses_scanned"] == 0
+    assert any("not a directory" in warning for warning in result["warnings"])
+    assert any(rule["rule"] == "incomplete_state_data" for rule in result["triggered_rules"])
+
+
+def test_realized_pnl_today_includes_partial_trim_and_daily_halt(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_trim_gm_20260702_0001",
+        status="PARTIALLY_CLOSED",
+        history=[
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T10:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": -1250.0,
+            },
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T15:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": -750.0,
+            },
+        ],
+    )
+
+    result = evaluate_state(state_dir)
+
+    assert result["metrics"]["realized_pnl_today"] == -2000.0
+    assert result["recommendation"] == "HALTED"
+    assert result["triggered_rules"][0]["rule"] == "max_daily_loss"
+    assert result["triggered_rules"][0]["active_until"].startswith("2026-07-03T00:00:00")
+
+
+def test_daily_loss_below_threshold_is_allowed(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_small_gm_20260702_0001",
+        status="PARTIALLY_CLOSED",
+        history=[
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T11:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": -1999.99,
+            }
+        ],
+    )
+
+    result = evaluate_state(state_dir)
+
+    assert result["metrics"]["realized_pnl_today"] == -1999.99
+    assert result["recommendation"] == "TRADING_ALLOWED"
+
+
+def test_producer_trim_bare_date_counts_on_named_trading_date(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    thesis_store, thesis_id = register_producer_thesis(state_dir, ticker="PRODTRIM")
+
+    assert (
+        thesis_store.main(
+            [
+                "--state-dir",
+                str(state_dir),
+                "transition",
+                thesis_id,
+                "ENTRY_READY",
+                "--reason",
+                "ready",
+                "--event-date",
+                "2026-07-01",
+            ]
+        )
+        == 0
+    )
+    assert (
+        thesis_store.main(
+            [
+                "--state-dir",
+                str(state_dir),
+                "open-position",
+                thesis_id,
+                "--actual-price",
+                "100",
+                "--actual-date",
+                "2026-07-01",
+                "--shares",
+                "100",
+                "--event-date",
+                "2026-07-01",
+            ]
+        )
+        == 0
+    )
+    assert (
+        thesis_store.main(
+            [
+                "--state-dir",
+                str(state_dir),
+                "trim",
+                thesis_id,
+                "--shares-sold",
+                "40",
+                "--price",
+                "0",
+                "--date",
+                "2026-07-02",
+            ]
+        )
+        == 0
+    )
+
+    result = evaluate_state(state_dir, as_of="2026-07-02")
+
+    assert result["metrics"]["realized_pnl_today"] == -4000.0
+    assert result["recommendation"] == "HALTED"
+    assert result["triggered_rules"][0]["rule"] == "max_daily_loss"
+
+
+def test_realized_pnl_uses_eastern_date_boundaries(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_tz_gm_20260702_0001",
+        status="PARTIALLY_CLOSED",
+        history=[
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T00:30:00+00:00",
+                "reason": "trim",
+                "realized_pnl": -500.0,
+            },
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T13:30:00+00:00",
+                "reason": "trim",
+                "realized_pnl": -250.0,
+            },
+        ],
+    )
+
+    result = evaluate_state(state_dir, as_of="2026-07-02T12:00:00-04:00")
+    previous_day = evaluate_state(state_dir, as_of="2026-07-01T23:00:00-04:00")
+
+    assert result["metrics"]["realized_pnl_today"] == -250.0
+    assert previous_day["metrics"]["realized_pnl_today"] == -500.0
+
+
+def test_future_events_after_as_of_time_are_excluded(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_future_gm_20260702_0001",
+        status="PARTIALLY_CLOSED",
+        history=[
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T11:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": -100.0,
+            },
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T15:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": -5000.0,
+            },
+        ],
+    )
+    write_thesis(
+        state_dir,
+        "th_future_loss_gm_20260702_0002",
+        ticker="FLOSS",
+        pnl_dollars=-100.0,
+        exit_date="2026-07-02T15:30:00-04:00",
+    )
+
+    noon_result = evaluate_state(state_dir, as_of="2026-07-02T12:00:00-04:00")
+    end_of_day_result = evaluate_state(state_dir, as_of="2026-07-02")
+
+    assert noon_result["metrics"]["realized_pnl_today"] == -100.0
+    assert noon_result["metrics"]["consecutive_losses"] == 0
+    assert noon_result["recommendation"] == "TRADING_ALLOWED"
+    assert end_of_day_result["metrics"]["realized_pnl_today"] == -5200.0
+    assert end_of_day_result["metrics"]["consecutive_losses"] == 1
+    assert end_of_day_result["recommendation"] == "HALTED"
+
+
+def test_malformed_yaml_sets_partial_quality_and_halts(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    (state_dir).mkdir()
+    (state_dir / "th_bad.yaml").write_text("status: [", encoding="utf-8")
+    write_thesis(
+        state_dir,
+        "th_good_gm_20260702_0001",
+        status="PARTIALLY_CLOSED",
+        history=[
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T11:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": 100.0,
+            }
+        ],
+    )
+
+    result = evaluate_state(state_dir)
+
+    assert result["data_quality"] == "PARTIAL"
+    assert result["recommendation"] == "HALTED"
+    assert result["metrics"]["theses_scanned"] == 1
+    assert result["warnings"]
+    incomplete_rule = next(
+        rule for rule in result["triggered_rules"] if rule["rule"] == "incomplete_state_data"
+    )
+    assert incomplete_rule == {
+        "rule": "incomplete_state_data",
+        "threshold": "OK_OR_EMPTY_STATE",
+        "observed": "PARTIAL",
+        "active_until": None,
+        "detail": (
+            "Trader-memory state is incomplete; repair the reported data warnings "
+            "and rerun the circuit breaker before taking new trade risk."
+        ),
+    }
+
+    markdown = generate_markdown_report(result)
+    assert "active until state is repaired and the decision is rerun" in markdown
+    assert "active until None" not in markdown
+    assert "active until null" not in markdown
+    json.dumps(result, allow_nan=False)
+
+
+def test_duplicate_thesis_ids_are_excluded_fail_closed_with_real_paths(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_unique_loss_gm_20260702_0001",
+        status="PARTIALLY_CLOSED",
+        history=[
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T11:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": -2500.0,
+            }
+        ],
+    )
+
+    duplicate_template = {
+        "thesis_id": " th_duplicate_profit_gm_20260702_0002 ",
+        "ticker": "DUP",
+        "status": "PARTIALLY_CLOSED",
+        "status_history": [
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T12:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": 1000.0,
+            }
+        ],
+        "entry": {
+            "actual_price": 100.0,
+            "actual_date": "2026-07-01T09:30:00-04:00",
+        },
+        "position": {"shares": 100.0, "shares_remaining": 50.0},
+        "_source_path": "/forged/from-input.yaml",
+    }
+    duplicate_paths = [
+        state_dir / "th_a_duplicate.yaml",
+        state_dir / "th_m_duplicate.yaml",
+        state_dir / "th_z_duplicate.yaml",
+    ]
+    state_dir.mkdir(parents=True, exist_ok=True)
+    for index, path in enumerate(duplicate_paths):
+        payload = dict(duplicate_template)
+        payload["thesis_id"] = (
+            "th_duplicate_profit_gm_20260702_0002"
+            if index == 1
+            else duplicate_template["thesis_id"]
+        )
+        path.write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
+
+    result = evaluate_state(state_dir)
+
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["realized_pnl_today"] == -2500.0
+    assert result["metrics"]["realized_pnl_wtd"] == -2500.0
+    assert result["metrics"]["realized_pnl_mtd"] == -2500.0
+    assert result["metrics"]["theses_scanned"] == 1
+    assert [rule["rule"] for rule in result["triggered_rules"]] == [
+        "max_daily_loss",
+        "incomplete_state_data",
+    ]
+    duplicate_warnings = [
+        warning for warning in result["warnings"] if "Duplicate thesis_id" in warning
+    ]
+    assert duplicate_warnings == [
+        "Duplicate thesis_id 'th_duplicate_profit_gm_20260702_0002' in valid thesis "
+        "files; excluded all copies: " + ", ".join(str(path) for path in duplicate_paths)
+    ]
+    assert "/forged/from-input.yaml" not in duplicate_warnings[0]
+
+
+def test_duplicate_terminal_theses_do_not_affect_losing_streak(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_unique_loss_gm_20260701_0001",
+        ticker="UNIQ",
+        status="CLOSED",
+        history=[
+            {
+                "status": "CLOSED",
+                "at": "2026-07-01T10:00:00-04:00",
+                "reason": "manual",
+                "realized_pnl": -100.0,
+            }
+        ],
+        pnl_dollars=-100.0,
+        exit_date="2026-07-01T10:00:00-04:00",
+    )
+    duplicate = {
+        "thesis_id": "th_duplicate_loss_gm_20260701_0002",
+        "ticker": "DUPL",
+        "status": "CLOSED",
+        "status_history": [
+            {
+                "status": "CLOSED",
+                "at": "2026-07-01T11:00:00-04:00",
+                "reason": "manual",
+                "realized_pnl": -200.0,
+            }
+        ],
+        "exit": {
+            "actual_date": "2026-07-01T11:00:00-04:00",
+            "actual_price": 100.0,
+            "exit_reason": "manual",
+        },
+        "outcome": {"pnl_dollars": -200.0, "pnl_pct": -0.2},
+    }
+    for name in ("th_duplicate_one.yaml", "th_duplicate_two.yaml"):
+        (state_dir / name).write_text(yaml.safe_dump(duplicate, sort_keys=False), encoding="utf-8")
+
+    result = evaluate_state(state_dir, as_of="2026-07-02T12:00:00-04:00")
+
+    assert result["metrics"]["realized_pnl_wtd"] == -100.0
+    assert result["metrics"]["realized_pnl_mtd"] == -100.0
+    assert result["metrics"]["consecutive_losses"] == 1
+    assert result["metrics"]["last_loss_exit_at"] == "2026-07-01T10:00:00-04:00"
+    assert result["metrics"]["theses_scanned"] == 1
+    assert [rule["rule"] for rule in result["triggered_rules"]] == ["incomplete_state_data"]
+
+
+def test_duplicate_warnings_are_sorted_by_normalized_id(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    state_dir.mkdir()
+    for filename, thesis_id in (
+        ("th_1_zulu.yaml", " zulu "),
+        ("th_2_zulu.yaml", "zulu"),
+        ("th_3_alpha.yaml", "alpha"),
+        ("th_4_alpha.yaml", " alpha "),
+    ):
+        (state_dir / filename).write_text(
+            yaml.safe_dump(
+                {
+                    "thesis_id": thesis_id,
+                    "ticker": "TEST",
+                    "status": "IDEA",
+                    "status_history": [],
+                },
+                sort_keys=False,
+            ),
+            encoding="utf-8",
+        )
+
+    theses, quality, warnings = load_theses(state_dir)
+
+    assert theses == []
+    assert quality == "PARTIAL"
+    assert [warning.split("'", 2)[1] for warning in warnings] == ["alpha", "zulu"]
+
+
+def test_valid_unique_thesis_cannot_forge_source_path_in_ledger_warning(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    state_dir.mkdir()
+    actual_path = state_dir / "th_unique_with_forged_source.yaml"
+    actual_path.write_text(
+        yaml.safe_dump(
+            {
+                "thesis_id": "th_unique_with_forged_source",
+                "ticker": "REAL",
+                "status": "PARTIALLY_CLOSED",
+                "status_history": [
+                    {
+                        "status": "PARTIALLY_CLOSED",
+                        "at": "2026-07-02T10:00:00-04:00",
+                        "reason": "trim",
+                        "realized_pnl": -100.0,
+                    },
+                    {
+                        "status": "PARTIALLY_CLOSED",
+                        "at": "2026-07-02T11:00:00-04:00",
+                        "reason": "trim",
+                        "shares_sold": 5,
+                    },
+                ],
+                "entry": {
+                    "actual_price": 100.0,
+                    "actual_date": "2026-07-01T09:30:00-04:00",
+                },
+                "position": {"shares": 100.0, "shares_remaining": 50.0},
+                "_source_path": "/forged/from-input.yaml",
+            },
+            sort_keys=False,
+        ),
+        encoding="utf-8",
+    )
+
+    result = evaluate_state(state_dir)
+
+    ledger_warning = next(
+        warning
+        for warning in result["warnings"]
+        if "ledger-shaped event missing realized_pnl" in warning
+    )
+    assert str(actual_path) in ledger_warning
+    assert "/forged/from-input.yaml" not in ledger_warning
+    assert result["metrics"]["theses_scanned"] == 1
+    assert result["recommendation"] == "HALTED"
+
+
+def test_duplicate_detection_uses_only_valid_case_sensitive_trimmed_ids(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    upper_path = write_thesis(
+        state_dir,
+        "th_case_upper_file",
+        ticker="UPPER",
+        status="PARTIALLY_CLOSED",
+        history=[
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T10:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": 100.0,
+            }
+        ],
+    )
+    lower_path = write_thesis(
+        state_dir,
+        "th_case_lower_file",
+        ticker="LOWER",
+        status="PARTIALLY_CLOSED",
+        history=[
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T11:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": 200.0,
+            }
+        ],
+    )
+    for path, logical_id in (
+        (upper_path, "th_CaseSensitiveId"),
+        (lower_path, "th_casesensitiveid"),
+    ):
+        payload = yaml.safe_load(path.read_text())
+        payload["thesis_id"] = logical_id
+        path.write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
+    (state_dir / "th_malformed_same_id.yaml").write_text(
+        yaml.safe_dump(
+            {
+                "thesis_id": " th_CaseSensitiveId ",
+                "status": "PARTIALLY_CLOSED",
+                "status_history": [],
+            },
+            sort_keys=False,
+        ),
+        encoding="utf-8",
+    )
+
+    result = evaluate_state(state_dir)
+
+    assert result["metrics"]["realized_pnl_today"] == 300.0
+    assert result["metrics"]["realized_pnl_wtd"] == 300.0
+    assert result["metrics"]["realized_pnl_mtd"] == 300.0
+    assert result["metrics"]["theses_scanned"] == 2
+    assert not any("Duplicate thesis_id" in warning for warning in result["warnings"])
+    assert any("th_malformed_same_id.yaml" in warning for warning in result["warnings"])
+    assert result["data_quality"] == "PARTIAL"
+    assert result["recommendation"] == "HALTED"
+
+
+@pytest.mark.parametrize(
+    "thesis",
+    [
+        {},
+        {
+            "thesis_id": "th_partial_without_ledger_gm_20260702_0001",
+            "status": "PARTIALLY_CLOSED",
+            "status_history": [],
+        },
+    ],
+)
+def test_semantically_malformed_thesis_is_skipped_and_halts(tmp_path: Path, thesis: dict):
+    state_dir = tmp_path / "theses"
+    state_dir.mkdir()
+    (state_dir / "th_malformed.yaml").write_text(
+        yaml.safe_dump(thesis, sort_keys=False), encoding="utf-8"
+    )
+
+    result = evaluate_state(state_dir)
+
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["theses_scanned"] == 0
+    assert any("Skipped" in warning for warning in result["warnings"])
+    assert any(rule["rule"] == "incomplete_state_data" for rule in result["triggered_rules"])
+    json.dumps(result, allow_nan=False)
+
+
+def test_skeletal_active_thesis_is_skipped_and_halts(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    state_dir.mkdir()
+    (state_dir / "th_skeletal_active.yaml").write_text(
+        yaml.safe_dump(
+            {
+                "thesis_id": "th_skeletal_active_gm_20260702_0001",
+                "ticker": "SKEL",
+                "status": "ACTIVE",
+                "status_history": [],
+            },
+            sort_keys=False,
+        ),
+        encoding="utf-8",
+    )
+
+    result = evaluate_state(state_dir)
+
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["theses_scanned"] == 0
+    assert any("no status_history events" in warning for warning in result["warnings"])
+
+
+@pytest.mark.parametrize(
+    "history",
+    [
+        [{}],
+        [{"status": "ACTIVE"}],
+        [{"status": "UNKNOWN", "at": "2026-07-02T10:00:00-04:00"}],
+    ],
+)
+def test_required_history_event_malformed_active_thesis_halts(tmp_path: Path, history: list[dict]):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_bad_active_history_gm_20260702_0001",
+        ticker="BADHIST",
+        status="ACTIVE",
+        history=history,
+    )
+
+    result = evaluate_state(state_dir)
+
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["theses_scanned"] == 0
+    assert any("status_history[0] is malformed" in warning for warning in result["warnings"])
+
+
+def test_active_thesis_requires_entry_actuals(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    state_dir.mkdir()
+    (state_dir / "th_active_missing_open_state.yaml").write_text(
+        yaml.safe_dump(
+            {
+                "thesis_id": "th_active_missing_open_state_gm_20260702_0001",
+                "ticker": "OPEN",
+                "status": "ACTIVE",
+                "status_history": [
+                    {
+                        "status": "ACTIVE",
+                        "at": "2026-07-02T09:30:00-04:00",
+                        "reason": "opened",
+                    }
+                ],
+            },
+            sort_keys=False,
+        ),
+        encoding="utf-8",
+    )
+
+    result = evaluate_state(state_dir)
+
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["theses_scanned"] == 0
+    assert any("ACTIVE thesis requires entry" in warning for warning in result["warnings"])
+
+
+def test_active_thesis_allows_legacy_missing_position(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_active_legacy_no_position_gm_20260702_0001",
+        ticker="LEGOK",
+        status="ACTIVE",
+        history=[
+            {
+                "status": "ACTIVE",
+                "at": "2026-07-02T09:30:00-04:00",
+                "reason": "opened",
+            }
+        ],
+    )
+    path = state_dir / "th_active_legacy_no_position_gm_20260702_0001.yaml"
+    data = yaml.safe_load(path.read_text())
+    data["position"] = None
+    path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
+
+    result = evaluate_state(state_dir)
+
+    assert result["recommendation"] == "TRADING_ALLOWED"
+    assert result["data_quality"] == "OK"
+    assert result["metrics"]["theses_scanned"] == 1
+
+
+def test_partially_closed_thesis_requires_position(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_partial_missing_position_gm_20260702_0001",
+        ticker="NOPOS",
+        status="PARTIALLY_CLOSED",
+        history=[
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T10:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": 10.0,
+            }
+        ],
+    )
+    path = state_dir / "th_partial_missing_position_gm_20260702_0001.yaml"
+    data = yaml.safe_load(path.read_text())
+    data["position"] = None
+    path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
+
+    result = evaluate_state(state_dir)
+
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["theses_scanned"] == 0
+    assert any(
+        "PARTIALLY_CLOSED thesis requires position" in warning for warning in result["warnings"]
+    )
+
+
+def test_active_thesis_with_open_state_is_allowed(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_active_ok_gm_20260702_0001",
+        ticker="OPENOK",
+        status="ACTIVE",
+        history=[
+            {
+                "status": "ACTIVE",
+                "at": "2026-07-02T09:30:00-04:00",
+                "reason": "opened",
+            }
+        ],
+    )
+
+    result = evaluate_state(state_dir)
+
+    assert result["recommendation"] == "TRADING_ALLOWED"
+    assert result["data_quality"] == "OK"
+    assert result["metrics"]["theses_scanned"] == 1
+
+
+def test_losing_streak_triggers_cooldown(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_loss1_gm_20260701_0001",
+        ticker="AAA",
+        pnl_dollars=-100.0,
+        exit_date="2026-07-01T10:00:00-04:00",
+    )
+    write_thesis(
+        state_dir,
+        "th_loss2_gm_20260701_0002",
+        ticker="BBB",
+        pnl_dollars=-150.0,
+        exit_date="2026-07-01T15:30:00-04:00",
+    )
+
+    result = evaluate_state(state_dir, as_of="2026-07-02T10:00:00-04:00")
+
+    assert result["recommendation"] == "COOLDOWN"
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["consecutive_losses"] == 2
+    assert result["triggered_rules"][0]["rule"] == "losing_streak_cooldown"
+    assert result["triggered_rules"][0]["active_until"] == "2026-07-02T15:30:00-04:00"
+    assert all(rule["rule"] != "incomplete_state_data" for rule in result["triggered_rules"])
+
+
+def test_losing_streak_resets_on_break_even_and_expires_after_24h(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_loss1_gm_20260701_0001",
+        ticker="AAA",
+        pnl_dollars=-100.0,
+        exit_date="2026-07-01T10:00:00-04:00",
+    )
+    write_thesis(
+        state_dir,
+        "th_flat_gm_20260701_0002",
+        ticker="BBB",
+        pnl_dollars=0.0,
+        exit_date="2026-07-01T12:00:00-04:00",
+    )
+    write_thesis(
+        state_dir,
+        "th_loss2_gm_20260701_0003",
+        ticker="CCC",
+        pnl_dollars=-150.0,
+        exit_date="2026-07-01T15:30:00-04:00",
+    )
+
+    reset_result = evaluate_state(state_dir, as_of="2026-07-02T10:00:00-04:00")
+
+    assert reset_result["metrics"]["consecutive_losses"] == 1
+    assert reset_result["recommendation"] == "TRADING_ALLOWED"
+
+    write_thesis(
+        state_dir,
+        "th_loss3_gm_20260701_0004",
+        ticker="DDD",
+        pnl_dollars=-50.0,
+        exit_date="2026-07-01T16:00:00-04:00",
+    )
+    expired_result = evaluate_state(state_dir, as_of="2026-07-02T16:00:00-04:00")
+
+    assert expired_result["metrics"]["consecutive_losses"] == 2
+    assert expired_result["recommendation"] == "TRADING_ALLOWED"
+
+
+def test_losing_streak_terminal_ordering_uses_eastern_time(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_loss_utc_gm_20260702_0001",
+        ticker="UTCLOSS",
+        pnl_dollars=-100.0,
+        exit_date="2026-07-02T00:30:00+00:00",
+    )
+    write_thesis(
+        state_dir,
+        "th_win_et_gm_20260701_0002",
+        ticker="ETWIN",
+        pnl_dollars=0.0,
+        exit_date="2026-07-01T23:00:00-04:00",
+    )
+    write_thesis(
+        state_dir,
+        "th_loss_late_gm_20260702_0003",
+        ticker="LATELOSS",
+        pnl_dollars=-50.0,
+        exit_date="2026-07-02T09:00:00-04:00",
+    )
+
+    result = evaluate_state(state_dir, as_of="2026-07-02T10:00:00-04:00")
+
+    assert result["metrics"]["consecutive_losses"] == 1
+    assert result["recommendation"] == "TRADING_ALLOWED"
+    assert result["metrics"]["last_loss_exit_at"] == "2026-07-02T09:00:00-04:00"
+
+
+def test_terminal_thesis_missing_pnl_sets_partial_quality(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_missing_outcome_gm_20260701_0001",
+        ticker="MISS",
+        exit_date="2026-07-01T10:00:00-04:00",
+    )
+    write_thesis(
+        state_dir,
+        "th_loss_gm_20260701_0002",
+        ticker="LOSS",
+        pnl_dollars=-100.0,
+        exit_date="2026-07-01T15:30:00-04:00",
+    )
+
+    result = evaluate_state(state_dir, as_of="2026-07-02T10:00:00-04:00")
+
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["consecutive_losses"] == 1
+    assert any("missing pnl_dollars" in warning for warning in result["warnings"])
+
+
+def test_producer_legacy_close_outcome_falls_back_to_drawdown_metrics(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    thesis_store, thesis_id = register_producer_thesis(state_dir, ticker="LEGACY")
+
+    assert (
+        thesis_store.main(
+            [
+                "--state-dir",
+                str(state_dir),
+                "transition",
+                thesis_id,
+                "ENTRY_READY",
+                "--reason",
+                "ready",
+                "--event-date",
+                "2026-07-01",
+            ]
+        )
+        == 0
+    )
+    assert (
+        thesis_store.main(
+            [
+                "--state-dir",
+                str(state_dir),
+                "open-position",
+                thesis_id,
+                "--actual-price",
+                "100",
+                "--actual-date",
+                "2026-07-01",
+                "--event-date",
+                "2026-07-01",
+            ]
+        )
+        == 0
+    )
+    assert (
+        thesis_store.main(
+            [
+                "--state-dir",
+                str(state_dir),
+                "close",
+                thesis_id,
+                "--exit-reason",
+                "manual",
+                "--actual-price",
+                "79.5",
+                "--actual-date",
+                "2026-07-02",
+                "--event-date",
+                "2026-07-02",
+            ]
+        )
+        == 0
+    )
+
+    result = evaluate_state(state_dir, as_of="2026-07-02", account_size=1000)
+
+    assert result["metrics"]["realized_pnl_today"] == -20.5
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert any("Inferred missing realized_pnl" in warning for warning in result["warnings"])
+
+
+def test_producer_legacy_invalidated_outcome_falls_back_to_drawdown_metrics(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    thesis_store, thesis_id = register_producer_thesis(state_dir, ticker="INVAL")
+
+    assert (
+        thesis_store.main(
+            [
+                "--state-dir",
+                str(state_dir),
+                "transition",
+                thesis_id,
+                "ENTRY_READY",
+                "--reason",
+                "ready",
+                "--event-date",
+                "2026-07-01",
+            ]
+        )
+        == 0
+    )
+    assert (
+        thesis_store.main(
+            [
+                "--state-dir",
+                str(state_dir),
+                "open-position",
+                thesis_id,
+                "--actual-price",
+                "100",
+                "--actual-date",
+                "2026-07-01",
+                "--event-date",
+                "2026-07-01",
+            ]
+        )
+        == 0
+    )
+    assert (
+        thesis_store.main(
+            [
+                "--state-dir",
+                str(state_dir),
+                "terminate",
+                thesis_id,
+                "--terminal-status",
+                "INVALIDATED",
+                "--exit-reason",
+                "setup failed",
+                "--actual-price",
+                "79.5",
+                "--actual-date",
+                "2026-07-02",
+                "--event-date",
+                "2026-07-02",
+            ]
+        )
+        == 0
+    )
+
+    result = evaluate_state(state_dir, as_of="2026-07-02", account_size=1000)
+
+    assert result["metrics"]["realized_pnl_today"] == -20.5
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert any("Inferred missing realized_pnl" in warning for warning in result["warnings"])
+
+
+def test_exit_null_does_not_crash_terminal_scan(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_exit_null_gm_20260702_0001",
+        pnl_dollars=-100.0,
+        history=[
+            {
+                "status": "CLOSED",
+                "at": "2026-07-02T10:00:00-04:00",
+                "reason": "manual",
+            }
+        ],
+    )
+    path = state_dir / "th_exit_null_gm_20260702_0001.yaml"
+    data = yaml.safe_load(path.read_text())
+    data["exit"] = None
+    path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
+
+    result = evaluate_state(state_dir, as_of="2026-07-02")
+
+    assert result["metrics"]["consecutive_losses"] == 1
+    assert result["metrics"]["realized_pnl_today"] == -100.0
+
+
+def test_terminal_non_list_history_blocks_outcome_fallback(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_bad_history_gm_20260702_0001",
+        pnl_dollars=-100.0,
+        exit_date="2026-07-02T10:00:00-04:00",
+    )
+    path = state_dir / "th_bad_history_gm_20260702_0001.yaml"
+    data = yaml.safe_load(path.read_text())
+    data["status_history"] = {"status": "CLOSED", "at": "2026-07-02T10:00:00-04:00"}
+    path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
+
+    result = evaluate_state(state_dir, as_of="2026-07-02")
+
+    assert result["recommendation"] == "HALTED"
+    assert result["metrics"]["realized_pnl_today"] == 0
+    assert result["data_quality"] == "PARTIAL"
+    assert any("status_history must be a list" in warning for warning in result["warnings"])
+
+
+def test_terminal_exit_null_and_non_list_history_degrades_to_partial(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_exit_null_bad_history_gm_20260702_0001",
+        pnl_dollars=-100.0,
+        history=[
+            {
+                "status": "CLOSED",
+                "at": "2026-07-02T10:00:00-04:00",
+                "reason": "manual",
+            }
+        ],
+    )
+    path = state_dir / "th_exit_null_bad_history_gm_20260702_0001.yaml"
+    data = yaml.safe_load(path.read_text())
+    data["exit"] = None
+    data["status_history"] = {"status": "CLOSED", "at": "2026-07-02T10:00:00-04:00"}
+    path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
+
+    result = evaluate_state(state_dir, as_of="2026-07-02")
+
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["realized_pnl_today"] == 0
+    assert any("status_history must be a list" in warning for warning in result["warnings"])
+
+
+@pytest.mark.parametrize("bad_pnl", [float("nan"), float("inf"), float("-inf")])
+def test_non_finite_ledger_pnl_halts_without_contaminating_metrics(tmp_path: Path, bad_pnl: float):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_non_finite_ledger_gm_20260702_0001",
+        status="PARTIALLY_CLOSED",
+        history=[
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T11:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": bad_pnl,
+            }
+        ],
+    )
+
+    result = evaluate_state(state_dir)
+
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["realized_pnl_today"] == 0
+    assert all(
+        math.isfinite(result["metrics"][field])
+        for field in ("realized_pnl_today", "realized_pnl_wtd", "realized_pnl_mtd")
+    )
+    assert any("non-finite" in warning for warning in result["warnings"])
+    json.dumps(result, allow_nan=False)
+
+
+@pytest.mark.parametrize("bad_pnl", [float("nan"), float("inf"), float("-inf")])
+def test_non_finite_terminal_outcome_halts_without_counting_result(tmp_path: Path, bad_pnl: float):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_non_finite_outcome_gm_20260702_0001",
+        pnl_dollars=bad_pnl,
+        exit_date="2026-07-02T10:00:00-04:00",
+    )
+
+    result = evaluate_state(state_dir)
+
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["realized_pnl_today"] == 0
+    assert result["metrics"]["consecutive_losses"] == 0
+    assert any("non-finite" in warning for warning in result["warnings"])
+    json.dumps(result, allow_nan=False)
+
+
+@pytest.mark.parametrize(
+    "malformed_event",
+    [
+        None,
+        {
+            "status": "PARTIALLY_CLOSED",
+            "at": "2026-07-02T10:00:00-04:00",
+            "reason": "trim",
+            "shares_sold": 10,
+            "price": 90.0,
+            "proceeds": 900.0,
+        },
+        {
+            "status": "CLOSED",
+            "at": "2026-07-02T10:00:00-04:00",
+            "reason": "final leg",
+            "quantity_sold": 1,
+            "price": 90.0,
+            "proceeds": 90.0,
+        },
+    ],
+)
+def test_malformed_or_incomplete_ledger_event_halts_even_with_outcome_fallback(
+    tmp_path: Path, malformed_event: object
+):
+    state_dir = tmp_path / "theses"
+    history = [malformed_event]
+    if isinstance(malformed_event, dict) and malformed_event.get("status") == "PARTIALLY_CLOSED":
+        history.append({"status": "CLOSED", "at": "2026-07-02T10:05:00-04:00", "reason": "manual"})
+    write_thesis(
+        state_dir,
+        "th_incomplete_ledger_gm_20260702_0001",
+        history=history,
+        pnl_dollars=-100.0,
+        exit_date="2026-07-02T10:00:00-04:00",
+    )
+
+    result = evaluate_state(state_dir)
+
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert any("status_history event" in warning for warning in result["warnings"])
+    assert any(rule["rule"] == "incomplete_state_data" for rule in result["triggered_rules"])
+
+
+def test_terminal_empty_history_event_blocks_outcome_and_loss_streak(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_junk_terminal_history_gm_20260702_0001",
+        history=[{}],
+        pnl_dollars=-100.0,
+        exit_date="2026-07-02T10:00:00-04:00",
+    )
+
+    result = evaluate_state(state_dir, as_of="2026-07-02T12:00:00-04:00")
+
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["realized_pnl_today"] == 0
+    assert result["metrics"]["consecutive_losses"] == 0
+    assert any("status_history[0] is malformed" in warning for warning in result["warnings"])
+    assert any(rule["rule"] == "incomplete_state_data" for rule in result["triggered_rules"])
+
+
+def test_terminal_history_must_reach_current_status_before_fallback(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_terminal_history_mismatch_gm_20260702_0001",
+        history=[{"status": "ACTIVE", "at": "2026-07-02T09:30:00-04:00", "reason": "open"}],
+        pnl_dollars=-100.0,
+        exit_date="2026-07-02T10:00:00-04:00",
+    )
+
+    result = evaluate_state(state_dir, as_of="2026-07-02T12:00:00-04:00")
+
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["realized_pnl_today"] == 0
+    assert result["metrics"]["consecutive_losses"] == 0
+    assert any("does not reach current status" in warning for warning in result["warnings"])
+    assert any(rule["rule"] == "incomplete_state_data" for rule in result["triggered_rules"])
+
+
+@pytest.mark.parametrize("bad_pnl", [False, "-1.00"])
+def test_ledger_pnl_rejects_booleans_and_strings(tmp_path: Path, bad_pnl: bool | str):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_bad_typed_ledger_gm_20260702_0001",
+        status="PARTIALLY_CLOSED",
+        history=[
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T10:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": bad_pnl,
+            }
+        ],
+    )
+
+    result = evaluate_state(state_dir)
+
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["realized_pnl_today"] == 0
+    assert result["metrics"]["theses_scanned"] == 0
+    assert any(
+        "PARTIALLY_CLOSED thesis has no valid ledger event" in warning
+        for warning in result["warnings"]
+    )
+
+
+@pytest.mark.parametrize("bad_pnl", [False, "-1.00"])
+def test_terminal_outcome_pnl_rejects_booleans_and_strings(tmp_path: Path, bad_pnl: bool | str):
+    state_dir = tmp_path / "theses"
+    state_dir.mkdir()
+    thesis = {
+        "thesis_id": "th_bad_typed_outcome_gm_20260702_0001",
+        "ticker": "BADOUT",
+        "status": "CLOSED",
+        "status_history": [
+            {"status": "CLOSED", "at": "2026-07-02T10:00:00-04:00", "reason": "manual"}
+        ],
+        "exit": {
+            "actual_date": "2026-07-02T10:00:00-04:00",
+            "actual_price": 100.0,
+            "exit_reason": "manual",
+        },
+        "outcome": {"pnl_dollars": bad_pnl, "pnl_pct": 0},
+    }
+    (state_dir / "th_bad_typed_outcome_gm_20260702_0001.yaml").write_text(
+        yaml.safe_dump(thesis, sort_keys=False), encoding="utf-8"
+    )
+
+    result = evaluate_state(state_dir)
+
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["realized_pnl_today"] == 0
+    assert result["metrics"]["consecutive_losses"] == 0
+    assert any("must be an int or float" in warning for warning in result["warnings"])
+
+
+def test_overflowing_ledger_aggregate_halts_with_finite_metrics(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_overflowing_ledger_gm_20260702_0001",
+        status="PARTIALLY_CLOSED",
+        history=[
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T10:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": 1e308,
+            },
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T11:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": 1e308,
+            },
+        ],
+    )
+
+    result = evaluate_state(state_dir)
+
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["realized_pnl_today"] == 0
+    assert all(
+        math.isfinite(result["metrics"][field])
+        for field in ("realized_pnl_today", "realized_pnl_wtd", "realized_pnl_mtd")
+    )
+    assert any("aggregate is non-finite" in warning for warning in result["warnings"])
+    json.dumps(result, allow_nan=False)
+
+
+def test_oversized_terminal_outcome_becomes_blocking_warning(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    state_dir.mkdir()
+    thesis = {
+        "thesis_id": "th_oversized_outcome_gm_20260702_0001",
+        "ticker": "HUGE",
+        "status": "CLOSED",
+        "status_history": [
+            {"status": "CLOSED", "at": "2026-07-02T10:00:00-04:00", "reason": "manual"}
+        ],
+        "exit": {
+            "actual_date": "2026-07-02T10:00:00-04:00",
+            "actual_price": 100.0,
+            "exit_reason": "manual",
+        },
+        "outcome": {"pnl_dollars": 10**400, "pnl_pct": 0},
+    }
+    (state_dir / "th_oversized_outcome_gm_20260702_0001.yaml").write_text(
+        yaml.safe_dump(thesis, sort_keys=False), encoding="utf-8"
+    )
+
+    result = evaluate_state(state_dir)
+
+    assert result["recommendation"] == "HALTED"
+    assert result["data_quality"] == "PARTIAL"
+    assert result["metrics"]["realized_pnl_today"] == 0
+    assert result["metrics"]["consecutive_losses"] == 0
+    assert any("must be finite" in warning for warning in result["warnings"])
+
+
+def test_large_finite_account_uses_finite_loss_threshold(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_large_finite_loss_gm_20260702_0001",
+        status="PARTIALLY_CLOSED",
+        history=[
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T10:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": -1e308,
+            }
+        ],
+    )
+
+    result = evaluate_state(state_dir, account_size=1e308)
+
+    assert result["recommendation"] == "HALTED"
+    daily_rule = next(
+        rule for rule in result["triggered_rules"] if rule["rule"] == "max_daily_loss"
+    )
+    assert math.isfinite(daily_rule["threshold"])
+    assert daily_rule["threshold"] == 2e306
+
+
+def test_weekly_and_monthly_drawdown_rules_use_calendar_boundaries(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_prior_week_gm_20260628_0001",
+        status="PARTIALLY_CLOSED",
+        history=[
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-06-28T15:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": -10_000.0,
+            }
+        ],
+    )
+    write_thesis(
+        state_dir,
+        "th_this_week_gm_20260701_0001",
+        status="PARTIALLY_CLOSED",
+        history=[
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-01T15:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": -5_000.0,
+            }
+        ],
+    )
+
+    result = evaluate_state(state_dir, as_of="2026-07-02T12:00:00-04:00")
+
+    assert result["metrics"]["realized_pnl_wtd"] == -5000.0
+    assert result["metrics"]["realized_pnl_mtd"] == -5000.0
+    assert [rule["rule"] for rule in result["triggered_rules"]] == ["weekly_drawdown_halt"]
+    assert result["triggered_rules"][0]["active_until"].startswith("2026-07-06T00:00:00")
+
+
+def test_monthly_drawdown_halt_and_halted_priority_over_cooldown(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    write_thesis(
+        state_dir,
+        "th_loss1_gm_20260701_0001",
+        ticker="AAA",
+        pnl_dollars=-100.0,
+        exit_date="2026-07-01T10:00:00-04:00",
+    )
+    write_thesis(
+        state_dir,
+        "th_loss2_gm_20260701_0002",
+        ticker="BBB",
+        pnl_dollars=-150.0,
+        exit_date="2026-07-01T15:30:00-04:00",
+        history=[
+            {
+                "status": "CLOSED",
+                "at": "2026-07-01T15:30:00-04:00",
+                "reason": "manual",
+                "realized_pnl": -8_000.0,
+            }
+        ],
+    )
+
+    result = evaluate_state(state_dir, as_of="2026-07-02T10:00:00-04:00")
+
+    assert result["recommendation"] == "HALTED"
+    rules = {rule["rule"]: rule for rule in result["triggered_rules"]}
+    assert "losing_streak_cooldown" in rules
+    assert "monthly_drawdown_halt" in rules
+    assert rules["monthly_drawdown_halt"]["active_until"].startswith("2026-08-01T00:00:00")
+
+
+def test_json_only_cli_creates_json_without_markdown(tmp_path: Path):
+    state_dir = tmp_path / "theses"
+    output_dir = tmp_path / "reports"
+    write_thesis(
+        state_dir,
+        "th_ok_gm_20260702_0001",
+        status="PARTIALLY_CLOSED",
+        history=[
+            {
+                "status": "PARTIALLY_CLOSED",
+                "at": "2026-07-02T11:00:00-04:00",
+                "reason": "trim",
+                "realized_pnl": 10.0,
+            }
+        ],
+    )
+
+    exit_code = main(
+        [
+            "--state-dir",
+            str(state_dir),
+            "--account-size",
+            "100000",
+            "--as-of",
+            "2026-07-02",
+            "--output-dir",
+            str(output_dir),
+            "--json-only",
+        ]
+    )
+
+    assert exit_code == 0
+    json_files = list(output_dir.glob("circuit_breaker_decision_*.json"))
+    md_files = list(output_dir.glob("circuit_breaker_decision_*.md"))
+    assert len(json_files) == 1
+    assert md_files == []
+    data = json.loads(json_files[0].read_text())
+    assert data["schema_version"] == "1.0"
+    assert data["recommendation"] == "TRADING_ALLOWED"
+    assert set(data) >= {
+        "generated_at",
+        "as_of_date",
+        "triggered_rules",
+        "metrics",
+        "account_size",
+        "config",
+        "data_quality",
+        "rationale",
+    }
+
+
+def test_config_file_and_cli_overrides_are_applied(tmp_path: Path):
+    config_path = tmp_path / "config.json"
+    config_path.write_text(
+        json.dumps({"max_daily_loss_pct": 1.0, "losing_streak_n": 3}), encoding="utf-8"
+    )
+    output_dir = tmp_path / "reports"
+
+    exit_code = main(
+        [
+            "--state-dir",
+            str(tmp_path / "missing"),
+            "--account-size",
+            "100000",
+            "--config",
+            str(config_path),
+            "--losing-streak-n",
+            "4",
+            "--output-dir",
+            str(output_dir),
+            "--json-only",
+        ]
+    )
+
+    assert exit_code == 0
+    data = json.loads(next(output_dir.glob("circuit_breaker_decision_*.json")).read_text())
+    assert data["config"]["max_daily_loss_pct"] == 1.0
+    assert data["config"]["losing_streak_n"] == 4
+
+
+def test_unknown_config_key_fails_closed(tmp_path: Path):
+    config_path = tmp_path / "config.json"
+    config_path.write_text(json.dumps({"max_daily_loss_pct_typo": 1.0}), encoding="utf-8")
+
+    exit_code = main(
+        [
+            "--state-dir",
+            str(tmp_path / "missing"),
+            "--account-size",
+            "100000",
+            "--config",
+            str(config_path),
+            "--output-dir",
+            str(tmp_path / "reports"),
+            "--json-only",
+        ]
+    )
+
+    assert exit_code == 1
+
+
+@pytest.mark.parametrize("bad_value", ["nan", "inf", "0", "-1"])
+def test_account_size_rejects_non_finite_or_non_positive_values(tmp_path: Path, bad_value: str):
+    output_dir = tmp_path / "reports"
+
+    with pytest.raises(SystemExit) as exc_info:
+        main(
+            [
+                "--state-dir",
+                str(tmp_path / "missing"),
+                "--account-size",
+                bad_value,
+                "--output-dir",
+                str(output_dir),
+                "--json-only",
+            ]
+        )
+
+    assert exc_info.value.code == 2
+    assert not output_dir.exists()
+
+
+@pytest.mark.parametrize(
+    ("flag", "bad_value"),
+    [
+        ("--max-daily-loss-pct", "nan"),
+        ("--cooldown-hours", "inf"),
+        ("--weekly-drawdown-pct", "0"),
+        ("--monthly-drawdown-pct", "-1"),
+    ],
+)
+def test_cli_thresholds_reject_non_finite_or_non_positive_values(
+    tmp_path: Path, flag: str, bad_value: str
+):
+    output_dir = tmp_path / "reports"
+
+    with pytest.raises(SystemExit) as exc_info:
+        main(
+            [
+                "--state-dir",
+                str(tmp_path / "missing"),
+                "--account-size",
+                "100000",
+                flag,
+                bad_value,
+                "--output-dir",
+                str(output_dir),
+                "--json-only",
+            ]
+        )
+
+    assert exc_info.value.code == 2
+    assert not output_dir.exists()
+
+
+@pytest.mark.parametrize(
+    ("key", "bad_value"),
+    [
+        ("max_daily_loss_pct", float("nan")),
+        ("cooldown_hours", float("inf")),
+        ("weekly_drawdown_pct", 0),
+        ("monthly_drawdown_pct", -1),
+    ],
+)
+def test_config_thresholds_reject_non_finite_or_non_positive_values(
+    tmp_path: Path, key: str, bad_value: float
+):
+    config_path = tmp_path / "config.json"
+    config_path.write_text(json.dumps({key: bad_value}), encoding="utf-8")
+    output_dir = tmp_path / "reports"
+
+    exit_code = main(
+        [
+            "--state-dir",
+            str(tmp_path / "missing"),
+            "--account-size",
+            "100000",
+            "--config",
+            str(config_path),
+            "--output-dir",
+            str(output_dir),
+            "--json-only",
+        ]
+    )
+
+    assert exit_code == 1
+    assert not output_dir.exists()
+
+
+@pytest.mark.parametrize(
+    ("key", "bad_value"),
+    [
+        ("max_daily_loss_pct", True),
+        ("cooldown_hours", False),
+        ("losing_streak_n", True),
+        ("losing_streak_n", 1.9),
+        ("losing_streak_n", 3.0),
+    ],
+)
+def test_config_rejects_boolean_and_non_integer_coercion(
+    tmp_path: Path, key: str, bad_value: bool | float
+):
+    config_path = tmp_path / "config.json"
+    config_path.write_text(json.dumps({key: bad_value}), encoding="utf-8")
+    output_dir = tmp_path / "reports"
+
+    exit_code = main(
+        [
+            "--state-dir",
+            str(tmp_path / "missing"),
+            "--account-size",
+            "100000",
+            "--config",
+            str(config_path),
+            "--output-dir",
+            str(output_dir),
+            "--json-only",
+        ]
+    )
+
+    assert exit_code == 1
+    assert not output_dir.exists()
+
+
+def test_write_reports_rejects_non_finite_output(tmp_path: Path):
+    result = evaluate_state(tmp_path / "missing")
+    result["metrics"]["realized_pnl_today"] = float("nan")
+    output_dir = tmp_path / "reports"
+
+    with pytest.raises(ValueError):
+        write_reports(result, output_dir, json_only=True)
+
+    assert list(output_dir.glob("circuit_breaker_decision_*.json")) == []
+
+
+def test_overflowing_derived_threshold_fails_without_report(tmp_path: Path):
+    output_dir = tmp_path / "reports"
+
+    exit_code = main(
+        [
+            "--state-dir",
+            str(tmp_path / "missing"),
+            "--account-size",
+            "1e308",
+            "--max-daily-loss-pct",
+            "1e308",
+            "--output-dir",
+            str(output_dir),
+            "--json-only",
+        ]
+    )
+
+    assert exit_code == 1
+    assert not output_dir.exists()

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Residual Edge Analyzer"
+  short_description: "Separate baseline exposure from residual strategy edge"
+  default_prompt: "Use $residual-edge-analyzer to test whether my strategy returns contain robust residual edge beyond declared baselines."

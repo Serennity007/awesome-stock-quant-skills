@@ -1,0 +1,7 @@
+ib_async==2.1.0
+pandas>=2.2,<3
+numpy>=2.0,<3
+pyyaml>=6.0
+python-dotenv>=1.0
+requests>=2.31
+ibflex>=0.16
