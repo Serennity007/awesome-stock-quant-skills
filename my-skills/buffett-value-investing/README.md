@@ -1,5 +1,7 @@
 # buffett-value-investing
 
+**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
+
 作者：Serennity007（原创）。
 
 A股巴菲特式价值投资分析技能：护城河评估、连续 5 年 ROE/毛利率/负债率/自由现金流筛选、安全边际估值。

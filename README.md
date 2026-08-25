@@ -1,5 +1,7 @@
 # awesome-stock-quant-skills
 
+**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
+
 炒股 / 量化交易 / 选股 AI Skill 合集：收录国内外 GitHub 上的股票分析、量化交易、选股策略 Agent Skills（Claude Code / Agent Skills 格式），附索引与合规转载。
 
 - **合规原则**：`skills/` 目录仅收录 License 为 MIT / Apache-2.0 / BSD / CC0 的项目，并保留原 LICENSE 文件与 SOURCE.md 来源说明；无 License、GPL、AGPL、NOASSERTION 的项目一律只进索引、不复制文件。
