@@ -44,6 +44,14 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 | [cruisekkk__trading-ledger](skills/cruisekkk__trading-ledger) | 交易日志 skill | [cruisekkk/trading-ledger](https://github.com/cruisekkk/trading-ledger) | MIT |
 | [AlexLiu0130__ibkr-options-assistant](skills/AlexLiu0130__ibkr-options-assistant) | IBKR 期权助手 | [AlexLiu0130/ibkr-options-assistant](https://github.com/AlexLiu0130/ibkr-options-assistant) | MIT |
 
+## 原创技能
+
+本仓库作者（Serennity007）原创的技能，放在 `my-skills/` 目录，与 `skills/` 收录区区分：
+
+| 目录 | 简介 | License |
+|---|---|---|
+| [buffett-value-investing](my-skills/buffett-value-investing) | A股巴菲特式价值投资分析：护城河评估、连续5年ROE/毛利率/负债率/自由现金流筛选、安全边际估值（基于 akshare，含筛股与单股分析脚本） | MIT |
+
 ## 索引目录
 
 以下项目仅提供链接索引，未转载文件（License 不允许转载、体量过大或为完整应用/框架）。Stars 数据为 2026-08-25 查询。
