@@ -2,6 +2,8 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![収録スキル](https://img.shields.io/badge/収録スキル-16-blue?style=flat-square) ![オリジナルスキル](https://img.shields.io/badge/オリジナルスキル-2-green?style=flat-square) ![言語](https://img.shields.io/badge/言語-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+
 株式トレード / クオンツトレード / 銘柄スクリーニング AI Skill コレクション：国内外の GitHub から株式分析・クオンツトレード・スクリーニング戦略の Agent Skills（Claude Code / Agent Skills 形式）を収録し、インデックスとライセンス遵守の転載を付記。
 
 - **コンプライアンス原則**：`skills/` ディレクトリには MIT / Apache-2.0 / BSD / CC0 ライセンスのプロジェクトのみを収録し、元の LICENSE ファイルと SOURCE.md の出典情報を保持します。ライセンスなし・GPL・AGPL・NOASSERTION のプロジェクトはインデックスのみで、ファイルはコピーしません。
@@ -53,6 +55,17 @@ cp -r skills/<作者>__<スキル名> ~/.agents/skills/
 | ディレクトリ | 概要 | License |
 |---|---|---|
 | [buffett-value-investing](my-skills/buffett-value-investing) | A株バフェット式バリュー投資分析：堀評価、5年連続 ROE／粗利率／負債比率／フリーキャッシュフローのスクリーニング、安全マージン評価（akshare ベース、スクリーニングと個別株分析スクリプト付き） | MIT |
+| [technical-pattern-recognition](my-skills/technical-pattern-recognition) | A株テクニカルパターン認識：移動平均線のパーフェクトオーダー/逆オーダー、MACD ゴールデン/デッドクロス、出来高を伴う N 日高値ブレイク、出来高減少の押し目、シグナル表を出力（akshare 新浪日足ベース） | MIT |
+
+## デモ
+
+オリジナルスキルはすべて実際に実行可能なコードで、実走の出力を添付（2026-08-26 実測、akshare 1.18.94、当日の実際の相場・財務データ）：
+
+- **バフェットスクリーニング実測**：`screen.py --codes 600519,000858,600036` → 貴州茅台 100 点（5年連続 ROE 27.7%–37.0%、粗利率 91.7%、PE/PB パーセンタイル 0.07/0.03）、五糧液 94 点、招商銀行 47 点（金融業の高レバレッジが正しく減点）。完全な出力：[my-skills/buffett-value-investing/docs/demo.ja.md](my-skills/buffett-value-investing/docs/demo.ja.md)
+- **個別株分析実測**：`analyze.py 600519` → 堀チェックリスト + 5年財務トレンド + バリュエーションレンジ（保守的評価 1547.89 元 / 安全マージン参考値 1083.52 元）。
+- **パターン認識実測**：`patterns.py` 6 銘柄 → 601318/000001 が `MACD_GOLDEN`、他は `NO_SIGNAL`。完全な出力：[my-skills/technical-pattern-recognition/docs/demo.ja.md](my-skills/technical-pattern-recognition/docs/demo.ja.md)
+- **日次自動レポート**：GitHub Action が毎日 UTC 01:00 に 20 銘柄の A 株代表株でバフェットスクリーニングを自動実行し、結果を [`reports/`](reports/) にコミット（最新：[reports/latest.md](reports/latest.md)）。
+- **収録スキルの実測比較**：16 の収録スキルの構造化チェック表（SKILL.md 規範性、依存、API キー、実測可否）は [docs/skill-review.ja.md](docs/skill-review.ja.md) を参照。
 
 ## インデックス
 

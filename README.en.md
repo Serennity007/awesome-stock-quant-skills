@@ -2,6 +2,8 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![Collected skills](https://img.shields.io/badge/collected%20skills-16-blue?style=flat-square) ![Original skills](https://img.shields.io/badge/original%20skills-2-green?style=flat-square) ![Languages](https://img.shields.io/badge/languages-ZH%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+
 A curated collection of stock trading / quantitative trading / stock screening AI Skills: Agent Skills (Claude Code / Agent Skills format) for stock analysis, quant trading, and screening strategies from GitHub projects in China and abroad, with an index and license-compliant reprints.
 
 - **Compliance principle**: the `skills/` directory only includes projects licensed under MIT / Apache-2.0 / BSD / CC0, keeping the original LICENSE file and a SOURCE.md attribution note. Projects with no license, GPL, AGPL, or NOASSERTION are index-only — no files are copied.
@@ -53,6 +55,17 @@ Skills originally created by this repository's author (Serennity007), placed und
 | Directory | Description | License |
 |---|---|---|
 | [buffett-value-investing](my-skills/buffett-value-investing) | A-share Buffett-style value investing analysis: moat assessment, 5-year ROE / gross margin / debt ratio / free cash flow screening, margin-of-safety valuation (based on akshare, with screening and single-stock analysis scripts) | MIT |
+| [technical-pattern-recognition](my-skills/technical-pattern-recognition) | A-share technical pattern recognition: MA bullish/bearish alignment, MACD golden/death cross, volume breakout to N-day high, low-volume pullback to MA, outputting a signal table (based on akshare Sina daily bars) | MIT |
+
+## Demo
+
+All original skills are runnable code with real captured outputs (tested 2026-08-26, akshare 1.18.94, genuine market and financial data of that day):
+
+- **Buffett screen run**: `screen.py --codes 600519,000858,600036` → Kweichow Moutai 100 (5-year ROE 27.7%–37.0%, gross margin 91.7%, PE/PB percentile 0.07/0.03), Wuliangye 94, China Merchants Bank 47 (financial-sector leverage correctly penalized). Full output: [my-skills/buffett-value-investing/docs/demo.en.md](my-skills/buffett-value-investing/docs/demo.en.md)
+- **Single-stock analysis run**: `analyze.py 600519` → moat checklist + 5-year financial trend + valuation range (conservative value 1547.89 CNY / margin-of-safety reference 1083.52 CNY).
+- **Pattern recognition run**: `patterns.py` on 6 stocks → `MACD_GOLDEN` for 601318/000001, `NO_SIGNAL` for the rest. Full output: [my-skills/technical-pattern-recognition/docs/demo.en.md](my-skills/technical-pattern-recognition/docs/demo.en.md)
+- **Daily automated report**: a GitHub Action runs the Buffett screen on 20 representative A-shares every day at 01:00 UTC and commits the results to [`reports/`](reports/) (latest: [reports/latest.md](reports/latest.md)).
+- **Collected-skills review**: a structured checklist of the 16 collected skills (SKILL.md compliance, dependencies, API keys, whether actually tested) is in [docs/skill-review.en.md](docs/skill-review.en.md).
 
 ## Index
 

@@ -2,6 +2,8 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![收录技能](https://img.shields.io/badge/收录技能-16-blue?style=flat-square) ![原创技能](https://img.shields.io/badge/原创技能-2-green?style=flat-square) ![语言](https://img.shields.io/badge/语言-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+
 炒股 / 量化交易 / 选股 AI Skill 合集：收录国内外 GitHub 上的股票分析、量化交易、选股策略 Agent Skills（Claude Code / Agent Skills 格式），附索引与合规转载。
 
 - **合规原则**：`skills/` 目录仅收录 License 为 MIT / Apache-2.0 / BSD / CC0 的项目，并保留原 LICENSE 文件与 SOURCE.md 来源说明；无 License、GPL、AGPL、NOASSERTION 的项目一律只进索引、不复制文件。
@@ -53,6 +55,17 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 | 目录 | 简介 | License |
 |---|---|---|
 | [buffett-value-investing](my-skills/buffett-value-investing) | A股巴菲特式价值投资分析：护城河评估、连续5年ROE/毛利率/负债率/自由现金流筛选、安全边际估值（基于 akshare，含筛股与单股分析脚本） | MIT |
+| [technical-pattern-recognition](my-skills/technical-pattern-recognition) | A股技术形态识别：均线多头/空头排列、MACD 金叉死叉、放量突破 N 日新高、缩量回踩均线，输出信号表（基于 akshare 新浪日线） | MIT |
+
+## 演示 / Demo
+
+原创技能均为真实可运行代码，附实跑输出（2026-08-26 实测，akshare 1.18.94，数据为当日真实行情与财务数据）：
+
+- **巴菲特筛股实测**：`screen.py --codes 600519,000858,600036` → 贵州茅台 100 分（5 年 ROE 27.7%–37.0%、毛利率 91.7%、PE/PB 分位 0.07/0.03）、五粮液 94 分、招商银行 47 分（金融业高杠杆被正确扣分）。完整输出：[my-skills/buffett-value-investing/docs/demo.md](my-skills/buffett-value-investing/docs/demo.md)
+- **单股分析实测**：`analyze.py 600519` → 护城河清单 + 5 年财务趋势 + 估值区间（保守估值 1547.89 元 / 安全边际参考价 1083.52 元）。
+- **技术形态识别实测**：`patterns.py` 6 只实测 → 601318/000001 命中 `MACD_GOLDEN`，其余 `NO_SIGNAL`。完整输出：[my-skills/technical-pattern-recognition/docs/demo.md](my-skills/technical-pattern-recognition/docs/demo.md)
+- **每日自动报告**：GitHub Action 每天 UTC 01:00 对 20 只 A 股代表股自动运行巴菲特筛股，结果提交到 [`reports/`](reports/)（最新报告：[reports/latest.md](reports/latest.md)）。
+- **收录技能实测对比**：16 个收录技能的结构化检查表（SKILL.md 规范性、依赖、API key、是否实测跑通）见 [docs/skill-review.md](docs/skill-review.md)。
 
 ## 索引目录
 
