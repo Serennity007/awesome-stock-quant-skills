@@ -1,6 +1,6 @@
 ---
 name: buffett-value-investing
-description: A股巴菲特式价值投资分析：护城河评估、连续5年ROE/毛利率/负债率/自由现金流筛选、安全边际估值 | A-share Buffett-style value investing analysis: moat assessment, 5-year ROE/gross-margin/debt/free-cash-flow screening, margin-of-safety valuation | A株バフェット式バリュー投資分析：堀評価、5年連続ROE/粗利率/負債比率/フリーキャッシュフローのスクリーニング、安全マージン評価
+description: A股巴菲特式价值投资分析：护城河评估、连续5年ROE/毛利率/负债率/经营现金流筛选、安全边际估值 | A-share Buffett-style value investing analysis: moat assessment, 5-year ROE/gross-margin/debt/operating-cash-flow screening, margin-of-safety valuation | A株バフェット式バリュー投資分析：堀評価、5年連続ROE/粗利率/負債比率/営業キャッシュフローのスクリーニング、安全マージン評価
 author: Serennity007
 license: MIT
 ---
@@ -23,6 +23,8 @@ license: MIT
 | 资产负债率 | < 50%（金融股除外，需人工剔除） | 低杠杆意味着不依赖借钱赚钱 |
 | 经营现金流 | 连续 5 年为正 | 利润必须是真金白银 |
 | 估值 | PE / PB 处于近 5 年历史分位低位 | 安全边际：好公司也要好价格 |
+
+> 注：金融、地产等高杠杆行业的负债率标准不适用，需另行人工分析。
 
 打分规则详见 `references/scoring_rules.md`，投资原则详见 `references/buffett_principles.md`。
 

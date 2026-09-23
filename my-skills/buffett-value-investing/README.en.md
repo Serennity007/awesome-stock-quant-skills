@@ -4,7 +4,7 @@
 
 Author: Serennity007 (original work).
 
-A-share Buffett-style value investing skill: moat assessment, 5-year ROE / gross margin / debt ratio / free cash flow screening, and margin-of-safety valuation.
+A-share Buffett-style value investing skill: moat assessment, 5-year ROE / gross margin / debt ratio / operating cash flow screening, and margin-of-safety valuation.
 
 ## Contents
 

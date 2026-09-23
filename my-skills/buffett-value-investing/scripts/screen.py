@@ -8,11 +8,22 @@
 数据源: akshare。所有网络调用失败都会给出清晰报错。
 打分规则见 references/scoring_rules.md。
 """
+import os
+
+os.environ.setdefault("TQDM_DISABLE", "1")
+
 import argparse
 import sys
 import time
 
 import pandas as pd
+
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
 
 try:
     import akshare as ak
@@ -22,11 +33,24 @@ except ImportError:
 YEARS = 5
 
 
+def _retry_call(func, max_retries: int = 3, sleep_base: float = 1.0):
+    """带指数退避的简单重试，最后一次失败抛出原异常。"""
+    last_err = None
+    for attempt in range(max_retries):
+        try:
+            return func()
+        except Exception as e:
+            last_err = e
+            if attempt < max_retries - 1:
+                time.sleep(sleep_base * (2 ** attempt))
+    raise last_err
+
+
 def annual_fin_indicator(code: str) -> pd.DataFrame:
     """近 YEARS 年年报主要财务指标。失败抛异常。"""
     try:
-        df = ak.stock_financial_analysis_indicator(
-            symbol=code, start_year=str(pd.Timestamp.now().year - YEARS - 1))
+        df = _retry_call(lambda: ak.stock_financial_analysis_indicator(
+            symbol=code, start_year=str(pd.Timestamp.now().year - YEARS - 1)))
     except Exception as e:
         raise RuntimeError(f"获取 {code} 财务指标失败: {e}")
     if df is None or df.empty:
@@ -43,12 +67,12 @@ def annual_fin_indicator(code: str) -> pd.DataFrame:
 def annual_report(code: str, symbol: str) -> pd.DataFrame:
     """新浪三大报表（年度行，近 YEARS 年）。失败返回空表。"""
     try:
-        df = ak.stock_financial_report_sina(stock=code, symbol=symbol)
+        df = _retry_call(lambda: ak.stock_financial_report_sina(stock=code, symbol=symbol))
     except Exception:
         return pd.DataFrame()
     if df is None or df.empty or "报告日" not in df.columns:
         return pd.DataFrame()
-    df["报告日"] = df["报告日"].astype(str)
+    df["报告日"] = df["报告日"].astype(str).str.replace("-", "")
     df = df[df["报告日"].str.endswith("1231")].sort_values("报告日").tail(YEARS)
     return df
 
@@ -60,7 +84,7 @@ def gross_margins(code: str) -> pd.Series:
         return pd.Series(dtype=float)
     rev = pd.to_numeric(inc["营业收入"], errors="coerce")
     cost = pd.to_numeric(inc["营业成本"], errors="coerce")
-    gm = (rev - cost) / rev * 100
+    gm = ((rev - cost) / rev.where(rev > 0, float("nan")) * 100)
     return gm.dropna()
 
 
@@ -77,7 +101,7 @@ def cashflow_positive_years(code: str) -> int:
 def valuation_percentile(code: str):
     """(PE 分位, PB 分位)，基于近 5 年每日估值，0-1；失败返回 (None, None)。"""
     try:
-        df = ak.stock_value_em(symbol=code)
+        df = _retry_call(lambda: ak.stock_value_em(symbol=code))
     except Exception:
         return None, None
     if df is None or df.empty:
@@ -94,12 +118,14 @@ def valuation_percentile(code: str):
         if len(s) < 60:
             out.append(None)
             continue
-        out.append(float((s < s.iloc[-1]).mean()))
+        current = s.iloc[-1]
+        out.append(float((s <= current).mean()))
     return out[0], out[1]
 
 
 def score_one(code: str) -> dict:
     ind = annual_fin_indicator(code)
+    time.sleep(0.15)
 
     def series(*keys):
         for k in keys:
@@ -127,7 +153,8 @@ def score_one(code: str) -> dict:
         debt_score = 15 if latest_d < 40 else (8 if latest_d < 50 else (3 if latest_d < 65 else 0))
 
     cf_years = cashflow_positive_years(code)
-    cf_score = cf_years * 4
+    cf_score = min(cf_years, YEARS) * 4
+    time.sleep(0.15)
 
     pe_pct, pb_pct = valuation_percentile(code)
     val_score = 0
@@ -137,11 +164,12 @@ def score_one(code: str) -> dict:
         val_score += 7 if pb_pct < 0.3 else (3 if pb_pct < 0.5 else 0)
 
     total = roe_score + gross_score + debt_score + cf_score + val_score
+    data_years = int(len(roe))
     return {
         "code": code,
         "total": total,
         "roe_score": roe_score,
-        "roe_annual": ",".join(f"{v:.1f}" for v in roe.tolist()),
+        "roe_annual": ",".join(f"{v:.1f}" for v in roe.tolist()) if len(roe) else "—",
         "gross_score": gross_score,
         "gross_mean": round(float(gross.mean()), 1) if len(gross) else None,
         "debt_score": debt_score,
@@ -151,13 +179,14 @@ def score_one(code: str) -> dict:
         "valuation_score": val_score,
         "pe_pct": round(pe_pct, 2) if pe_pct is not None else None,
         "pb_pct": round(pb_pct, 2) if pb_pct is not None else None,
+        "data_years": data_years,
     }
 
 
 def get_pool(pool: str) -> list:
     if pool == "hs300":
         try:
-            df = ak.index_stock_cons_csindex(symbol="000300")
+            df = _retry_call(lambda: ak.index_stock_cons_csindex(symbol="000300"))
         except Exception as e:
             sys.exit(f"ERROR: 获取沪深300成分股失败: {e}")
         col = next((c for c in df.columns if "成分券代码" in str(c)), None)
@@ -196,7 +225,16 @@ def main():
     df = pd.DataFrame(rows).sort_values("total", ascending=False)
     df.to_csv(args.out, index=False, encoding="utf-8-sig")
     print(f"\n=== 前 {min(args.top, len(df))} 名（完整结果见 {args.out}）===")
-    print(df.head(args.top).to_string(index=False))
+    display_cols = ["code", "total", "roe_score", "gross_score", "debt_score",
+                    "cashflow_score", "valuation_score", "pe_pct", "pb_pct", "data_years"]
+    display_df = df.head(args.top)[display_cols].copy()
+    display_df["pe_pct"] = display_df["pe_pct"].apply(lambda x: f"{x:.2f}" if pd.notna(x) else "—")
+    display_df["pb_pct"] = display_df["pb_pct"].apply(lambda x: f"{x:.2f}" if pd.notna(x) else "—")
+    print(display_df.to_string(index=False))
+    incomplete = df[df["data_years"] < YEARS]
+    if not incomplete.empty:
+        print(f"\n注意: 以下 {len(incomplete)} 只股票财务数据未满 {YEARS} 年，分数基于部分年份，参考性下降：")
+        print(", ".join(incomplete["code"].tolist()))
     print(f"\n成功 {len(rows)} 只，失败 {len(failed)} 只。")
     print("判定线: >=70 进入人工护城河核查; 50-69 有短板; <50 不符合框架。")
 
