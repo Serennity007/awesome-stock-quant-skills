@@ -1,0 +1,4 @@
+﻿code,total,roic_score,roic_annual,gross_score,gross_mean,gross_annual,debt_score,debt_latest,quality_score,quality_mean,dilution_score,shares_growth_pct,data_years,source,note
+600519,95,25,"27.7,31.8,34.6,37.0,33.6",25,91.7,"91.5,91.9,92.0,91.9,91.2",15,16.4,15,0.87,15,-0.3,5,akshare.stock_financial_analysis_indicator,ROIC 风格指标以 ROE 代理（akshare 公开接口未直接提供 ROIC）
+000858,90,20,"23.6,23.4,23.3,23.9,7.5",25,76.2,"75.4,75.4,75.8,77.1,77.5",10,35.7,20,1.5,15,0.0,5,akshare.stock_financial_analysis_indicator,ROIC 风格指标以 ROE 代理（akshare 公开接口未直接提供 ROIC）
+600036,39,4,"14.6,13.6,12.1,11.8",0,,—,0,90.2,20,2.8,15,0.0,5,akshare.stock_financial_analysis_indicator,ROIC 风格指标以 ROE 代理（akshare 公开接口未直接提供 ROIC）
