@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![収録スキル](https://img.shields.io/badge/収録スキル-16-blue?style=flat-square) ![オリジナルスキル](https://img.shields.io/badge/オリジナルスキル-2-green?style=flat-square) ![言語](https://img.shields.io/badge/言語-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![収録スキル](https://img.shields.io/badge/収録スキル-16-blue?style=flat-square) ![オリジナルスキル](https://img.shields.io/badge/オリジナルスキル-13-green?style=flat-square) ![言語](https://img.shields.io/badge/言語-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 株式トレード / クオンツトレード / 銘柄スクリーニング AI Skill コレクション：国内外の GitHub から株式分析・クオンツトレード・スクリーニング戦略の Agent Skills（Claude Code / Agent Skills 形式）を収録し、インデックスとライセンス遵守の転載を付記。
 
@@ -52,9 +52,32 @@ cp -r skills/<作者>__<スキル名> ~/.agents/skills/
 
 本リポジトリ作者（Serennity007）のオリジナルスキル。収録区の `skills/` と区別するため `my-skills/` に配置：
 
+### 投資マスター方法論シリーズ
+
 | ディレクトリ | 概要 | License |
 |---|---|---|
-| [buffett-value-investing](my-skills/buffett-value-investing) | A株バフェット式バリュー投資分析：堀評価、5年連続 ROE／粗利率／負債比率／フリーキャッシュフローのスクリーニング、安全マージン評価（akshare ベース、スクリーニングと個別株分析スクリプト付き） | MIT |
+| [buffett-value-investing](my-skills/buffett-value-investing) | A株バフェット式バリュー投資分析：堀評価、5年連続 ROE／粗利率／負債比率／営業キャッシュフローのスクリーニング、安全マージン評価（akshare ベース、スクリーニングと個別株分析スクリプト付き） | MIT |
+| [munger-quality-investing](my-skills/munger-quality-investing) | A株マンガー式クオリティ投資：5年連続ROIC/ROE、低負債、高く安定した粗利率、収益の質、希薄化の少なさで5次元品質スコアリング | MIT |
+| [lynch-garp-investing](my-skills/lynch-garp-investing) | A株ピーター・リンチGARP/テンバガー選別：PEG、連続利益成長、低負債率、リンチ6分類タグ | MIT |
+| [graham-defensive-investing](my-skills/graham-defensive-investing) | A株グラハム防御型投資スクリーナー：規模、流動比率、継続的収益、継続的配当、収益成長、低PER/PBRの定量選別 | MIT |
+| [dalio-all-weather](my-skills/dalio-all-weather) | A株レイ・ダリオ式オールウェザー／債務サイクル参照配分：幅基指数、国債ETF、金ETF、商品指数から相関・ボラティリティ・リスクパリティ風ウェイトを算出し、年率リターン・最大ドローダウン・シャープレシオでバックテスト | MIT |
+| [howard-marks-cycle](my-skills/howard-marks-cycle) | A株ハワード・マークスサイクル温度計：滬深300/中证全指のバリュエーション分位、株式・債券収益差、出来高熱度、信用取引残高トレンドから0-100のサイクル位置スコアと行動フレームワークを出力 | MIT |
+| [soros-reflexivity](my-skills/soros-reflexivity) | A株ソロス反身性／マクロ投機スキャナー：価格モメンタムとファンダメンタルの乖離から正のフィードバック／負のフィードバック段階と転換点候補をマーク | MIT |
+| [druckenmiller-macro-flex](my-skills/druckenmiller-macro-flex) | ドラッケンミラー式マクロ・フレックス・ダッシュボード：USD/CNY、中米10年国債利回り、金、原油、銅、A株指数と個別銘柄のN日トレンド/モメンタムを追跡し、多空バイアス・スナップショットを出力 | MIT |
+| [livermore-trend-trading](my-skills/livermore-trend-trading) | A株ジェシー・リバモア流トレンド投機：N日高値の軸となるポイントブレイクアウト、出来高確認、縮量押し目の2次エントリー、一日反転/出来高伴う行き詰まり危険シグナルを識別し、シグナル表とピラミッド建玉試行フレームワークを出力 | MIT |
+
+### ホットテーマシリーズ
+
+| ディレクトリ | 概要 | License |
+|---|---|---|
+| [hot-theme-scanner](my-skills/hot-theme-scanner) | A株ホットテーマスキャナー：akshareのコンセプト板・資金フローAPIを使い、N日間の人気テーマを特定し、上昇先導株をリストアップして構造化ヒート表を出力 | MIT |
+| [us-hot-stocks-tracker](my-skills/us-hot-stocks-tracker) | 米国人気AI株トラッカー：AIコンピュート/ストレージ/AIアプリ/robotaxiテーマのウォッチリストを内蔵し、現在値、騰落率、20/60日モメンタム、52週高安値距離、出来高異常を出力 | MIT |
+| [concept-stock-mapper](my-skills/concept-stock-mapper) | A株テーマキーワード→概念股マッパー：akshareの概念セクターインターフェースであいまい一致し、構成銘柄を取得して騰落率/回転率/主力資金で並べ替え、複数キーワードの題材強度比較に対応 | MIT |
+
+### 既存
+
+| ディレクトリ | 概要 | License |
+|---|---|---|
 | [technical-pattern-recognition](my-skills/technical-pattern-recognition) | A株テクニカルパターン認識：移動平均線のパーフェクトオーダー/逆オーダー、MACD ゴールデン/デッドクロス、出来高を伴う N 日高値ブレイク、出来高減少の押し目、シグナル表を出力（akshare 新浪日足ベース） | MIT |
 
 ## デモ

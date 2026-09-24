@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![收录技能](https://img.shields.io/badge/收录技能-16-blue?style=flat-square) ![原创技能](https://img.shields.io/badge/原创技能-2-green?style=flat-square) ![语言](https://img.shields.io/badge/语言-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![收录技能](https://img.shields.io/badge/收录技能-16-blue?style=flat-square) ![原创技能](https://img.shields.io/badge/原创技能-13-green?style=flat-square) ![语言](https://img.shields.io/badge/语言-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 炒股 / 量化交易 / 选股 AI Skill 合集：收录国内外 GitHub 上的股票分析、量化交易、选股策略 Agent Skills（Claude Code / Agent Skills 格式），附索引与合规转载。
 
@@ -52,9 +52,32 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 
 本仓库作者（Serennity007）原创的技能，放在 `my-skills/` 目录，与 `skills/` 收录区区分：
 
+### 投资大师方法论系列
+
 | 目录 | 简介 | License |
 |---|---|---|
-| [buffett-value-investing](my-skills/buffett-value-investing) | A股巴菲特式价值投资分析：护城河评估、连续5年ROE/毛利率/负债率/自由现金流筛选、安全边际估值（基于 akshare，含筛股与单股分析脚本） | MIT |
+| [buffett-value-investing](my-skills/buffett-value-investing) | A股巴菲特式价值投资分析：护城河评估、连续5年ROE/毛利率/负债率/经营现金流筛选、安全边际估值（基于 akshare，含筛股与单股分析脚本） | MIT |
+| [munger-quality-investing](my-skills/munger-quality-investing) | A股芒格优质企业投资法：连续5年ROIC/ROE、低负债、高稳定毛利率、盈利质量、少股本稀释五维质量打分 | MIT |
+| [lynch-garp-investing](my-skills/lynch-garp-investing) | A股彼得·林奇GARP十倍股筛选器：PEG、连续盈利增长、低负债率、林奇六分类标签 | MIT |
+| [graham-defensive-investing](my-skills/graham-defensive-investing) | A股格雷厄姆防御型投资七准则筛股器：规模、流动比率、连续盈利、连续分红、盈利增长、低PE/PB量化筛选 | MIT |
+| [dalio-all-weather](my-skills/dalio-all-weather) | A股达利欧全天候/债务周期参考配置：用宽基指数、国债ETF、黄金ETF与商品指数计算相关性、波动率与风险平价权重，并回测年化/最大回撤/夏普 | MIT |
+| [howard-marks-cycle](my-skills/howard-marks-cycle) | A股霍华德·马克斯周期温度计：沪深300/中证全指估值分位、股债收益差、成交热度、两融趋势，合成0-100周期位置评分并输出行动框架 | MIT |
+| [soros-reflexivity](my-skills/soros-reflexivity) | A股索罗斯反身性/宏观投机扫描器：在价格动量与基本面的裂缝中标记正反馈/负反馈阶段与潜在拐点 | MIT |
+| [druckenmiller-macro-flex](my-skills/druckenmiller-macro-flex) | 德鲁肯米勒式宏观灵活仪表盘：用akshare跟踪美元/人民币汇率、中美10Y国债收益率、黄金、原油、铜、A股指数及个股的近N日趋势与动量，输出多空倾向快照 | MIT |
+| [livermore-trend-trading](my-skills/livermore-trend-trading) | A股杰西·利弗莫尔趋势投机：识别N日新高关键点突破、放量确认、缩量回踩二次入场与单日反转/放量滞涨危险信号，输出信号表与金字塔仓位试探框架 | MIT |
+
+### 热点题材系列
+
+| 目录 | 简介 | License |
+|---|---|---|
+| [hot-theme-scanner](my-skills/hot-theme-scanner) | A股热点题材扫描器：基于akshare概念板块与资金流向接口，识别近N日最热题材、列出领涨股并输出结构化热度表 | MIT |
+| [us-hot-stocks-tracker](my-skills/us-hot-stocks-tracker) | 美股热门AI股追踪器：内置AI算力/存储/AI应用/robotaxi主题清单，输出现价、涨跌幅、20/60日动量、52周高低位距离、成交量异动快照表 | MIT |
+| [concept-stock-mapper](my-skills/concept-stock-mapper) | A股题材关键词→概念股映射器：用akshare概念板块接口模糊匹配板块，取成分股并按涨幅/换手/主力资金排序，支持多关键词题材强度对比 | MIT |
+
+### 原有
+
+| 目录 | 简介 | License |
+|---|---|---|
 | [technical-pattern-recognition](my-skills/technical-pattern-recognition) | A股技术形态识别：均线多头/空头排列、MACD 金叉死叉、放量突破 N 日新高、缩量回踩均线，输出信号表（基于 akshare 新浪日线） | MIT |
 
 ## 演示 / Demo

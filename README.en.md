@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![Collected skills](https://img.shields.io/badge/collected%20skills-16-blue?style=flat-square) ![Original skills](https://img.shields.io/badge/original%20skills-2-green?style=flat-square) ![Languages](https://img.shields.io/badge/languages-ZH%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![Collected skills](https://img.shields.io/badge/collected%20skills-16-blue?style=flat-square) ![Original skills](https://img.shields.io/badge/original%20skills-13-green?style=flat-square) ![Languages](https://img.shields.io/badge/languages-ZH%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 A curated collection of stock trading / quantitative trading / stock screening AI Skills: Agent Skills (Claude Code / Agent Skills format) for stock analysis, quant trading, and screening strategies from GitHub projects in China and abroad, with an index and license-compliant reprints.
 
@@ -52,10 +52,33 @@ For multi-skill collections (e.g. `agiprolabs__claude-trading-skills/skills/...`
 
 Skills originally created by this repository's author (Serennity007), placed under `my-skills/` to distinguish them from the collected `skills/`:
 
+### Investment Master Methodology Series
+
 | Directory | Description | License |
 |---|---|---|
-| [buffett-value-investing](my-skills/buffett-value-investing) | A-share Buffett-style value investing analysis: moat assessment, 5-year ROE / gross margin / debt ratio / free cash flow screening, margin-of-safety valuation (based on akshare, with screening and single-stock analysis scripts) | MIT |
-| [technical-pattern-recognition](my-skills/technical-pattern-recognition) | A-share technical pattern recognition: MA bullish/bearish alignment, MACD golden/death cross, volume breakout to N-day high, low-volume pullback to MA, outputting a signal table (based on akshare Sina daily bars) | MIT |
+| [buffett-value-investing](my-skills/buffett-value-investing) | A-share Buffett-style value investing analysis: moat assessment, 5-year ROE / gross margin / debt ratio / operating cash flow screening, margin-of-safety valuation (based on akshare, with screening and single-stock analysis scripts) | MIT |
+| [munger-quality-investing](my-skills/munger-quality-investing) | A-share Munger-style quality investing: 5-dimensional quality scoring on 5-year ROIC/ROE, low debt, high & stable gross margin, earnings quality, and low share dilution | MIT |
+| [lynch-garp-investing](my-skills/lynch-garp-investing) | A-share Peter Lynch GARP/ten-bagger screener: PEG, continuous profit growth, low debt, six Lynch category labels | MIT |
+| [graham-defensive-investing](my-skills/graham-defensive-investing) | A-share Graham defensive investing screener: size, current ratio, earnings stability, dividend record, earnings growth, low PE/PB quantitative filter | MIT |
+| [dalio-all-weather](my-skills/dalio-all-weather) | A-share Ray Dalio all-weather / debt-cycle reference allocator: computes correlations, volatilities, risk-parity-style weights across stocks/bonds/gold/commodities, and backtests CAGR/max-drawdown/Sharpe | MIT |
+| [howard-marks-cycle](my-skills/howard-marks-cycle) | A-share Howard Marks cycle gauge: CSI 300 / CSI All Share valuation percentiles, equity-bond spread, turnover heat, margin balance trend, synthesizes a 0-100 cycle-position score with action framework | MIT |
+| [soros-reflexivity](my-skills/soros-reflexivity) | A-share Soros reflexivity / macro speculation scanner: labels positive/negative feedback stages and potential inflection points from the gap between price momentum and fundamentals | MIT |
+| [druckenmiller-macro-flex](my-skills/druckenmiller-macro-flex) | Druckenmiller-style macro-flex dashboard: tracks USD/CNY, China/US 10Y yields, gold, crude oil, copper, A-share indices and individual stocks' N-day trend/momentum, outputs a long/short bias snapshot | MIT |
+| [livermore-trend-trading](my-skills/livermore-trend-trading) | A-share Jesse Livermore trend speculation: identifies N-day new-high pivotal-point breakout, volume confirmation, low-volume pullback secondary entry, and one-day reversal/volume-stagnation danger signals, outputs a signal table and pyramid position-probe framework | MIT |
+
+### Hot Theme Series
+
+| Directory | Description | License |
+|---|---|---|
+| [hot-theme-scanner](my-skills/hot-theme-scanner) | A-share hot theme scanner: identifies the hottest themes over N days, lists leading stocks, and outputs a structured heat table based on akshare concept-board and capital-flow APIs | MIT |
+| [us-hot-stocks-tracker](my-skills/us-hot-stocks-tracker) | US hot AI stocks tracker: built-in AI compute/storage/AI application/robotaxi watchlist, outputs current price, change%, 20/60-day momentum, 52-week high/low distance, volume anomaly snapshot | MIT |
+| [concept-stock-mapper](my-skills/concept-stock-mapper) | A-share theme keyword → concept stock mapper: fuzzy-match concept boards via akshare, extract constituents and sort by gain/turnover/main-force capital, supports multi-keyword theme strength comparison | MIT |
+
+### Original
+
+| Directory | Description | License |
+|---|---|---|
+| [technical-pattern-recognition](my-skills/technical-pattern-recognition) | A-share technical pattern recognition: MA bullish/bearish alignment, MACD golden/death cross, volume-breakout to N-day high, low-volume pullback to MA, outputting a signal table (based on akshare Sina daily bars) | MIT |
 
 ## Demo
 
