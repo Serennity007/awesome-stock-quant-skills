@@ -1,0 +1,4 @@
+﻿code,ret_5d,ret_20d,ret_60d,vol_20d_annual,volume_ratio_5_20,ma60,ma60_deviation,close,latest_date,data_days,source,name,momentum_20_score,momentum_60_score,momentum_score,reversal_score,volatility_score,volume_score,ma_deviation_score,total
+600519,-0.0237,-0.0428,0.0283,0.133,1.1046,1286.3223333333337,-0.0383,1237.0,2026-09-24,103,akshare.stock_zh_a_daily（新浪，降级）,贵州茅台,33.3333,66.6667,50.0,100.0,66.6667,100.0,66.6667,75.8333
+600036,0.0022,0.028,0.1117,0.1684,0.7396,39.409000000000006,0.0325,40.69,2026-09-24,103,akshare.stock_zh_a_daily（新浪，降级）,招商银行,100.0,100.0,100.0,66.6667,33.3333,33.3333,100.0,68.3333
+000858,0.0078,-0.0204,-0.0521,0.1295,0.7836,72.8545,-0.0437,69.67,2026-09-24,103,akshare.stock_zh_a_daily（新浪，降级）,五 粮 液,66.6667,33.3333,50.0,33.3333,100.0,66.6667,33.3333,55.8333
