@@ -1,0 +1,4 @@
+﻿code,name,close,wk52_low,wk52_high,position_ratio,dist_low_pct,dist_high_pct,pe_ttm,pe_pct,pb,pb_pct,vol_ratio,volume_contracted,price_stabilized,profit_latest_亿,score,signals,val_source,profit_source,note
+600519,贵州茅台,1237.0,1168.63,1555.0,0.177,5.85,25.71,18.99,0.014,6.15,0.02,1.077,False,True,853.1,75,52周低位、PE/PB双历史低位、盈利为正,东财估值(akshare.stock_value_em),新浪利润表,
+000858,五粮液,69.67,69.13,126.65,0.009,0.78,81.79,20.67,0.221,2.28,0.004,0.727,False,True,93.17,70,52周底部区、PE或PB历史低位、盈利为正,东财估值(akshare.stock_value_em),新浪利润表,
+600036,招商银行,40.69,35.5,43.45,0.653,14.62,6.78,6.76,0.31,0.9,0.159,0.683,False,True,1511.26,20,盈利为正,东财估值(akshare.stock_value_em),新浪利润表,
