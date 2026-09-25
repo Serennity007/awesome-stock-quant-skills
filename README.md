@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![收录技能](https://img.shields.io/badge/收录技能-16-blue?style=flat-square) ![原创技能](https://img.shields.io/badge/原创技能-13-green?style=flat-square) ![语言](https://img.shields.io/badge/语言-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![收录技能](https://img.shields.io/badge/收录技能-16-blue?style=flat-square) ![原创技能](https://img.shields.io/badge/原创技能-16-green?style=flat-square) ![语言](https://img.shields.io/badge/语言-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 炒股 / 量化交易 / 选股 AI Skill 合集：收录国内外 GitHub 上的股票分析、量化交易、选股策略 Agent Skills（Claude Code / Agent Skills 格式），附索引与合规转载。
 
@@ -65,6 +65,9 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 | [soros-reflexivity](my-skills/soros-reflexivity) | A股索罗斯反身性/宏观投机扫描器：在价格动量与基本面的裂缝中标记正反馈/负反馈阶段与潜在拐点 | MIT |
 | [druckenmiller-macro-flex](my-skills/druckenmiller-macro-flex) | 德鲁肯米勒式宏观灵活仪表盘：用akshare跟踪美元/人民币汇率、中美10Y国债收益率、黄金、原油、铜、A股指数及个股的近N日趋势与动量，输出多空倾向快照 | MIT |
 | [livermore-trend-trading](my-skills/livermore-trend-trading) | A股杰西·利弗莫尔趋势投机：识别N日新高关键点突破、放量确认、缩量回踩二次入场与单日反转/放量滞涨危险信号，输出信号表与金字塔仓位试探框架 | MIT |
+| [simons-factor-quant](my-skills/simons-factor-quant) | A股西蒙斯式多因子打分器：动量/反转/波动率/量能/均线偏离五维合成综合因子分并输出排名 | MIT |
+| [klarman-margin-safety](my-skills/klarman-margin-safety) | A股卡拉曼安全边际深度价值筛选：PB/PE历史分位、市值/净现金比、52周高点回撤四把尺子，剔除ST与亏损股 | MIT |
+| [templeton-global-contrarian](my-skills/templeton-global-contrarian) | A股邓普顿极度悲观逆向扫描器：52周位置、PE/PB自身历史低分位、缩量企稳、盈利为正，输出逆向买入观察清单 | MIT |
 
 ### 热点题材系列
 

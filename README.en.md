@@ -65,6 +65,9 @@ Skills originally created by this repository's author (Serennity007), placed und
 | [soros-reflexivity](my-skills/soros-reflexivity) | A-share Soros reflexivity / macro speculation scanner: labels positive/negative feedback stages and potential inflection points from the gap between price momentum and fundamentals | MIT |
 | [druckenmiller-macro-flex](my-skills/druckenmiller-macro-flex) | Druckenmiller-style macro-flex dashboard: tracks USD/CNY, China/US 10Y yields, gold, crude oil, copper, A-share indices and individual stocks' N-day trend/momentum, outputs a long/short bias snapshot | MIT |
 | [livermore-trend-trading](my-skills/livermore-trend-trading) | A-share Jesse Livermore trend speculation: identifies N-day new-high pivotal-point breakout, volume confirmation, low-volume pullback secondary entry, and one-day reversal/volume-stagnation danger signals, outputs a signal table and pyramid position-probe framework | MIT |
+| [simons-factor-quant](my-skills/simons-factor-quant) | A-share Simons-style multi-factor scorer: momentum/reversal/volatility/volume/MA-deviation combined into a composite factor score | MIT |
+| [klarman-margin-safety](my-skills/klarman-margin-safety) | A-share Klarman margin-of-safety deep-value screener: PB/PE historical percentiles, market-cap-to-net-cash, 52-week-high drawdown, excluding ST/loss-making stocks | MIT |
+| [templeton-global-contrarian](my-skills/templeton-global-contrarian) | A-share Templeton max-pessimism contrarian scanner: 52-week position, PE/PB self-history low percentiles, volume-dry-up stabilization, positive earnings | MIT |
 
 ### Hot Theme Series
 

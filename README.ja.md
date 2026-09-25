@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![収録スキル](https://img.shields.io/badge/収録スキル-16-blue?style=flat-square) ![オリジナルスキル](https://img.shields.io/badge/オリジナルスキル-13-green?style=flat-square) ![言語](https://img.shields.io/badge/言語-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![収録スキル](https://img.shields.io/badge/収録スキル-16-blue?style=flat-square) ![オリジナルスキル](https://img.shields.io/badge/オリジナルスキル-16-green?style=flat-square) ![言語](https://img.shields.io/badge/言語-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 株式トレード / クオンツトレード / 銘柄スクリーニング AI Skill コレクション：国内外の GitHub から株式分析・クオンツトレード・スクリーニング戦略の Agent Skills（Claude Code / Agent Skills 形式）を収録し、インデックスとライセンス遵守の転載を付記。
 
@@ -65,6 +65,9 @@ cp -r skills/<作者>__<スキル名> ~/.agents/skills/
 | [soros-reflexivity](my-skills/soros-reflexivity) | A株ソロス反身性／マクロ投機スキャナー：価格モメンタムとファンダメンタルの乖離から正のフィードバック／負のフィードバック段階と転換点候補をマーク | MIT |
 | [druckenmiller-macro-flex](my-skills/druckenmiller-macro-flex) | ドラッケンミラー式マクロ・フレックス・ダッシュボード：USD/CNY、中米10年国債利回り、金、原油、銅、A株指数と個別銘柄のN日トレンド/モメンタムを追跡し、多空バイアス・スナップショットを出力 | MIT |
 | [livermore-trend-trading](my-skills/livermore-trend-trading) | A株ジェシー・リバモア流トレンド投機：N日高値の軸となるポイントブレイクアウト、出来高確認、縮量押し目の2次エントリー、一日反転/出来高伴う行き詰まり危険シグナルを識別し、シグナル表とピラミッド建玉試行フレームワークを出力 | MIT |
+| [simons-factor-quant](my-skills/simons-factor-quant) | A株シモンズ式マルチファクター採点器：モメンタム/逆張り/ボラティリティ/出来高/移動平均乖離の5次元で総合スコアを合成 | MIT |
+| [klarman-margin-safety](my-skills/klarman-margin-safety) | A株クラーマン流安全マージン・ディープバリュー選別：PB/PE歴史分位、時価総額/ネットキャッシュ比、52週高値からの下落幅、ST・赤字株を除外 | MIT |
+| [templeton-global-contrarian](my-skills/templeton-global-contrarian) | A株テンプルトン流最悲観逆張りスキャナー：52週位置、PE/PBの自己歴史低位、出来高縮小からの安定、黒字維持で逆張り監視リストを出力 | MIT |
 
 ### ホットテーマシリーズ
 
