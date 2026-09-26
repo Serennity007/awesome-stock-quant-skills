@@ -1,0 +1,4 @@
+﻿code,name,industry,pe_ttm,pb,total_mv_yi,close,pe_percentile,pb_percentile,roe_avg,roe_std,revenue_growth_avg,data_years,val_source,fin_source,note,industry_rank,industry_score,roe_score,growth_score,pe_score,pb_score,price_score,price_note,total_score,data_date
+600519,贵州茅台,白酒Ⅱ,18.99,6.155,15463.51,1237.0,1.4,1.9,32.94,3.5,12.45,5,akshare.stock_value_em,akshare.stock_financial_analysis_indicator,,1,25,23,10,20,15,35,,93,2026-09-26
+000858,五粮液,白酒Ⅱ,20.67,2.283,2704.32,69.67,22.0,0.3,20.34,7.2,-1.53,5,akshare.stock_value_em,akshare.stock_financial_analysis_indicator,,2,20,21,0,15,15,30,,71,2026-09-26
+600036,招商银行,银行Ⅱ,6.76,0.896,10261.96,40.69,31.0,15.8,13.03,1.32,0.49,4,akshare.stock_value_em,akshare.stock_financial_analysis_indicator,,1,25,17,4,10,12,22,,68,2026-09-26
