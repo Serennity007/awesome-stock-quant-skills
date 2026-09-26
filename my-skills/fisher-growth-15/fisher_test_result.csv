@@ -1,0 +1,4 @@
+﻿code,name,industry,total,growth_score,rd_score,margin_score,roe_score,cash_score,debt_score,rev_cagr,profit_pos_years,profit_growth_annual,rd_ratio_avg,rd_annual,gross_mean,gross_annual,roe_mean,ocf_to_profit_mean,debt_latest,data_years,source,note,data_date
+300760,迈瑞医疗,医疗器械,78,13,20,8,15,12,10,9.6,4,"20.2,20.1,20.5,1.4,-28.0",9.84,"8.89,9.99,9.62,9.83,9.98,10.75",63.6,"65.0,65.0,64.2,64.2,63.1,60.3",29.7,1.12,27.4,6,akshare.stock_financial_analysis_indicator,研发费用率来自新浪利润表,2026-09-26
+002415,海康威视,计算机设备,76,10,20,15,12,12,7,7.8,3,"28.0,-22.6,11.8,-13.3,17.4",11.71,"10.04,10.13,11.80,12.75,12.83,12.70",44.5,"46.5,44.3,42.3,44.3,43.8,45.9",19.1,1.04,33.9,6,akshare.stock_financial_analysis_indicator,研发费用率来自新浪利润表,2026-09-26
+600519,贵州茅台,白酒Ⅱ,63,17,1,12,15,8,10,12.2,4,"12.5,17.3,18.6,15.2,-4.5",0.09,"0.05,0.06,0.11,0.11,0.13,0.11",91.6,"91.4,91.5,91.9,92.0,91.9,91.2",32.9,0.87,16.4,6,akshare.stock_financial_analysis_indicator,研发费用率来自新浪利润表,2026-09-26
