@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![Collected skills](https://img.shields.io/badge/collected%20skills-16-blue?style=flat-square) ![Original skills](https://img.shields.io/badge/original%20skills-21-green?style=flat-square) ![Languages](https://img.shields.io/badge/languages-ZH%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![Collected skills](https://img.shields.io/badge/collected%20skills-16-blue?style=flat-square) ![Original skills](https://img.shields.io/badge/original%20skills-23-green?style=flat-square) ![Languages](https://img.shields.io/badge/languages-ZH%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 A curated collection of stock trading / quantitative trading / stock screening AI Skills: Agent Skills (Claude Code / Agent Skills format) for stock analysis, quant trading, and screening strategies from GitHub projects in China and abroad, with an index and license-compliant reprints.
 
@@ -68,6 +68,8 @@ Skills originally created by this repository's author (Serennity007), placed und
 | [simons-factor-quant](my-skills/simons-factor-quant) | A-share Simons-style multi-factor scorer: momentum/reversal/volatility/volume/MA-deviation combined into a composite factor score | MIT |
 | [klarman-margin-safety](my-skills/klarman-margin-safety) | A-share Klarman margin-of-safety deep-value screener: PB/PE historical percentiles, market-cap-to-net-cash, 52-week-high drawdown, excluding ST/loss-making stocks | MIT |
 | [templeton-global-contrarian](my-skills/templeton-global-contrarian) | A-share Templeton max-pessimism contrarian scanner: 52-week position, PE/PB self-history low percentiles, volume-dry-up stabilization, positive earnings | MIT |
+| [fisher-growth-15](my-skills/fisher-growth-15) | A-share Philip Fisher growth-stock scoring: revenue-CAGR runway, R&D intensity, margin trend, sustained ROE, cash quality, financial conservatism — a shortlist for scuttlebutt research | MIT |
+| [neff-low-pe-total-return](my-skills/neff-low-pe-total-return) | A-share John Neff low-P/E investing: P/E discount vs all-market median, total-return ratio ≥2 golden standard, span-annualized dividend yield, fundamental floors | MIT |
 
 ### Chinese Investment Masters Series
 
@@ -102,6 +104,7 @@ All original skills are runnable code with real captured outputs (tested 2026-08
 - **Pattern recognition run**: `patterns.py` on 6 stocks → `MACD_GOLDEN` for 601318/000001, `NO_SIGNAL` for the rest. Full output: [my-skills/technical-pattern-recognition/docs/demo.en.md](my-skills/technical-pattern-recognition/docs/demo.en.md)
 - **Daily automated report**: a GitHub Action runs the Buffett screen on 20 representative A-shares every day at 01:00 UTC and commits the results to [`reports/`](reports/) (latest: [reports/latest.md](reports/latest.md)).
 - **Duan Yongping full-pool run** (2026-09-26): `screen.py --pool hs300` (300 stocks) → Shanxi Fenjiu 86, Mindray 83, Kweichow Moutai 82, Wuliangye 81, CNOOC 81 — high-margin cash-cow industries lead overall.
+- **Fisher / Neff sample runs** (2026-09-26): Fisher framework — Mindray 78, Hikvision 76 (R&D-heavy growth stocks lead), Moutai penalized for low R&D; Neff framework — China Merchants Bank 88 (P/E only 0.18× the market median, yield 6.34%, total-return ratio 2.33 clears the golden line).
 - **Collected-skills review**: a structured checklist of the 16 collected skills (SKILL.md compliance, dependencies, API keys, whether actually tested) is in [docs/skill-review.en.md](docs/skill-review.en.md).
 
 ## Index

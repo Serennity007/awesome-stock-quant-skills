@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![収録スキル](https://img.shields.io/badge/収録スキル-16-blue?style=flat-square) ![オリジナルスキル](https://img.shields.io/badge/オリジナルスキル-21-green?style=flat-square) ![言語](https://img.shields.io/badge/言語-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![収録スキル](https://img.shields.io/badge/収録スキル-16-blue?style=flat-square) ![オリジナルスキル](https://img.shields.io/badge/オリジナルスキル-23-green?style=flat-square) ![言語](https://img.shields.io/badge/言語-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 株式トレード / クオンツトレード / 銘柄スクリーニング AI Skill コレクション：国内外の GitHub から株式分析・クオンツトレード・スクリーニング戦略の Agent Skills（Claude Code / Agent Skills 形式）を収録し、インデックスとライセンス遵守の転載を付記。
 
@@ -68,6 +68,8 @@ cp -r skills/<作者>__<スキル名> ~/.agents/skills/
 | [simons-factor-quant](my-skills/simons-factor-quant) | A株シモンズ式マルチファクター採点器：モメンタム/逆張り/ボラティリティ/出来高/移動平均乖離の5次元で総合スコアを合成 | MIT |
 | [klarman-margin-safety](my-skills/klarman-margin-safety) | A株クラーマン流安全マージン・ディープバリュー選別：PB/PE歴史分位、時価総額/ネットキャッシュ比、52週高値からの下落幅、ST・赤字株を除外 | MIT |
 | [templeton-global-contrarian](my-skills/templeton-global-contrarian) | A株テンプルトン流最悲観逆張りスキャナー：52週位置、PE/PBの自己歴史低位、出来高縮小からの安定、黒字維持で逆張り監視リストを出力 | MIT |
+| [fisher-growth-15](my-skills/fisher-growth-15) | A株フィリップ・フィッシャー成長株15のポイントの機械化：売上CAGR、研究開発比率、利益率トレンド、持続ROE、キャッシュの質、財務健全性の6次元スコアリング、「スカトルバット」調査の候補絞り込み | MIT |
+| [neff-low-pe-total-return](my-skills/neff-low-pe-total-return) | A株ジョン・ネフ低PER投資法：全市場中央値比PER割引、(成長率+配当利回り)/PER≥2の総リターン比率、スパン年間化配当利回り、ファンダメンタル下限の7次元スコアリング | MIT |
 
 ### 中国投資偉人シリーズ
 
@@ -102,6 +104,7 @@ cp -r skills/<作者>__<スキル名> ~/.agents/skills/
 - **パターン認識実測**：`patterns.py` 6 銘柄 → 601318/000001 が `MACD_GOLDEN`、他は `NO_SIGNAL`。完全な出力：[my-skills/technical-pattern-recognition/docs/demo.ja.md](my-skills/technical-pattern-recognition/docs/demo.ja.md)
 - **日次自動レポート**：GitHub Action が毎日 UTC 01:00 に 20 銘柄の A 株代表株でバフェットスクリーニングを自動実行し、結果を [`reports/`](reports/) にコミット（最新：[reports/latest.md](reports/latest.md)）。
 - **段永平全プール実測**（2026-09-26）：`screen.py --pool hs300`（300銘柄）→ 山西汾酒 86 点、邁瑞医療 83 点、貴州茅台 82 点、五糧液 81 点、中国海洋石油 81 点が上位——高粗利率キャッシュカウ業種が全体をリード。
+- **フィッシャー/ネフ小規模実測**（2026-09-26）：フィッシャー框架では邁瑞医療 78 点、海康威視 76 点が上位（R&D重視の成長株）、茅台は低R&Dで減点；ネフ框架では招商銀行 88 点（PER は市場中央値の 0.18 倍、配当利回り 6.34%、総リターン比率 2.33 でゴールデンライン通過）。
 - **収録スキルの実測比較**：16 の収録スキルの構造化チェック表（SKILL.md 規範性、依存、API キー、実測可否）は [docs/skill-review.ja.md](docs/skill-review.ja.md) を参照。
 
 ## インデックス

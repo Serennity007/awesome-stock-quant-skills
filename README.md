@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![收录技能](https://img.shields.io/badge/收录技能-16-blue?style=flat-square) ![原创技能](https://img.shields.io/badge/原创技能-21-green?style=flat-square) ![语言](https://img.shields.io/badge/语言-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![收录技能](https://img.shields.io/badge/收录技能-16-blue?style=flat-square) ![原创技能](https://img.shields.io/badge/原创技能-23-green?style=flat-square) ![语言](https://img.shields.io/badge/语言-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 炒股 / 量化交易 / 选股 AI Skill 合集：收录国内外 GitHub 上的股票分析、量化交易、选股策略 Agent Skills（Claude Code / Agent Skills 格式），附索引与合规转载。
 
@@ -68,6 +68,8 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 | [simons-factor-quant](my-skills/simons-factor-quant) | A股西蒙斯式多因子打分器：动量/反转/波动率/量能/均线偏离五维合成综合因子分并输出排名 | MIT |
 | [klarman-margin-safety](my-skills/klarman-margin-safety) | A股卡拉曼安全边际深度价值筛选：PB/PE历史分位、市值/净现金比、52周高点回撤四把尺子，剔除ST与亏损股 | MIT |
 | [templeton-global-contrarian](my-skills/templeton-global-contrarian) | A股邓普顿极度悲观逆向扫描器：52周位置、PE/PB自身历史低分位、缩量企稳、盈利为正，输出逆向买入观察清单 | MIT |
+| [fisher-growth-15](my-skills/fisher-growth-15) | A股费雪成长股15要点机械化：营收CAGR成长跑道、研发费用率、毛利率趋势、连续ROE、盈利含金量、财务保守六维打分，为"闲聊法"调研筛出候选 | MIT |
+| [neff-low-pe-total-return](my-skills/neff-low-pe-total-return) | A股约翰·聂夫低市盈率投资法：个股PE相对全市场中位数折价、(增速+股息率)/PE≥2总回报率黄金标准、股息率跨度年化、基本面底线七维打分 | MIT |
 
 ### 国内投资大佬系列
 
@@ -102,6 +104,7 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 - **技术形态识别实测**：`patterns.py` 6 只实测 → 601318/000001 命中 `MACD_GOLDEN`，其余 `NO_SIGNAL`。完整输出：[my-skills/technical-pattern-recognition/docs/demo.md](my-skills/technical-pattern-recognition/docs/demo.md)
 - **每日自动报告**：GitHub Action 每天 UTC 01:00 对 20 只 A 股代表股自动运行巴菲特筛股，结果提交到 [`reports/`](reports/)（最新报告：[reports/latest.md](reports/latest.md)）。
 - **段永平全池实测**（2026-09-26）：`screen.py --pool hs300`（300 只）→ 山西汾酒 86 分、迈瑞医疗 83 分、贵州茅台 82 分、五粮液 81 分、中国海油 81 分居前——高毛利现金牛行业整体领先。
+- **费雪/聂夫小样实测**（2026-09-26）：费雪框架下迈瑞医疗 78 分、海康威视 76 分居前（高研发成长股），茅台因研发率低被扣分；聂夫框架下招商银行 88 分（PE 仅为市场中位数 0.18 倍、股息率 6.34%、总回报率 2.33 过黄金线）。
 - **收录技能实测对比**：16 个收录技能的结构化检查表（SKILL.md 规范性、依赖、API key、是否实测跑通）见 [docs/skill-review.md](docs/skill-review.md)。
 
 ## 索引目录
