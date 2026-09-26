@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![Collected skills](https://img.shields.io/badge/collected%20skills-16-blue?style=flat-square) ![Original skills](https://img.shields.io/badge/original%20skills-13-green?style=flat-square) ![Languages](https://img.shields.io/badge/languages-ZH%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![Collected skills](https://img.shields.io/badge/collected%20skills-16-blue?style=flat-square) ![Original skills](https://img.shields.io/badge/original%20skills-21-green?style=flat-square) ![Languages](https://img.shields.io/badge/languages-ZH%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 A curated collection of stock trading / quantitative trading / stock screening AI Skills: Agent Skills (Claude Code / Agent Skills format) for stock analysis, quant trading, and screening strategies from GitHub projects in China and abroad, with an index and license-compliant reprints.
 
@@ -69,6 +69,16 @@ Skills originally created by this repository's author (Serennity007), placed und
 | [klarman-margin-safety](my-skills/klarman-margin-safety) | A-share Klarman margin-of-safety deep-value screener: PB/PE historical percentiles, market-cap-to-net-cash, 52-week-high drawdown, excluding ST/loss-making stocks | MIT |
 | [templeton-global-contrarian](my-skills/templeton-global-contrarian) | A-share Templeton max-pessimism contrarian scanner: 52-week position, PE/PB self-history low percentiles, volume-dry-up stabilization, positive earnings | MIT |
 
+### Chinese Investment Masters Series
+
+| Directory | Description | License |
+|---|---|---|
+| [duan-yongping-business-first](my-skills/duan-yongping-business-first) | A-share Duan Yongping "business model first" 6-dimension scoring: gross-margin stability, sustained ROE, OCF/net profit, low leverage, earnings stability, in-industry leadership ("dare to be the follower") | MIT |
+| [zhang-lei-longterm](my-skills/zhang-lei-longterm) | A-share Zhang Lei Hillhouse long-term structural value investing: 4-dimensional growth-quality radar on sustained double growth, R&D/capex investment, industry headroom, and rising ROE | MIT |
+| [qiu-guolu-simple-rules](my-skills/qiu-guolu-simple-rules) | A-share Qiu Guolu "the simplest thing in investing" triple-good scorer: good industry (count moons, not stars), good company (leader + high ROE), good price (PE/PB historical percentiles) | MIT |
+| [feng-liu-weak-side](my-skills/feng-liu-weak-side) | A-share Feng Liu weak-side contrarian scanner: 52-week drawdown, PE/PB 3-year percentiles, intact fundamentals (positive earnings, no revenue collapse), low attention — odds/probability watchlist | MIT |
+| [lin-yuan-monopoly-consumer](my-skills/lin-yuan-monopoly-consumer) | A-share Lin Yuan monopoly + addictive consumer investing: mouth-related necessity leaders, gross margin ≥50%, ROE ≥15%, high dividend, SW consumer/pharma industry filter scoring | MIT |
+
 ### Hot Theme Series
 
 | Directory | Description | License |
@@ -91,6 +101,7 @@ All original skills are runnable code with real captured outputs (tested 2026-08
 - **Single-stock analysis run**: `analyze.py 600519` → moat checklist + 5-year financial trend + valuation range (conservative value 1547.89 CNY / margin-of-safety reference 1083.52 CNY).
 - **Pattern recognition run**: `patterns.py` on 6 stocks → `MACD_GOLDEN` for 601318/000001, `NO_SIGNAL` for the rest. Full output: [my-skills/technical-pattern-recognition/docs/demo.en.md](my-skills/technical-pattern-recognition/docs/demo.en.md)
 - **Daily automated report**: a GitHub Action runs the Buffett screen on 20 representative A-shares every day at 01:00 UTC and commits the results to [`reports/`](reports/) (latest: [reports/latest.md](reports/latest.md)).
+- **Duan Yongping full-pool run** (2026-09-26): `screen.py --pool hs300` (300 stocks) → Shanxi Fenjiu 86, Mindray 83, Kweichow Moutai 82, Wuliangye 81, CNOOC 81 — high-margin cash-cow industries lead overall.
 - **Collected-skills review**: a structured checklist of the 16 collected skills (SKILL.md compliance, dependencies, API keys, whether actually tested) is in [docs/skill-review.en.md](docs/skill-review.en.md).
 
 ## Index

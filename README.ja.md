@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![収録スキル](https://img.shields.io/badge/収録スキル-16-blue?style=flat-square) ![オリジナルスキル](https://img.shields.io/badge/オリジナルスキル-16-green?style=flat-square) ![言語](https://img.shields.io/badge/言語-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![収録スキル](https://img.shields.io/badge/収録スキル-16-blue?style=flat-square) ![オリジナルスキル](https://img.shields.io/badge/オリジナルスキル-21-green?style=flat-square) ![言語](https://img.shields.io/badge/言語-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 株式トレード / クオンツトレード / 銘柄スクリーニング AI Skill コレクション：国内外の GitHub から株式分析・クオンツトレード・スクリーニング戦略の Agent Skills（Claude Code / Agent Skills 形式）を収録し、インデックスとライセンス遵守の転載を付記。
 
@@ -69,6 +69,16 @@ cp -r skills/<作者>__<スキル名> ~/.agents/skills/
 | [klarman-margin-safety](my-skills/klarman-margin-safety) | A株クラーマン流安全マージン・ディープバリュー選別：PB/PE歴史分位、時価総額/ネットキャッシュ比、52週高値からの下落幅、ST・赤字株を除外 | MIT |
 | [templeton-global-contrarian](my-skills/templeton-global-contrarian) | A株テンプルトン流最悲観逆張りスキャナー：52週位置、PE/PBの自己歴史低位、出来高縮小からの安定、黒字維持で逆張り監視リストを出力 | MIT |
 
+### 中国投資偉人シリーズ
+
+| ディレクトリ | 概要 | License |
+|---|---|---|
+| [duan-yongping-business-first](my-skills/duan-yongping-business-first) | A株段永平「ビジネスモデル第一」6次元スコアリング：粗利率の安定性、連続ROE、営業CF/純利益、低負債、収益安定性、業界内リーダー順位（「敢為天下後」で良いビジネスを発見） | MIT |
+| [zhang-lei-longterm](my-skills/zhang-lei-longterm) | A株張磊・高瓴の長期構造価値投資：連続増収増益、長期投資（R&D/設備投資）、業界成長余地、ROEトレンドの4次元成長質レーダー、「時間の友」スクリーナー | MIT |
+| [qiu-guolu-simple-rules](my-skills/qiu-guolu-simple-rules) | A株邱国鷺「投資で最も単純なこと」三好スコアラー：良い業種（月を数え星を数えず）、良い企業（リーダー+高ROE）、良い価格（PE/PB歴史分位） | MIT |
+| [feng-liu-weak-side](my-skills/feng-liu-weak-side) | A株馮柳「弱者体系」逆張りスキャナー：52週下落幅、PE/PB3年歴史分位、崩れぬファンダメンタルズ（黒字+売上未失速）、低関心度——オッズ/確率ウォッチリスト | MIT |
+| [lin-yuan-monopoly-consumer](my-skills/lin-yuan-monopoly-consumer) | A株林園式独占+依存性消費投資：口元関連必需品リーダー、粗利率≥50%、ROE≥15%、高配当、申万消費/医薬業種フィルタによる多次元スコアリング | MIT |
+
 ### ホットテーマシリーズ
 
 | ディレクトリ | 概要 | License |
@@ -91,6 +101,7 @@ cp -r skills/<作者>__<スキル名> ~/.agents/skills/
 - **個別株分析実測**：`analyze.py 600519` → 堀チェックリスト + 5年財務トレンド + バリュエーションレンジ（保守的評価 1547.89 元 / 安全マージン参考値 1083.52 元）。
 - **パターン認識実測**：`patterns.py` 6 銘柄 → 601318/000001 が `MACD_GOLDEN`、他は `NO_SIGNAL`。完全な出力：[my-skills/technical-pattern-recognition/docs/demo.ja.md](my-skills/technical-pattern-recognition/docs/demo.ja.md)
 - **日次自動レポート**：GitHub Action が毎日 UTC 01:00 に 20 銘柄の A 株代表株でバフェットスクリーニングを自動実行し、結果を [`reports/`](reports/) にコミット（最新：[reports/latest.md](reports/latest.md)）。
+- **段永平全プール実測**（2026-09-26）：`screen.py --pool hs300`（300銘柄）→ 山西汾酒 86 点、邁瑞医療 83 点、貴州茅台 82 点、五糧液 81 点、中国海洋石油 81 点が上位——高粗利率キャッシュカウ業種が全体をリード。
 - **収録スキルの実測比較**：16 の収録スキルの構造化チェック表（SKILL.md 規範性、依存、API キー、実測可否）は [docs/skill-review.ja.md](docs/skill-review.ja.md) を参照。
 
 ## インデックス

@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![收录技能](https://img.shields.io/badge/收录技能-16-blue?style=flat-square) ![原创技能](https://img.shields.io/badge/原创技能-16-green?style=flat-square) ![语言](https://img.shields.io/badge/语言-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![收录技能](https://img.shields.io/badge/收录技能-16-blue?style=flat-square) ![原创技能](https://img.shields.io/badge/原创技能-21-green?style=flat-square) ![语言](https://img.shields.io/badge/语言-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 炒股 / 量化交易 / 选股 AI Skill 合集：收录国内外 GitHub 上的股票分析、量化交易、选股策略 Agent Skills（Claude Code / Agent Skills 格式），附索引与合规转载。
 
@@ -69,6 +69,16 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 | [klarman-margin-safety](my-skills/klarman-margin-safety) | A股卡拉曼安全边际深度价值筛选：PB/PE历史分位、市值/净现金比、52周高点回撤四把尺子，剔除ST与亏损股 | MIT |
 | [templeton-global-contrarian](my-skills/templeton-global-contrarian) | A股邓普顿极度悲观逆向扫描器：52周位置、PE/PB自身历史低分位、缩量企稳、盈利为正，输出逆向买入观察清单 | MIT |
 
+### 国内投资大佬系列
+
+| 目录 | 简介 | License |
+|---|---|---|
+| [duan-yongping-business-first](my-skills/duan-yongping-business-first) | A股段永平"商业模式第一"六维打分：毛利率稳定性、连续ROE、经营现金流/净利润、低负债、盈利稳定、行业内龙头排名，"敢为天下后"筛选好生意 | MIT |
+| [zhang-lei-longterm](my-skills/zhang-lei-longterm) | A股张磊高瓴长期结构性价值投资：连续双增、长期投入（研发/资本开支）、行业空间、ROE趋势四维成长质量雷达，"时间的朋友"筛选器 | MIT |
+| [qiu-guolu-simple-rules](my-skills/qiu-guolu-simple-rules) | A股邱国鹭"投资中最简单的事"三好打分器：好行业（数月亮不数星星）、好公司（龙头+高ROE）、好价格（PE/PB历史分位） | MIT |
+| [feng-liu-weak-side](my-skills/feng-liu-weak-side) | A股冯柳弱者体系逆向扫描：52周回撤、PE/PB三年历史分位、基本面未崩（盈利为正+营收未失速）、低关注度，输出赔率/概率逆向观察清单 | MIT |
+| [lin-yuan-monopoly-consumer](my-skills/lin-yuan-monopoly-consumer) | A股林园垄断+成瘾性消费投资法：嘴巴相关刚需龙头、毛利率≥50%、ROE≥15%、高分红、申万消费/医药行业过滤多维打分 | MIT |
+
 ### 热点题材系列
 
 | 目录 | 简介 | License |
@@ -91,6 +101,7 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 - **单股分析实测**：`analyze.py 600519` → 护城河清单 + 5 年财务趋势 + 估值区间（保守估值 1547.89 元 / 安全边际参考价 1083.52 元）。
 - **技术形态识别实测**：`patterns.py` 6 只实测 → 601318/000001 命中 `MACD_GOLDEN`，其余 `NO_SIGNAL`。完整输出：[my-skills/technical-pattern-recognition/docs/demo.md](my-skills/technical-pattern-recognition/docs/demo.md)
 - **每日自动报告**：GitHub Action 每天 UTC 01:00 对 20 只 A 股代表股自动运行巴菲特筛股，结果提交到 [`reports/`](reports/)（最新报告：[reports/latest.md](reports/latest.md)）。
+- **段永平全池实测**（2026-09-26）：`screen.py --pool hs300`（300 只）→ 山西汾酒 86 分、迈瑞医疗 83 分、贵州茅台 82 分、五粮液 81 分、中国海油 81 分居前——高毛利现金牛行业整体领先。
 - **收录技能实测对比**：16 个收录技能的结构化检查表（SKILL.md 规范性、依赖、API key、是否实测跑通）见 [docs/skill-review.md](docs/skill-review.md)。
 
 ## 索引目录
