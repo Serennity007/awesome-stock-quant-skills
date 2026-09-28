@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![收录技能](https://img.shields.io/badge/收录技能-16-blue?style=flat-square) ![原创技能](https://img.shields.io/badge/原创技能-27-green?style=flat-square) ![语言](https://img.shields.io/badge/语言-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![收录技能](https://img.shields.io/badge/收录技能-16-blue?style=flat-square) ![原创技能](https://img.shields.io/badge/原创技能-28-green?style=flat-square) ![语言](https://img.shields.io/badge/语言-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 炒股 / 量化交易 / 选股 AI Skill 合集：收录国内外 GitHub 上的股票分析、量化交易、选股策略 Agent Skills（Claude Code / Agent Skills 格式），附索引与合规转载。
 
@@ -93,6 +93,12 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 | [us-hot-stocks-tracker](my-skills/us-hot-stocks-tracker) | 美股热门AI股追踪器：内置AI算力/存储/AI应用/robotaxi主题清单，输出现价、涨跌幅、20/60日动量、52周高低位距离、成交量异动快照表 | MIT |
 | [concept-stock-mapper](my-skills/concept-stock-mapper) | A股题材关键词→概念股映射器：用akshare概念板块接口模糊匹配板块，取成分股并按涨幅/换手/主力资金排序，支持多关键词题材强度对比 | MIT |
 
+### 系列联动
+
+| 目录 | 简介 | License |
+|---|---|---|
+| [master-ensemble](my-skills/master-ensemble) | 大师共识筛选器：把任意多个大师 skill 的打分结果 CSV 按框架内百分位归一化，合成共识分与顶级命中数，输出"多条独立思路同时指向"的跨框架交集标的（纯本地合成，秒级） | MIT |
+
 ### 原有
 
 | 目录 | 简介 | License |
@@ -110,6 +116,8 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 - **段永平全池实测**（2026-09-26）：`screen.py --pool hs300`（300 只）→ 山西汾酒 86 分、迈瑞医疗 83 分、贵州茅台 82 分、五粮液 81 分、中国海油 81 分居前——高毛利现金牛行业整体领先。
 - **费雪/聂夫小样实测**（2026-09-26）：费雪框架下迈瑞医疗 78 分、海康威视 76 分居前（高研发成长股），茅台因研发率低被扣分；聂夫框架下招商银行 88 分（PE 仅为市场中位数 0.18 倍、股息率 6.34%、总回报率 2.33 过黄金线）。
 - **但斌/李录/欧奈尔小样实测**（2026-09-28）：但斌框架下贵州茅台 88 分（毛利率 91.9%、ROE 32.9%、财年口径股息率 4.18%）、五粮液 79 分；李录框架下茅台 88 分（PB 仅处 5 年 1.9% 分位，安全边际满分）；欧奈尔 CANSLIM 框架下海康威视 [C,N,L] 三项成立（季同比 39.6%），茅台低分正是动量框架与价值框架的互补性所在。
+- **但斌/李录/欧奈尔全量沪深300实测**（2026-09-28，各 300/300 成功）：但斌框架下山西汾酒 97、泸州老窖 91、茅台 88 居前（高毛利白酒霸榜符合"厚雪"直觉）；李录框架下东鹏饮料 94、亿联网络 92、新和成 91 居前；CANSLIM 框架下瑞芯微 79 [C,A,N,L]、药明康德 77 [C,A,N,L,I] 居前（当日大盘在 50 日线下方 M=0，全池扣 10 分——欧奈尔纪律的正确打开方式）。结果见各 skill 目录 `*_hs300_result.csv`。
+- **大师共识实测**（2026-09-28）：三框架共识筛选器 `master-ensemble` 上线——亿联网络 96.4（3 框架全部前 10%）、药明康德 95.9、新易盛 92.0、中际旭创 91.9 居前，通信设备板块被价值与动量框架同时看好（AI 算力业绩兑现的典型形态）。见 [my-skills/master-ensemble/consensus_hs300_demo.csv](my-skills/master-ensemble/consensus_hs300_demo.csv)。
 - **博格指数温度计实测**（2026-09-28）：沪深300 PE 12.59（10 年分位 60%）、上证50 PE 10.64（58%）、中证500 78% 分位（减半档）；近 5 年月定投沪深300 年化 1.81% vs 一次性买入 -1.79%。
 - **收录技能实测对比**：16 个收录技能的结构化检查表（SKILL.md 规范性、依赖、API key、是否实测跑通）见 [docs/skill-review.md](docs/skill-review.md)。
 

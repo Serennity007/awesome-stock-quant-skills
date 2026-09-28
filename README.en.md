@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![Collected skills](https://img.shields.io/badge/collected%20skills-16-blue?style=flat-square) ![Original skills](https://img.shields.io/badge/original%20skills-27-green?style=flat-square) ![Languages](https://img.shields.io/badge/languages-ZH%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![Collected skills](https://img.shields.io/badge/collected%20skills-16-blue?style=flat-square) ![Original skills](https://img.shields.io/badge/original%20skills-28-green?style=flat-square) ![Languages](https://img.shields.io/badge/languages-ZH%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 A curated collection of stock trading / quantitative trading / stock screening AI Skills: Agent Skills (Claude Code / Agent Skills format) for stock analysis, quant trading, and screening strategies from GitHub projects in China and abroad, with an index and license-compliant reprints.
 
@@ -93,6 +93,12 @@ Skills originally created by this repository's author (Serennity007), placed und
 | [us-hot-stocks-tracker](my-skills/us-hot-stocks-tracker) | US hot AI stocks tracker: built-in AI compute/storage/AI application/robotaxi watchlist, outputs current price, change%, 20/60-day momentum, 52-week high/low distance, volume anomaly snapshot | MIT |
 | [concept-stock-mapper](my-skills/concept-stock-mapper) | A-share theme keyword → concept stock mapper: fuzzy-match concept boards via akshare, extract constituents and sort by gain/turnover/main-force capital, supports multi-keyword theme strength comparison | MIT |
 
+### Cross-Framework Tools
+
+| Directory | Description | License |
+|---|---|---|
+| [master-ensemble](my-skills/master-ensemble) | Master-consensus screener: merges scoring CSVs from any master skills, percentile-normalizes within each framework, synthesizes a consensus score + top-hit count, and outputs cross-framework intersection stocks ("multiple independent methodologies pointing at the same stock") — pure local merging, finishes in seconds | MIT |
+
 ### Original
 
 | Directory | Description | License |
@@ -111,6 +117,8 @@ All original skills are runnable code with real captured outputs (tested 2026-08
 - **Fisher / Neff sample runs** (2026-09-26): Fisher framework — Mindray 78, Hikvision 76 (R&D-heavy growth stocks lead), Moutai penalized for low R&D; Neff framework — China Merchants Bank 88 (P/E only 0.18× the market median, yield 6.34%, total-return ratio 2.33 clears the golden line).
 - **Dan Bin / Li Lu / O'Neil sample runs** (2026-09-28): Dan Bin framework — Kweichow Moutai 88 (gross margin 91.9%, ROE 32.9%, fiscal-year-accurate yield 4.18%), Wuliangye 79; Li Lu framework — Moutai 88 (PB at only the 1.9th percentile of its 5-year history, full margin-of-safety score); O'Neil CANSLIM — Hikvision passes [C,N,L] (quarterly yoy 39.6%), while Moutai's low score shows exactly how the momentum framework complements the value frameworks.
 - **Bogle thermometer run** (2026-09-28): CSI 300 PE 12.59 (60th 10-year percentile), SSE 50 PE 10.64 (58%), CSI 500 at the 78th percentile (halve new purchases); 5-year monthly DCA on CSI 300 annualized 1.81% vs lump-sum -1.79%.
+- **Dan Bin / Li Lu / O'Neil full CSI-300 runs** (2026-09-28, 300/300 each): Dan Bin — Shanxi Fenjiu 97, Luzhou Laojiao 91, Moutai 88 (high-margin baijiu sweeping the board, matching the "thick snow" intuition); Li Lu — East Buy (Dongpeng) Beverage 94, Yealink 92, NHU 91; CANSLIM — Rockchip 79 [C,A,N,L], WuXi AppTec 77 [C,A,N,L,I] (market below its 50-day MA that day, M=0 pool-wide — O'Neil discipline in action). Results in each skill's `*_hs300_result.csv`.
+- **Master-consensus run** (2026-09-28): the `master-ensemble` cross-framework screener ships — Yealink 96.4 (top-10% in all 3 frameworks), WuXi AppTec 95.9, Eoptolink 92.0, Innolight 91.9 lead; communication-equipment names are favored by both value and momentum frameworks (the classic AI-compute earnings-delivery shape). See [my-skills/master-ensemble/consensus_hs300_demo.csv](my-skills/master-ensemble/consensus_hs300_demo.csv).
 - **Collected-skills review**: a structured checklist of the 16 collected skills (SKILL.md compliance, dependencies, API keys, whether actually tested) is in [docs/skill-review.en.md](docs/skill-review.en.md).
 
 ## Index

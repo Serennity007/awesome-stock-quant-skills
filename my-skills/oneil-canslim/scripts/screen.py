@@ -51,6 +51,19 @@ def _disable_proxies():
     requests.utils.getproxies = lambda: {}
     for k in ["HTTP_PROXY", "HTTPS_PROXY", "http_proxy", "https_proxy", "ALL_PROXY", "all_proxy"]:
         os.environ.pop(k, None)
+    _install_request_timeout()
+
+
+def _install_request_timeout(seconds: int = 20):
+    """给所有 requests 请求注入默认超时——akshare 内部调用不带 timeout，
+    个别挂起连接会让整个跑测无限阻塞（实测发生过），必须全局兜底。"""
+    _orig_request = requests.Session.request
+
+    def _with_timeout(self, *args, **kwargs):
+        kwargs.setdefault("timeout", seconds)
+        return _orig_request(self, *args, **kwargs)
+
+    requests.Session.request = _with_timeout
 
 
 def _retry_call(func, max_retries: int = 3, sleep_base: float = 1.5):
@@ -414,12 +427,16 @@ def main():
     ap.add_argument("--top", type=int, default=20, help="终端展示前 N 名")
     ap.add_argument("--out", default="canslim_result.csv", help="CSV 输出路径")
     ap.add_argument("--sleep", type=float, default=0.3, help="每只股票间隔秒数(防限流)")
+    ap.add_argument("--offset", type=int, default=0, help="跳过池内前 N 只（分块跑测用）")
+    ap.add_argument("--limit", type=int, default=0, help="最多处理 N 只（分块跑测用，0=不限制）")
     args = ap.parse_args()
 
     _disable_proxies()
 
     codes = [c.strip() for c in args.codes.split(",") if c.strip()] if args.codes else get_pool(args.pool)
     codes = [c.zfill(6) for c in codes]
+    if args.offset or args.limit:
+        codes = codes[args.offset: args.offset + args.limit if args.limit else None]
 
     print(f"股票池共 {len(codes)} 只。加载池级数据：业绩报表 / 机构持股 / 沪深300趋势...")
     yjbb, report_date = fetch_latest_yjbb()

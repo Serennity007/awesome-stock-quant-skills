@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![収録スキル](https://img.shields.io/badge/収録スキル-16-blue?style=flat-square) ![オリジナルスキル](https://img.shields.io/badge/オリジナルスキル-27-green?style=flat-square) ![言語](https://img.shields.io/badge/言語-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![収録スキル](https://img.shields.io/badge/収録スキル-16-blue?style=flat-square) ![オリジナルスキル](https://img.shields.io/badge/オリジナルスキル-28-green?style=flat-square) ![言語](https://img.shields.io/badge/言語-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 株式トレード / クオンツトレード / 銘柄スクリーニング AI Skill コレクション：国内外の GitHub から株式分析・クオンツトレード・スクリーニング戦略の Agent Skills（Claude Code / Agent Skills 形式）を収録し、インデックスとライセンス遵守の転載を付記。
 
@@ -93,6 +93,12 @@ cp -r skills/<作者>__<スキル名> ~/.agents/skills/
 | [us-hot-stocks-tracker](my-skills/us-hot-stocks-tracker) | 米国人気AI株トラッカー：AIコンピュート/ストレージ/AIアプリ/robotaxiテーマのウォッチリストを内蔵し、現在値、騰落率、20/60日モメンタム、52週高安値距離、出来高異常を出力 | MIT |
 | [concept-stock-mapper](my-skills/concept-stock-mapper) | A株テーマキーワード→概念股マッパー：akshareの概念セクターインターフェースであいまい一致し、構成銘柄を取得して騰落率/回転率/主力資金で並べ替え、複数キーワードの題材強度比較に対応 | MIT |
 
+### クロスフレームワークツール
+
+| ディレクトリ | 概要 | License |
+|---|---|---|
+| [master-ensemble](my-skills/master-ensemble) | マスター合意スクリーナー：複数のマスタースキルのスコア結果CSVをフレームワーク内パーセンタイルで正規化し、合意スコア+トップヒット数を合成、「複数の独立した手法が同時に指す」クロスフレームワーク交差銘柄を出力（純ローカル合成、数秒で完了） | MIT |
+
 ### 既存
 
 | ディレクトリ | 概要 | License |
@@ -111,6 +117,8 @@ cp -r skills/<作者>__<スキル名> ~/.agents/skills/
 - **フィッシャー/ネフ小規模実測**（2026-09-26）：フィッシャー框架では邁瑞医療 78 点、海康威視 76 点が上位（R&D重視の成長株）、茅台は低R&Dで減点；ネフ框架では招商銀行 88 点（PER は市場中央値の 0.18 倍、配当利回り 6.34%、総リターン比率 2.33 でゴールデンライン通過）。
 - **但斌/李録/オニール小規模実測**（2026-09-28）：但斌框架では貴州茅台 88 点（粗利率 91.9%、ROE 32.9%、会計年度精度の配当利回り 4.18%）、五糧液 79 点；李録框架では茅台 88 点（PB は5年歴史の 1.9% 分位、安全マージン満点）；オニール CANSLIM では海康威視が [C,N,L] 成立（四半期YoY 39.6%）、茅台の低スコアはまさにモメンタム框架とバリュー框架の相補性。
 - **ボーグル温度計実測**（2026-09-28）：滬深300 PER 12.59（10年分位 60%）、上証50 PER 10.64（58%）、中証500 は 78% 分位（積立半減）；直近5年の月積立滬深300 年率 1.81% vs 一括投資 -1.79%。
+- **但斌/李録/オニール滬深300全量実測**（2026-09-28、各300/300成功）：但斌框架では山西汾酒 97 点、瀘州老窖 91 点、貴州茅台 88 点が上位（高粗利率白酒が覇権＝「深い雪」の直感どおり）；李録框架では東鵬飲料 94 点、億聯網絡 92 点、新和成 91 点；CANSLIM では瑞芯微 79 点 [C,A,N,L]、薬明康徳 77 点 [C,A,N,L,I]（当日は市場が50日移動平均下で M=0、全プール減点＝オニール規律の実践形）。結果は各スキルの `*_hs300_result.csv`。
+- **マスター合意実測**（2026-09-28）：クロスフレームワークスクリーナー `master-ensemble` を公開——億聯網絡 96.4（3フレームワーク全てで上位10%）、薬明康徳 95.9、新易盛 92.0、中際旭創 91.9 が上位；通信設備セクターがバリューとモメンタムの両框架に支持される（AIコンピュート業績実現の典型形）。[my-skills/master-ensemble/consensus_hs300_demo.csv](my-skills/master-ensemble/consensus_hs300_demo.csv) 参照。
 - **収録スキルの実測比較**：16 の収録スキルの構造化チェック表（SKILL.md 規範性、依存、API キー、実測可否）は [docs/skill-review.ja.md](docs/skill-review.ja.md) を参照。
 
 ## インデックス

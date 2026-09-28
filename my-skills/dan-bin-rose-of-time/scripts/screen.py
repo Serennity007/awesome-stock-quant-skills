@@ -49,6 +49,19 @@ def _disable_proxies():
     requests.utils.getproxies = lambda: {}
     for k in ["HTTP_PROXY", "HTTPS_PROXY", "http_proxy", "https_proxy", "ALL_PROXY", "all_proxy"]:
         os.environ.pop(k, None)
+    _install_request_timeout()
+
+
+def _install_request_timeout(seconds: int = 20):
+    """给所有 requests 请求注入默认超时——akshare 内部调用不带 timeout，
+    个别挂起连接会让整个跑测无限阻塞（实测发生过），必须全局兜底。"""
+    _orig_request = requests.Session.request
+
+    def _with_timeout(self, *args, **kwargs):
+        kwargs.setdefault("timeout", seconds)
+        return _orig_request(self, *args, **kwargs)
+
+    requests.Session.request = _with_timeout
 
 
 def _retry_call(func, max_retries: int = 3, sleep_base: float = 1.0):
@@ -398,12 +411,27 @@ def get_financials(code: str) -> dict:
     raise RuntimeError("; ".join(errs))
 
 
+_TX_SPOT_CACHE: Optional[pd.DataFrame] = None
+
+
+def _get_tx_spot() -> Optional[pd.DataFrame]:
+    """全市场快照每次跑测只拉一次（300 只股票逐只拉会拖慢 10 倍且易被限流）。"""
+    global _TX_SPOT_CACHE
+    if _TX_SPOT_CACHE is not None:
+        return _TX_SPOT_CACHE
+    try:
+        _TX_SPOT_CACHE = _retry_call(lambda: ak.stock_zh_a_spot_tx())
+    except Exception:
+        _TX_SPOT_CACHE = pd.DataFrame()
+    time.sleep(0.2)
+    return _TX_SPOT_CACHE
+
+
 def get_close_price(code: str) -> float:
-    """腾讯全市场快照取最新收盘价，失败返回 nan。"""
+    """从缓存的全市场快照取最新收盘价，失败返回 nan。"""
     try:
         prefix = "sh" if code.startswith("6") or code.startswith("5") else "sz"
-        df = _retry_call(lambda: ak.stock_zh_a_spot_tx())
-        time.sleep(0.15)
+        df = _get_tx_spot()
         if df is None or df.empty or "code" not in df.columns:
             return float("nan")
         row = df[df["code"].astype(str).str.lower() == f"{prefix}{code}"]
@@ -609,12 +637,16 @@ def main():
     ap.add_argument("--top", type=int, default=20, help="终端展示前 N 名")
     ap.add_argument("--out", default="danbin_result.csv", help="CSV 输出路径")
     ap.add_argument("--sleep", type=float, default=0.3, help="每只股票间隔秒数(防限流)")
+    ap.add_argument("--offset", type=int, default=0, help="跳过池内前 N 只（分块跑测用）")
+    ap.add_argument("--limit", type=int, default=0, help="最多处理 N 只（分块跑测用，0=不限制）")
     args = ap.parse_args()
 
     _disable_proxies()
 
     codes = [c.strip() for c in args.codes.split(",") if c.strip()] if args.codes else get_pool(args.pool)
     codes = [c.zfill(6) for c in codes]
+    if args.offset or args.limit:
+        codes = codes[args.offset: args.offset + args.limit if args.limit else None]
 
     print(f"股票池共 {len(codes)} 只，加载名称/行业映射...")
     meta = fetch_industry_map()
