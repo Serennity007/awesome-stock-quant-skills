@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![収録スキル](https://img.shields.io/badge/収録スキル-16-blue?style=flat-square) ![オリジナルスキル](https://img.shields.io/badge/オリジナルスキル-23-green?style=flat-square) ![言語](https://img.shields.io/badge/言語-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![収録スキル](https://img.shields.io/badge/収録スキル-16-blue?style=flat-square) ![オリジナルスキル](https://img.shields.io/badge/オリジナルスキル-27-green?style=flat-square) ![言語](https://img.shields.io/badge/言語-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 株式トレード / クオンツトレード / 銘柄スクリーニング AI Skill コレクション：国内外の GitHub から株式分析・クオンツトレード・スクリーニング戦略の Agent Skills（Claude Code / Agent Skills 形式）を収録し、インデックスとライセンス遵守の転載を付記。
 
@@ -70,6 +70,8 @@ cp -r skills/<作者>__<スキル名> ~/.agents/skills/
 | [templeton-global-contrarian](my-skills/templeton-global-contrarian) | A株テンプルトン流最悲観逆張りスキャナー：52週位置、PE/PBの自己歴史低位、出来高縮小からの安定、黒字維持で逆張り監視リストを出力 | MIT |
 | [fisher-growth-15](my-skills/fisher-growth-15) | A株フィリップ・フィッシャー成長株15のポイントの機械化：売上CAGR、研究開発比率、利益率トレンド、持続ROE、キャッシュの質、財務健全性の6次元スコアリング、「スカトルバット」調査の候補絞り込み | MIT |
 | [neff-low-pe-total-return](my-skills/neff-low-pe-total-return) | A株ジョン・ネフ低PER投資法：全市場中央値比PER割引、(成長率+配当利回り)/PER≥2の総リターン比率、スパン年間化配当利回り、ファンダメンタル下限の7次元スコアリング | MIT |
+| [bogle-index-investing](my-skills/bogle-index-investing) | A株ジョン・ボーグル・インデックス投資法：幅基指数PE/PB直近10年分位バリュエーション温度計、ボーグル式期待リターン3分解（配当利回り+利益成長+バリュエーション回帰）、積立ペース目安、月積立vs一括投資バックテスト | MIT |
+| [oneil-canslim](my-skills/oneil-canslim) | A株ウィリアム・オニールCANSLIM7要素スコアリング：C四半期利益YoY≥25%、A年間成長、N250日高値接近、S出来高、L沪深300比超過強度、I機関保有、M市場50日移動平均——アルファベット別合否表+プール内RPSパーセンタイル | MIT |
 
 ### 中国投資偉人シリーズ
 
@@ -80,6 +82,8 @@ cp -r skills/<作者>__<スキル名> ~/.agents/skills/
 | [qiu-guolu-simple-rules](my-skills/qiu-guolu-simple-rules) | A株邱国鷺「投資で最も単純なこと」三好スコアラー：良い業種（月を数え星を数えず）、良い企業（リーダー+高ROE）、良い価格（PE/PB歴史分位） | MIT |
 | [feng-liu-weak-side](my-skills/feng-liu-weak-side) | A株馮柳「弱者体系」逆張りスキャナー：52週下落幅、PE/PB3年歴史分位、崩れぬファンダメンタルズ（黒字+売上未失速）、低関心度——オッズ/確率ウォッチリスト | MIT |
 | [lin-yuan-monopoly-consumer](my-skills/lin-yuan-monopoly-consumer) | A株林園式独占+依存性消費投資：口元関連必需品リーダー、粗利率≥50%、ROE≥15%、高配当、申万消費/医薬業種フィルタによる多次元スコアリング | MIT |
+| [dan-bin-rose-of-time](my-skills/dan-bin-rose-of-time) | A株但斌「時間の薔薇」偉大な企業投資法：長い坂（売上CAGR）、深い雪（粗利率の価格決定力）、複利エンジン（連続ROE）、時間の薔薇（会計年度精度の配当年間化）、キャッシュの質、財務健全性、成長の質の7次元スコアリング | MIT |
+| [li-lu-value-compounding](my-skills/li-lu-value-compounding) | A株李録バリュー複利投資法：持続的高ROE、複利トレンド（直近2年vs前3年）、再投資成長、キャッシュの質、PE/PB歴史低分位の安全マージン、低負債の6次元スコアリング | MIT |
 
 ### ホットテーマシリーズ
 
@@ -105,6 +109,8 @@ cp -r skills/<作者>__<スキル名> ~/.agents/skills/
 - **日次自動レポート**：GitHub Action が毎日 UTC 01:00 に 20 銘柄の A 株代表株でバフェットスクリーニングを自動実行し、結果を [`reports/`](reports/) にコミット（最新：[reports/latest.md](reports/latest.md)）。
 - **段永平全プール実測**（2026-09-26）：`screen.py --pool hs300`（300銘柄）→ 山西汾酒 86 点、邁瑞医療 83 点、貴州茅台 82 点、五糧液 81 点、中国海洋石油 81 点が上位——高粗利率キャッシュカウ業種が全体をリード。
 - **フィッシャー/ネフ小規模実測**（2026-09-26）：フィッシャー框架では邁瑞医療 78 点、海康威視 76 点が上位（R&D重視の成長株）、茅台は低R&Dで減点；ネフ框架では招商銀行 88 点（PER は市場中央値の 0.18 倍、配当利回り 6.34%、総リターン比率 2.33 でゴールデンライン通過）。
+- **但斌/李録/オニール小規模実測**（2026-09-28）：但斌框架では貴州茅台 88 点（粗利率 91.9%、ROE 32.9%、会計年度精度の配当利回り 4.18%）、五糧液 79 点；李録框架では茅台 88 点（PB は5年歴史の 1.9% 分位、安全マージン満点）；オニール CANSLIM では海康威視が [C,N,L] 成立（四半期YoY 39.6%）、茅台の低スコアはまさにモメンタム框架とバリュー框架の相補性。
+- **ボーグル温度計実測**（2026-09-28）：滬深300 PER 12.59（10年分位 60%）、上証50 PER 10.64（58%）、中証500 は 78% 分位（積立半減）；直近5年の月積立滬深300 年率 1.81% vs 一括投資 -1.79%。
 - **収録スキルの実測比較**：16 の収録スキルの構造化チェック表（SKILL.md 規範性、依存、API キー、実測可否）は [docs/skill-review.ja.md](docs/skill-review.ja.md) を参照。
 
 ## インデックス

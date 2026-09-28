@@ -1,0 +1,4 @@
+﻿code,name,industry,total,runway_score,snow_score,roe_engine_score,rose_score,cash_score,debt_score,growth_quality_score,rev_cagr,gross_mean,roe_mean,dividend_yield,dividend_events,dividend_span_years,ocf_mean,debt_latest,profit_pos_years,close,data_years,fin_source,note,data_date
+600519,贵州茅台,白酒Ⅱ,88,9,20,20,12,7,10,10,12.5,91.9,32.9,4.18,2,23.9,0.87,16.4,4,1243.91,5,akshare.stock_financial_analysis_indicator,毛利率由利润表现算,2026-09-28
+000858,五粮液,白酒Ⅱ,79,0,20,17,15,10,7,10,-1.5,76.2,20.3,7.48,2,27.1,1.5,35.7,4,68.98,5,akshare.stock_financial_analysis_indicator,毛利率由利润表现算,2026-09-28
+600036,招商银行,银行Ⅱ,51,3,8,8,12,10,0,10,0.5,,13.0,4.97,2,23.0,2.8,90.2,5,40.54,4,akshare.stock_financial_analysis_indicator,营收CAGR由新浪利润表补充; 金融业等无毛利率，厚雪给中性分(8/20),2026-09-28

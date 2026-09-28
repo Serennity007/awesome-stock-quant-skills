@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![Collected skills](https://img.shields.io/badge/collected%20skills-16-blue?style=flat-square) ![Original skills](https://img.shields.io/badge/original%20skills-23-green?style=flat-square) ![Languages](https://img.shields.io/badge/languages-ZH%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![Collected skills](https://img.shields.io/badge/collected%20skills-16-blue?style=flat-square) ![Original skills](https://img.shields.io/badge/original%20skills-27-green?style=flat-square) ![Languages](https://img.shields.io/badge/languages-ZH%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 A curated collection of stock trading / quantitative trading / stock screening AI Skills: Agent Skills (Claude Code / Agent Skills format) for stock analysis, quant trading, and screening strategies from GitHub projects in China and abroad, with an index and license-compliant reprints.
 
@@ -70,6 +70,8 @@ Skills originally created by this repository's author (Serennity007), placed und
 | [templeton-global-contrarian](my-skills/templeton-global-contrarian) | A-share Templeton max-pessimism contrarian scanner: 52-week position, PE/PB self-history low percentiles, volume-dry-up stabilization, positive earnings | MIT |
 | [fisher-growth-15](my-skills/fisher-growth-15) | A-share Philip Fisher growth-stock scoring: revenue-CAGR runway, R&D intensity, margin trend, sustained ROE, cash quality, financial conservatism — a shortlist for scuttlebutt research | MIT |
 | [neff-low-pe-total-return](my-skills/neff-low-pe-total-return) | A-share John Neff low-P/E investing: P/E discount vs all-market median, total-return ratio ≥2 golden standard, span-annualized dividend yield, fundamental floors | MIT |
+| [bogle-index-investing](my-skills/bogle-index-investing) | A-share John Bogle index investing: broad-index PE/PB 10-year percentile thermometer, three-component Bogle expected-return decomposition (dividend yield + earnings growth + valuation reversion), DCA pacing guide, monthly-DCA vs lump-sum backtest | MIT |
+| [oneil-canslim](my-skills/oneil-canslim) | A-share William O'Neil CANSLIM 7-letter screener: quarterly profit yoy ≥25%, annual growth, 250d-high proximity, volume surge, excess strength vs CSI 300, institutional holdings, market 50-day-MA trend — letter-by-letter pass table + in-pool RPS percentile | MIT |
 
 ### Chinese Investment Masters Series
 
@@ -80,6 +82,8 @@ Skills originally created by this repository's author (Serennity007), placed und
 | [qiu-guolu-simple-rules](my-skills/qiu-guolu-simple-rules) | A-share Qiu Guolu "the simplest thing in investing" triple-good scorer: good industry (count moons, not stars), good company (leader + high ROE), good price (PE/PB historical percentiles) | MIT |
 | [feng-liu-weak-side](my-skills/feng-liu-weak-side) | A-share Feng Liu weak-side contrarian scanner: 52-week drawdown, PE/PB 3-year percentiles, intact fundamentals (positive earnings, no revenue collapse), low attention — odds/probability watchlist | MIT |
 | [lin-yuan-monopoly-consumer](my-skills/lin-yuan-monopoly-consumer) | A-share Lin Yuan monopoly + addictive consumer investing: mouth-related necessity leaders, gross margin ≥50%, ROE ≥15%, high dividend, SW consumer/pharma industry filter scoring | MIT |
+| [dan-bin-rose-of-time](my-skills/dan-bin-rose-of-time) | A-share Dan Bin "Rose of Time" great-enterprise investing: long slope (revenue CAGR), thick snow (gross-margin pricing power), compounding engine (sustained ROE), the rose of time (fiscal-year-accurate dividend annualization), cash quality, financial health, growth consistency — 7-dimension scoring | MIT |
+| [li-lu-value-compounding](my-skills/li-lu-value-compounding) | A-share Li Lu value-compounding investing: sustained high ROE, non-stalling compounding trend (recent 2yr vs prior 3yr), reinvestment growth, cash quality, low PE/PB historical-percentile margin of safety, low leverage — 6-dimension scoring | MIT |
 
 ### Hot Theme Series
 
@@ -105,6 +109,8 @@ All original skills are runnable code with real captured outputs (tested 2026-08
 - **Daily automated report**: a GitHub Action runs the Buffett screen on 20 representative A-shares every day at 01:00 UTC and commits the results to [`reports/`](reports/) (latest: [reports/latest.md](reports/latest.md)).
 - **Duan Yongping full-pool run** (2026-09-26): `screen.py --pool hs300` (300 stocks) → Shanxi Fenjiu 86, Mindray 83, Kweichow Moutai 82, Wuliangye 81, CNOOC 81 — high-margin cash-cow industries lead overall.
 - **Fisher / Neff sample runs** (2026-09-26): Fisher framework — Mindray 78, Hikvision 76 (R&D-heavy growth stocks lead), Moutai penalized for low R&D; Neff framework — China Merchants Bank 88 (P/E only 0.18× the market median, yield 6.34%, total-return ratio 2.33 clears the golden line).
+- **Dan Bin / Li Lu / O'Neil sample runs** (2026-09-28): Dan Bin framework — Kweichow Moutai 88 (gross margin 91.9%, ROE 32.9%, fiscal-year-accurate yield 4.18%), Wuliangye 79; Li Lu framework — Moutai 88 (PB at only the 1.9th percentile of its 5-year history, full margin-of-safety score); O'Neil CANSLIM — Hikvision passes [C,N,L] (quarterly yoy 39.6%), while Moutai's low score shows exactly how the momentum framework complements the value frameworks.
+- **Bogle thermometer run** (2026-09-28): CSI 300 PE 12.59 (60th 10-year percentile), SSE 50 PE 10.64 (58%), CSI 500 at the 78th percentile (halve new purchases); 5-year monthly DCA on CSI 300 annualized 1.81% vs lump-sum -1.79%.
 - **Collected-skills review**: a structured checklist of the 16 collected skills (SKILL.md compliance, dependencies, API keys, whether actually tested) is in [docs/skill-review.en.md](docs/skill-review.en.md).
 
 ## Index

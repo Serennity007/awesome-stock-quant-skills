@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![收录技能](https://img.shields.io/badge/收录技能-16-blue?style=flat-square) ![原创技能](https://img.shields.io/badge/原创技能-23-green?style=flat-square) ![语言](https://img.shields.io/badge/语言-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![收录技能](https://img.shields.io/badge/收录技能-16-blue?style=flat-square) ![原创技能](https://img.shields.io/badge/原创技能-27-green?style=flat-square) ![语言](https://img.shields.io/badge/语言-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 炒股 / 量化交易 / 选股 AI Skill 合集：收录国内外 GitHub 上的股票分析、量化交易、选股策略 Agent Skills（Claude Code / Agent Skills 格式），附索引与合规转载。
 
@@ -70,6 +70,8 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 | [templeton-global-contrarian](my-skills/templeton-global-contrarian) | A股邓普顿极度悲观逆向扫描器：52周位置、PE/PB自身历史低分位、缩量企稳、盈利为正，输出逆向买入观察清单 | MIT |
 | [fisher-growth-15](my-skills/fisher-growth-15) | A股费雪成长股15要点机械化：营收CAGR成长跑道、研发费用率、毛利率趋势、连续ROE、盈利含金量、财务保守六维打分，为"闲聊法"调研筛出候选 | MIT |
 | [neff-low-pe-total-return](my-skills/neff-low-pe-total-return) | A股约翰·聂夫低市盈率投资法：个股PE相对全市场中位数折价、(增速+股息率)/PE≥2总回报率黄金标准、股息率跨度年化、基本面底线七维打分 | MIT |
+| [bogle-index-investing](my-skills/bogle-index-investing) | A股约翰·博格指数投资法：宽基指数PE/PB近10年分位估值温度计、博格公式预期收益三项拆解（股息率+盈利增速+估值回归）、定投档位参考、月定投vs一次性回测 | MIT |
+| [oneil-canslim](my-skills/oneil-canslim) | A股威廉·欧奈尔CANSLIM七要素打分器：C最新季净利润同比≥25%、A年度增长、N距250日新高、S量能、L相对沪深300超额强度、I机构持股、M大盘50日线，逐字母通过表+池内RPS百分位 | MIT |
 
 ### 国内投资大佬系列
 
@@ -80,6 +82,8 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 | [qiu-guolu-simple-rules](my-skills/qiu-guolu-simple-rules) | A股邱国鹭"投资中最简单的事"三好打分器：好行业（数月亮不数星星）、好公司（龙头+高ROE）、好价格（PE/PB历史分位） | MIT |
 | [feng-liu-weak-side](my-skills/feng-liu-weak-side) | A股冯柳弱者体系逆向扫描：52周回撤、PE/PB三年历史分位、基本面未崩（盈利为正+营收未失速）、低关注度，输出赔率/概率逆向观察清单 | MIT |
 | [lin-yuan-monopoly-consumer](my-skills/lin-yuan-monopoly-consumer) | A股林园垄断+成瘾性消费投资法：嘴巴相关刚需龙头、毛利率≥50%、ROE≥15%、高分红、申万消费/医药行业过滤多维打分 | MIT |
+| [dan-bin-rose-of-time](my-skills/dan-bin-rose-of-time) | A股但斌"时间的玫瑰"伟大企业投资法：长坡（营收CAGR）、厚雪（高毛利率定价权）、复利引擎（连续ROE）、时间的玫瑰（财年归属精确年化分红）、含金量、财务健康、成长质量七维打分 | MIT |
+| [li-lu-value-compounding](my-skills/li-lu-value-compounding) | A股李录价值复利投资法：长期高ROE、复利趋势（近2年vs前3年不失速）、利润再投资成长、盈利含金量、PE/PB历史低分位安全边际、低负债六维打分 | MIT |
 
 ### 热点题材系列
 
@@ -105,6 +109,8 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 - **每日自动报告**：GitHub Action 每天 UTC 01:00 对 20 只 A 股代表股自动运行巴菲特筛股，结果提交到 [`reports/`](reports/)（最新报告：[reports/latest.md](reports/latest.md)）。
 - **段永平全池实测**（2026-09-26）：`screen.py --pool hs300`（300 只）→ 山西汾酒 86 分、迈瑞医疗 83 分、贵州茅台 82 分、五粮液 81 分、中国海油 81 分居前——高毛利现金牛行业整体领先。
 - **费雪/聂夫小样实测**（2026-09-26）：费雪框架下迈瑞医疗 78 分、海康威视 76 分居前（高研发成长股），茅台因研发率低被扣分；聂夫框架下招商银行 88 分（PE 仅为市场中位数 0.18 倍、股息率 6.34%、总回报率 2.33 过黄金线）。
+- **但斌/李录/欧奈尔小样实测**（2026-09-28）：但斌框架下贵州茅台 88 分（毛利率 91.9%、ROE 32.9%、财年口径股息率 4.18%）、五粮液 79 分；李录框架下茅台 88 分（PB 仅处 5 年 1.9% 分位，安全边际满分）；欧奈尔 CANSLIM 框架下海康威视 [C,N,L] 三项成立（季同比 39.6%），茅台低分正是动量框架与价值框架的互补性所在。
+- **博格指数温度计实测**（2026-09-28）：沪深300 PE 12.59（10 年分位 60%）、上证50 PE 10.64（58%）、中证500 78% 分位（减半档）；近 5 年月定投沪深300 年化 1.81% vs 一次性买入 -1.79%。
 - **收录技能实测对比**：16 个收录技能的结构化检查表（SKILL.md 规范性、依赖、API key、是否实测跑通）见 [docs/skill-review.md](docs/skill-review.md)。
 
 ## 索引目录

@@ -1,0 +1,4 @@
+﻿code,total,C_score,A_score,N_score,S_score,L_score,I_score,M_score,passed_letters,quarter_yoy,annual_growth_3y,dist_from_250d_high,vol_ratio_5_60,excess_ret_120d,inst_hold_ratio,close,a_source,note,data_date,name,industry,rps_percentile
+002415,48,20,5,8,0,10,5,0,"C,N,L",39.6,5.3,-15.4,0.5,10.7,,32.16,akshare.stock_financial_analysis_indicator,机构持股无数据，给中性分(5/10),2026-09-28,海康威视,计算机设备,
+600519,18,0,5,8,0,0,5,0,N,-1.9,9.8,-18.1,0.75,-11.5,,1243.88,akshare.stock_financial_analysis_indicator,机构持股无数据，给中性分(5/10),2026-09-28,贵州茅台,白酒Ⅱ,
+300760,10,0,0,0,0,5,5,0,,-5.4,-2.0,-34.7,0.64,2.2,,158.29,akshare.stock_financial_analysis_indicator,机构持股无数据，给中性分(5/10),2026-09-28,迈瑞医疗,医疗器械,
