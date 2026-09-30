@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![收录技能](https://img.shields.io/badge/收录技能-16-blue?style=flat-square) ![原创技能](https://img.shields.io/badge/原创技能-28-green?style=flat-square) ![语言](https://img.shields.io/badge/语言-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![收录技能](https://img.shields.io/badge/收录技能-16-blue?style=flat-square) ![原创技能](https://img.shields.io/badge/原创技能-29-green?style=flat-square) ![语言](https://img.shields.io/badge/语言-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 炒股 / 量化交易 / 选股 AI Skill 合集：收录国内外 GitHub 上的股票分析、量化交易、选股策略 Agent Skills（Claude Code / Agent Skills 格式），附索引与合规转载。
 
@@ -98,6 +98,7 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 | 目录 | 简介 | License |
 |---|---|---|
 | [master-ensemble](my-skills/master-ensemble) | 大师共识筛选器：把任意多个大师 skill 的打分结果 CSV 按框架内百分位归一化，合成共识分与顶级命中数，输出"多条独立思路同时指向"的跨框架交集标的（纯本地合成，秒级） | MIT |
+| [framework-backtest](my-skills/framework-backtest) | 大师框架回测验证器：月度调仓回测各大师 skill 的打分框架在 A 股的历史真实表现（等权持有前 N 名 vs 沪深300），时点正确（point-in-time）无未来函数，输出年化/超额/最大回撤/夏普与逐年对照表 | MIT |
 
 ### 原有
 
@@ -107,7 +108,7 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 
 ## 演示 / Demo
 
-原创技能均为真实可运行代码，附实跑输出（2026-08-26 实测，akshare 1.18.94，数据为当日真实行情与财务数据）：
+原创技能均为真实可运行代码，多数附实跑输出（2026-09-30 实测，akshare 1.18.96，数据为当日真实行情与财务数据）：
 
 - **巴菲特筛股实测**：`screen.py --codes 600519,000858,600036` → 贵州茅台 100 分（5 年 ROE 27.7%–37.0%、毛利率 91.7%、PE/PB 分位 0.07/0.03）、五粮液 94 分、招商银行 47 分（金融业高杠杆被正确扣分）。完整输出：[my-skills/buffett-value-investing/docs/demo.md](my-skills/buffett-value-investing/docs/demo.md)
 - **单股分析实测**：`analyze.py 600519` → 护城河清单 + 5 年财务趋势 + 估值区间（保守估值 1547.89 元 / 安全边际参考价 1083.52 元）。

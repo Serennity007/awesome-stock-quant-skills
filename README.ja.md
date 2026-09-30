@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![収録スキル](https://img.shields.io/badge/収録スキル-16-blue?style=flat-square) ![オリジナルスキル](https://img.shields.io/badge/オリジナルスキル-28-green?style=flat-square) ![言語](https://img.shields.io/badge/言語-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![収録スキル](https://img.shields.io/badge/収録スキル-16-blue?style=flat-square) ![オリジナルスキル](https://img.shields.io/badge/オリジナルスキル-29-green?style=flat-square) ![言語](https://img.shields.io/badge/言語-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 株式トレード / クオンツトレード / 銘柄スクリーニング AI Skill コレクション：国内外の GitHub から株式分析・クオンツトレード・スクリーニング戦略の Agent Skills（Claude Code / Agent Skills 形式）を収録し、インデックスとライセンス遵守の転載を付記。
 
@@ -98,6 +98,7 @@ cp -r skills/<作者>__<スキル名> ~/.agents/skills/
 | ディレクトリ | 概要 | License |
 |---|---|---|
 | [master-ensemble](my-skills/master-ensemble) | マスター合意スクリーナー：複数のマスタースキルのスコア結果CSVをフレームワーク内パーセンタイルで正規化し、合意スコア+トップヒット数を合成、「複数の独立した手法が同時に指す」クロスフレームワーク交差銘柄を出力（純ローカル合成、数秒で完了） | MIT |
+| [framework-backtest](my-skills/framework-backtest) | マスター框架バックテスト検証器：各マスタースキルの採点框架をA株で月次リバランスし検証（等上位N銘柄 vs 滬深300）、時点正確（point-in-time）、未来関数なし、年率/超過/最大DD/シャープと逐年対照表を出力 | MIT |
 
 ### 既存
 
@@ -107,7 +108,7 @@ cp -r skills/<作者>__<スキル名> ~/.agents/skills/
 
 ## デモ
 
-オリジナルスキルはすべて実際に実行可能なコードで、実走の出力を添付（2026-08-26 実測、akshare 1.18.94、当日の実際の相場・財務データ）：
+オリジナルスキルは実際に実行可能なコードで、多くは実走の出力を添付（2026-09-30 実測、akshare 1.18.96、当日の実際の相場・財務データ）：
 
 - **バフェットスクリーニング実測**：`screen.py --codes 600519,000858,600036` → 貴州茅台 100 点（5年連続 ROE 27.7%–37.0%、粗利率 91.7%、PE/PB パーセンタイル 0.07/0.03）、五糧液 94 点、招商銀行 47 点（金融業の高レバレッジが正しく減点）。完全な出力：[my-skills/buffett-value-investing/docs/demo.ja.md](my-skills/buffett-value-investing/docs/demo.ja.md)
 - **個別株分析実測**：`analyze.py 600519` → 堀チェックリスト + 5年財務トレンド + バリュエーションレンジ（保守的評価 1547.89 元 / 安全マージン参考値 1083.52 元）。

@@ -439,7 +439,7 @@ def main():
     ap.add_argument("--top", type=int, default=20, help="终端展示前 N 名")
     ap.add_argument("--out", default="garp_result.csv", help="CSV 输出路径")
     ap.add_argument("--sleep", type=float, default=0.3, help="每只股票间隔秒数(防限流)")
-    ap.add_argument("--max-debt", type=float, default=60.0, help="负债率阈值（默认 60%），仅影响 PASS 标记")
+    ap.add_argument("--max-debt", type=float, default=60.0, help="负债率阈值（默认 60%%），仅影响 PASS 标记")
     args = ap.parse_args()
 
     _disable_proxies()

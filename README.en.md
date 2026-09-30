@@ -2,7 +2,7 @@
 
 **[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![Collected skills](https://img.shields.io/badge/collected%20skills-16-blue?style=flat-square) ![Original skills](https://img.shields.io/badge/original%20skills-28-green?style=flat-square) ![Languages](https://img.shields.io/badge/languages-ZH%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![Collected skills](https://img.shields.io/badge/collected%20skills-16-blue?style=flat-square) ![Original skills](https://img.shields.io/badge/original%20skills-29-green?style=flat-square) ![Languages](https://img.shields.io/badge/languages-ZH%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
 
 A curated collection of stock trading / quantitative trading / stock screening AI Skills: Agent Skills (Claude Code / Agent Skills format) for stock analysis, quant trading, and screening strategies from GitHub projects in China and abroad, with an index and license-compliant reprints.
 
@@ -98,6 +98,7 @@ Skills originally created by this repository's author (Serennity007), placed und
 | Directory | Description | License |
 |---|---|---|
 | [master-ensemble](my-skills/master-ensemble) | Master-consensus screener: merges scoring CSVs from any master skills, percentile-normalizes within each framework, synthesizes a consensus score + top-hit count, and outputs cross-framework intersection stocks ("multiple independent methodologies pointing at the same stock") — pure local merging, finishes in seconds | MIT |
+| [framework-backtest](my-skills/framework-backtest) | Master-framework backtest validator: monthly-rebalanced backtest of each master framework on A-shares (equal-weight top-N vs CSI 300), point-in-time scoring, no look-ahead bias, outputs CAGR/excess/max-drawdown/Sharpe with yearly comparison tables | MIT |
 
 ### Original
 
@@ -107,7 +108,7 @@ Skills originally created by this repository's author (Serennity007), placed und
 
 ## Demo
 
-All original skills are runnable code with real captured outputs (tested 2026-08-26, akshare 1.18.94, genuine market and financial data of that day):
+Original skills are runnable code; most come with real captured outputs (tested 2026-09-30, akshare 1.18.96, genuine market and financial data of that day):
 
 - **Buffett screen run**: `screen.py --codes 600519,000858,600036` → Kweichow Moutai 100 (5-year ROE 27.7%–37.0%, gross margin 91.7%, PE/PB percentile 0.07/0.03), Wuliangye 94, China Merchants Bank 47 (financial-sector leverage correctly penalized). Full output: [my-skills/buffett-value-investing/docs/demo.en.md](my-skills/buffett-value-investing/docs/demo.en.md)
 - **Single-stock analysis run**: `analyze.py 600519` → moat checklist + 5-year financial trend + valuation range (conservative value 1547.89 CNY / margin-of-safety reference 1083.52 CNY).

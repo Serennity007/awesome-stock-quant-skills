@@ -1,0 +1,5 @@
+# Generated data and outputs
+cache/
+results/
+*.log
+*.flag
