@@ -207,4 +207,4 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 
 ## License
 
-本合集自身的整理内容（README、索引、SOURCE.md）采用 [MIT License](LICENSE)。`skills/` 下各技能以各自原仓库 License 为准，详见各目录内的 LICENSE 与 SOURCE.md。
+本合集自身的整理内容（README、索引、SOURCE.md）采用 [MIT License](LICENSE)。`skills/` 下各技能以各自原仓库 License 为准，详见各目录内的 LICENSE 与 SOURCE.md，完整转载清单见 [docs/NOTICE.md](docs/NOTICE.md)。
