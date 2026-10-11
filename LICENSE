@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 liangzhengtao
+Copyright (c) 2026 Serennity007
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,7 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-Note: This license applies only to the curation content of this repository
-(README, indexes, SOURCE.md files). Each skill under skills/ is governed by
-its own original license; see the LICENSE and SOURCE.md in each directory.
