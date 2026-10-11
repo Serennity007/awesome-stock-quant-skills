@@ -207,4 +207,7 @@ The following projects are index-only (license does not permit reprinting, too l
 
 ## License
 
+A full list of every redistributed skill and its upstream license is in [docs/NOTICE.md](docs/NOTICE.md).
+
+
 The curation content of this collection itself (README, indexes, SOURCE.md) is licensed under the [MIT License](LICENSE). Each skill under `skills/` is governed by its original repository's license; see the LICENSE and SOURCE.md in each directory.
