@@ -26,7 +26,7 @@ python scripts/us_hot.py --out us_hot.csv
 | テーマ | 銘柄 | キーパーソン |
 |---|---|---|
 | AIコンピュート | NVDA、AVGO、ORCL、GOOGL | ジェンセン・フアン（NVDA） |
-| ストレージ | SNDK、WDC | — |
+| ストレージ | SNDK、WDC | David Goeckeler（Sandisk 会長兼 CEO） |
 | AIアプリ | PLTR | Alex Karp |
 | robotaxi / 人物概念 | TSLA | イーロン・マスク |
 

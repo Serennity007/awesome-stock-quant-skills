@@ -26,7 +26,7 @@ python scripts/us_hot.py --out us_hot.csv
 | 标签 | 标的 | 关键人物 |
 |---|---|---|
 | AI 算力 | NVDA、AVGO、ORCL、GOOGL | 黄仁勋（NVDA） |
-| 存储 | SNDK、WDC | — |
+| 存储 | SNDK、WDC | David Goeckeler（SNDK 董事长兼 CEO） |
 | AI 应用 | PLTR | Alex Karp |
 | robotaxi / 人物概念 | TSLA | 马斯克 |
 

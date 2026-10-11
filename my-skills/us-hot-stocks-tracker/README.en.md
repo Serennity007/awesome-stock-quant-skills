@@ -26,7 +26,7 @@ python scripts/us_hot.py --out us_hot.csv
 | Theme | Tickers | Key figure |
 |---|---|---|
 | AI compute | NVDA, AVGO, ORCL, GOOGL | Jensen Huang (NVDA) |
-| Storage | SNDK, WDC | — |
+| Storage | SNDK, WDC | David Goeckeler (Sandisk chairman & CEO) |
 | AI application | PLTR | Alex Karp |
 | robotaxi / personality play | TSLA | Elon Musk |
 
