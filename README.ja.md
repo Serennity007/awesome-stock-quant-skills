@@ -207,4 +207,4 @@ cp -r skills/<作者>__<スキル名> ~/.agents/skills/
 
 ## License
 
-本コレクション自体の整理コンテンツ（README、インデックス、SOURCE.md）は [MIT License](LICENSE) を適用します。`skills/` 配下の各スキルはそれぞれの元リポジトリのライセンスに従います。詳細は各ディレクトリ内の LICENSE と SOURCE.md を参照してください。
+本コレクション自体の整理コンテンツ（README、インデックス、SOURCE.md）は [MIT License](LICENSE) を適用します。`skills/` 配下の各スキルはそれぞれの元リポジトリのライセンスに従います。詳細は各ディレクトリ内の LICENSE と SOURCE.md、および転載一覧である [docs/NOTICE.md](docs/NOTICE.md) を参照してください。
