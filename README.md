@@ -174,6 +174,7 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 | [jesse-ai/jesse](https://github.com/jesse-ai/jesse) | 加密货币交易机器人 | 8.4k | MIT | 仅索引 |
 | [ricequant/rqalpha](https://github.com/ricequant/rqalpha) | 米筐A股回测框架 | 6.7k | NOASSERTION | 仅索引，未转载 |
 | [zvtvz/zvt](https://github.com/zvtvz/zvt) | 模块化量化框架 | 4.3k | MIT | 仅索引 |
+| [Lumiwealth/lumibot](https://github.com/Lumiwealth/lumibot) | 回测与实盘同一套代码的 Python 交易框架，支持 12 家券商 | 2.2k | GPL-3.0 | GPL 不转载，仅索引 |
 
 ### D. 数据接口
 
