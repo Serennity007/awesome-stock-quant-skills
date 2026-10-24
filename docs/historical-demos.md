@@ -17,4 +17,3 @@
 - **大师共识实测**（2026-09-28）：三框架共识筛选器 `master-ensemble` 上线——亿联网络 96.4（3 框架全部前 10%）、药明康德 95.9、新易盛 92.0、中际旭创 91.9 居前，通信设备板块被价值与动量框架同时看好（AI 算力业绩兑现的典型形态）。见 [my-skills/master-ensemble/consensus_hs300_demo.csv](../my-skills/master-ensemble/consensus_hs300_demo.csv)。
 - **博格指数温度计实测**（2026-09-28）：沪深300 PE 12.59（10 年分位 60%）、上证50 PE 10.64（58%）、中证500 78% 分位（减半档）；近 5 年月定投沪深300 年化 1.81% vs 一次性买入 -1.79%。
 - **收录技能实测对比**：16 个收录技能的结构化检查表（SKILL.md 规范性、依赖、API key、是否实测跑通）见 [docs/skill-review.md](../docs/skill-review.md)。
-

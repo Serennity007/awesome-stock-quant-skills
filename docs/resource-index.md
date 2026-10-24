@@ -82,4 +82,3 @@
 | [VoltAgent/awesome-claude-skills](https://github.com/VoltAgent/awesome-claude-skills) | 含 Web3/Trading 分区 | — | — | 仅索引 |
 | [shishirui/awesome-claude-skills-zh](https://github.com/shishirui/awesome-claude-skills-zh) | 中文 skills 索引 | 15 | CC0-1.0 | 仅索引 |
 | [yzfly/awesome-skills-zh](https://github.com/yzfly/awesome-skills-zh) | 中文 skills 索引 | 29 | Apache-2.0 | 仅索引 |
-
