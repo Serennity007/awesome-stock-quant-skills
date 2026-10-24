@@ -1,17 +1,41 @@
-# Awesome Stock Quant Skills
-
-**Stock research you can run, inspect and reproduce.**
-
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
+![Stock Quant Skills](.github/quant-research.svg)
+
+# AI Stock Screening & Quant Research Toolchain
+
+`awesome-stock-quant-skills`
+
+[![GitHub Stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square&color=00d4ff)](https://github.com/Serennity007/awesome-stock-quant-skills/stargazers) [![GitHub Forks](https://img.shields.io/github/forks/Serennity007/awesome-stock-quant-skills?style=flat-square&color=8b5cf6)](https://github.com/Serennity007/awesome-stock-quant-skills/forks) [![Original code: MIT](https://img.shields.io/badge/original_code-MIT-22c55e?style=flat-square)](LICENSE)
+
+Investment research implemented as Agent Skills and Python scripts: financial screening, factor ranking, multi-framework consensus and backtesting with transaction costs. Covers A-share research and US hot-stock tracking.
+
+**Enhanced version: 30 original Skills · 23 investment-method reference frameworks · 32 Python scripts · 35 passing behavioral tests.**
+
+**41 Stars / 8 Forks** on GitHub as of 2026-10-24. Original implementations, third-party source snapshots and external links are maintained separately; 16 source directories contain 225 vendored `SKILL.md` files.
 
 <!-- inventory: originals=30 mirrors=16 vendored=225 -->
 
-**30 original skills · 16 third-party source snapshots · 225 vendored SKILL.md files · Chinese / English / Japanese docs**
+**[Use the enhanced version](https://github.com/Serennity007/awesome-stock-quant-skills/tree/codex/quant-skills-refresh) · [Validation scope](https://github.com/Serennity007/awesome-stock-quant-skills/blob/c46da26575289ddaab5587d31e7f718f9ac22a2e/docs/validation.md) · [Live-data run](https://github.com/Serennity007/awesome-stock-quant-skills/blob/c46da26575289ddaab5587d31e7f718f9ac22a2e/examples/verification/2026-10-24/buffett-check.json)**
 
-An Agent Skills toolbox for stock analysis and quantitative research: A-share quality, value, growth, momentum, themes and index allocation, plus US hot-stock tracking. Run the Python scripts directly, or let an Agent Skills-compatible assistant choose a workflow.
+## Research tasks, concrete outputs
 
-The useful chain is **choose a framework → fetch data → inspect component scores → compare frameworks → examine historical performance**. Scores remain linked to rules, inputs and limitations.
+| Task | Implementation | Inspectable outputs |
+|---|---|---|
+| Financial quality and valuation | Buffett, Munger and Li Lu reference frameworks | Financial series, valuation percentiles and component deductions |
+| Growth, momentum and themes | Lynch, Fisher, CANSLIM, theme scanning and concept mapping | Growth metrics, relative strength, sectors and candidates |
+| Compare screening frameworks | Percentile normalization and consensus ranking | Consensus scores, coverage, input hashes and parameters |
+| Examine historical behavior | Monthly rebalancing, drift-aware turnover and transaction costs | Gross/net returns, holdings, benchmark and data manifest |
+
+## Engineering behind the research
+
+Combine task routing, retrieval, scoring, consensus and historical checks around a research question. Run Python scripts directly or load individual Skills in an agent. CSV and JSON outputs preserve results for inspection and further analysis.
+
+The enhanced version checks annual reporting periods, valuation dates, TTM fields, missing financials and consensus inputs, and records trading costs and holdings. Its 23 methodology Skills are rule-based references to public investment methods.
+
+## Hands-on validation
+
+On 2026-10-24, **AKShare 1.19.3** retrieved real financial data and completed screening for **600519**, spanning **FY2021–2025**, with a **2026-10-23** valuation observation. **35 behavioral tests** cover missing financials, valuation dates, consensus validation, turnover and costs. Original JSON, CSV, scope and reproduction commands are public. This validates retrieval and calculation; investment performance requires separate evidence.
 
 ## What makes it useful
 

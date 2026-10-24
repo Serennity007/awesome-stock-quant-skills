@@ -1,17 +1,32 @@
-# Awesome Stock Quant Skills
-
-**株式リサーチの問いを、実行・検証できるワークフローへ。**
-
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
+![Stock Quant Skills](.github/quant-research.svg)
+
+# AI 銘柄スクリーニング・クオンツ研究ツールチェーン
+
+`awesome-stock-quant-skills`
+
+[![GitHub Stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square&color=00d4ff)](https://github.com/Serennity007/awesome-stock-quant-skills/stargazers) [![GitHub Forks](https://img.shields.io/github/forks/Serennity007/awesome-stock-quant-skills?style=flat-square&color=8b5cf6)](https://github.com/Serennity007/awesome-stock-quant-skills/forks) [![Original code: MIT](https://img.shields.io/badge/original_code-MIT-22c55e?style=flat-square)](LICENSE)
+
+投資手法を Agent Skills と Python スクリプトで実装。財務スクリーニング、ファクター評価、複数手法の比較、取引費用を含むバックテストに対応し、A 株研究と米国注目銘柄の追跡を扱います。
+
+**拡張版：オリジナル Skill 30 件 · 投資手法の参考フレームワーク 23 件 · Python スクリプト 32 本 · 動作テスト 35 件合格。**
+
+GitHub は **41 Stars / 8 Forks**（2026-10-24 時点）。オリジナル実装と第三者ソースを区分し、16 のソースディレクトリに 225 の `SKILL.md` を収録しています。
 
 <!-- inventory: originals=30 mirrors=16 vendored=225 -->
 
-**オリジナル skill 30 件 · 第三者ソースのスナップショット 16 件 · 収録 SKILL.md 225 ファイル · 中英日ドキュメント**
+**[拡張版を使う](https://github.com/Serennity007/awesome-stock-quant-skills/tree/codex/quant-skills-refresh) · [検証範囲](https://github.com/Serennity007/awesome-stock-quant-skills/blob/c46da26575289ddaab5587d31e7f718f9ac22a2e/docs/validation.md) · [実データ実行記録](https://github.com/Serennity007/awesome-stock-quant-skills/blob/c46da26575289ddaab5587d31e7f718f9ac22a2e/examples/verification/2026-10-24/buffett-check.json)**
 
-A 株の企業品質・割安度・成長・モメンタム・テーマ・指数配分と、米国の注目銘柄追跡を扱う Agent Skills ツールボックスです。Python スクリプトを直接実行するほか、対応する AI アシスタントから利用できます。
+## 具体的な研究タスクと出力
 
-**手法の選択 → データ取得 → 項目別評価 → 複数手法の比較 → 過去の検証**を、入力・ルール・制約までたどれる形で進めます。
+財務品質・割安度、成長・モメンタム・テーマ、複数フレームワークの順位比較、月次回測を扱います。項目別スコア、財報期、評価日、カバレッジ、入力ハッシュ、費用と保有明細を出力から確認できます。
+
+拡張版は年報期・TTM・評価日の整合性、欠損財務と合意入力を検証します。23 の手法 Skill は公開投資手法のルール化した参考実装です。
+
+## 実データと動作の検証
+
+2026-10-24、**AKShare 1.19.3** で **600519** の取得・スクリーニングを実行。**2021–2025 年報**と **2026-10-23** の評価観測を確認し、**35 件の動作テスト**に合格しました。JSON・CSV・再現手順を公開しています。これは取得と計算の検証であり、投資収益には別の根拠が必要です。
 
 ## 実装を確認できる強み
 

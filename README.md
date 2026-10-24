@@ -1,21 +1,43 @@
-# Awesome Stock Quant Skills
-
-**让股票研究跑得通、查得清、经得起重算。**
-
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-[![Stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square)](https://github.com/Serennity007/awesome-stock-quant-skills/stargazers)
-[![License](https://img.shields.io/badge/curation-MIT-blue?style=flat-square)](LICENSE)
+![Stock Quant Skills](.github/quant-research.svg)
+
+# AI 选股与量化投研工具链
+
+`awesome-stock-quant-skills`
+
+[![GitHub Stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square&color=00d4ff)](https://github.com/Serennity007/awesome-stock-quant-skills/stargazers) [![GitHub Forks](https://img.shields.io/github/forks/Serennity007/awesome-stock-quant-skills?style=flat-square&color=8b5cf6)](https://github.com/Serennity007/awesome-stock-quant-skills/forks) [![Original code: MIT](https://img.shields.io/badge/original_code-MIT-22c55e?style=flat-square)](LICENSE)
+
+将价值、成长、动量、宏观周期与资产配置方法实现为 Agent Skills 和 Python 脚本，支持财务筛选、因子打分、多框架共识与含交易成本的回测。面向 A 股研究，并提供美股热门股追踪。
+
+**增强版：30 个原创 Skill · 23 套投资方法参考框架 · 32 个 Python 脚本 · 35 项行为测试通过。**
+
+GitHub 已获 **41 Stars / 8 Forks**（截至 2026-10-24）。原创实现、第三方来源快照与外部资源索引分别维护；16 个第三方来源目录收录 225 份 `SKILL.md`。
 
 <!-- inventory: originals=30 mirrors=16 vendored=225 -->
 
-**30 个原创 skill · 16 个第三方来源快照 · 225 份第三方 SKILL.md · 中英日文档**
+**[使用增强版](https://github.com/Serennity007/awesome-stock-quant-skills/tree/codex/quant-skills-refresh) · [验证范围](https://github.com/Serennity007/awesome-stock-quant-skills/blob/c46da26575289ddaab5587d31e7f718f9ac22a2e/docs/validation.md) · [真实取数记录](https://github.com/Serennity007/awesome-stock-quant-skills/blob/c46da26575289ddaab5587d31e7f718f9ac22a2e/examples/verification/2026-10-24/buffett-check.json)**
 
-面向股票分析与量化研究的 Agent Skills 工具箱：覆盖 A 股价值、成长、动量、题材、指数配置，以及美股热门股追踪。既可以直接运行 Python 脚本，也可以让支持 Agent Skills 的助手按研究目标调用。
+## 你可以用它完成什么
 
-这里最有价值的，是从**选框架 → 跑数据 → 看分项 → 合成排序 → 检查历史表现**形成可复查的研究链路。原创方法框架、第三方技能和外部资源索引分别维护；每个分数都应能回到规则、输入和适用条件。
+| 研究任务 | 已有实现 | 可以检查的产物 |
+|---|---|---|
+| 财务质量与估值初筛 | 巴菲特、芒格、李录等参考框架 | ROE、毛利率、现金流、估值分位及分项扣分 |
+| 成长、动量与题材研究 | 林奇、费雪、CANSLIM、热点扫描与概念映射 | 增长指标、相对强度、板块和候选清单 |
+| 比较不同选股框架 | 多框架百分位归一化与共识排序 | 共识分、覆盖数、输入哈希与参数记录 |
+| 检查框架的历史表现 | 月度调仓、漂移后换手与交易成本计算 | 毛净收益、持仓明细、基准和数据清单 |
 
-[快速开始](#快速开始) · [按任务选技能](#按任务选技能) · [验证证据](docs/validation.md) · [原创技能全表](#原创技能) · [第三方收录](#第三方收录) · [外部资源索引](docs/resource-index.md)
+## 值得关注的工程实现
+
+**任务路由、数据取数、规则评分、共识排序、历史检验**可以按研究目标组合。Python 脚本支持直接运行，Agent 按需加载 Skill；CSV 与 JSON 记录把计算结果留在本地，便于检查和二次分析。
+
+增强版已落实年报期对齐、估值日期与 TTM 字段核对、缺失财务状态、共识输入校验，以及回测交易成本和持仓审计。参考方法覆盖 16 个海外投资方法 Skill 与 7 个国内投资方法 Skill；这些是公开方法的规则化参考实现。
+
+## 个人实测与验证
+
+2026-10-24 使用 **AKShare 1.19.3**，完成 **600519 单股真实财务取数与筛选计算**，取得 **2021–2025 五个年报期间**，估值交易日为 **2026-10-23**。35 项行为测试覆盖财务缺失、估值日期、共识校验、换手和成本等行为。
+
+原始 JSON、筛选 CSV、验证范围和本地复现命令均已公开。实测说明取数与计算链路已验证；收益与策略有效性需要另行检验。
 
 ## 核心能力，经得起看代码和重跑
 
