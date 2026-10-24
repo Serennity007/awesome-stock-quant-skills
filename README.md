@@ -1,17 +1,49 @@
-# awesome-stock-quant-skills
+[中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
+![Stock Quant Skills](.github/quant-research.svg)
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![收录技能](https://img.shields.io/badge/收录技能-16-blue?style=flat-square) ![原创技能](https://img.shields.io/badge/原创技能-29-green?style=flat-square) ![语言](https://img.shields.io/badge/语言-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+# AI 选股与量化投研工具链
 
-炒股 / 量化交易 / 选股 AI Skill 合集：收录国内外 GitHub 上的股票分析、量化交易、选股策略 Agent Skills（Claude Code / Agent Skills 格式），附索引与合规转载。
+`awesome-stock-quant-skills`
 
-- **合规原则**：`skills/` 目录仅收录 License 为 MIT / Apache-2.0 / BSD / CC0 的项目，并保留原 LICENSE 文件与 SOURCE.md 来源说明；无 License、GPL、AGPL、NOASSERTION 的项目一律只进索引、不复制文件。
-- 收录日期：2026-08-25。
+[![GitHub Stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square&color=00d4ff)](https://github.com/Serennity007/awesome-stock-quant-skills/stargazers) [![GitHub Forks](https://img.shields.io/github/forks/Serennity007/awesome-stock-quant-skills?style=flat-square&color=8b5cf6)](https://github.com/Serennity007/awesome-stock-quant-skills/forks) [![Original code: MIT](https://img.shields.io/badge/original_code-MIT-22c55e?style=flat-square)](LICENSE)
+
+将价值、成长、动量、宏观周期与资产配置方法实现为 Agent Skills 和 Python 脚本，支持财务筛选、因子打分、多框架共识与含交易成本的回测。面向 A 股研究，并提供美股热门股追踪。
+
+**增强版：30 个原创 Skill · 23 套投资方法参考框架 · 32 个 Python 脚本 · 35 项行为测试通过。**
+
+GitHub 已获 **41 Stars / 8 Forks**（截至 2026-10-24）。原创实现、第三方来源快照与外部资源索引分别维护；16 个第三方来源目录收录 225 份 `SKILL.md`。
+
+**版本说明：本分支保留 29 个原创 Skill。上面的 30 / 23 / 32 / 35 与实测记录对应 [增强版](https://github.com/Serennity007/awesome-stock-quant-skills/tree/codex/quant-skills-refresh)，该版本新增研究工作流入口及数据、共识和回测校验。**
+
+**[使用增强版](https://github.com/Serennity007/awesome-stock-quant-skills/tree/codex/quant-skills-refresh) · [验证范围](https://github.com/Serennity007/awesome-stock-quant-skills/blob/c46da26575289ddaab5587d31e7f718f9ac22a2e/docs/validation.md) · [真实取数记录](https://github.com/Serennity007/awesome-stock-quant-skills/blob/c46da26575289ddaab5587d31e7f718f9ac22a2e/examples/verification/2026-10-24/buffett-check.json)**
+
+## 你可以用它完成什么
+
+| 研究任务 | 已有实现 | 可以检查的产物 |
+|---|---|---|
+| 财务质量与估值初筛 | 巴菲特、芒格、李录等参考框架 | ROE、毛利率、现金流、估值分位及分项扣分 |
+| 成长、动量与题材研究 | 林奇、费雪、CANSLIM、热点扫描与概念映射 | 增长指标、相对强度、板块和候选清单 |
+| 比较不同选股框架 | 多框架百分位归一化与共识排序 | 共识分、覆盖数、输入哈希与参数记录 |
+| 检查框架的历史表现 | 月度调仓、漂移后换手与交易成本计算 | 毛净收益、持仓明细、基准和数据清单 |
+
+## 值得关注的工程实现
+
+**任务路由、数据取数、规则评分、共识排序、历史检验**可以按研究目标组合。Python 脚本支持直接运行，Agent 按需加载 Skill；CSV 与 JSON 记录把计算结果留在本地，便于检查和二次分析。
+
+增强版已落实年报期对齐、估值日期与 TTM 字段核对、缺失财务状态、共识输入校验，以及回测交易成本和持仓审计。参考方法覆盖 16 个海外投资方法 Skill 与 7 个国内投资方法 Skill；这些是公开方法的规则化参考实现。
+
+## 个人实测与验证
+
+2026-10-24 使用 **AKShare 1.19.3**，完成 **600519 单股真实财务取数与筛选计算**，取得 **2021–2025 五个年报期间**，估值交易日为 **2026-10-23**。35 项行为测试覆盖财务缺失、估值日期、共识校验、换手和成本等行为。
+
+原始 JSON、筛选 CSV、验证范围和本地复现命令均已公开。实测说明取数与计算链路已验证；收益与策略有效性需要另行检验。
 
 ## 免责声明
 
 本仓库内容仅供学习研究使用，不构成任何投资建议。股市有风险，投资需谨慎。所有技能版权归原作者及原仓库所有，如有侵权请联系删除。
+
+第三方收录仅复制 MIT / Apache-2.0 / BSD / CC0 授权内容，保留原许可证与 `SOURCE.md`；其他项目仅作外部索引。初始收录日期为 2026-08-25。
 
 ## 使用说明
 

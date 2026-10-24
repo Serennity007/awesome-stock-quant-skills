@@ -1,17 +1,38 @@
-# awesome-stock-quant-skills
+[中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
+![Stock Quant Skills](.github/quant-research.svg)
 
-![GitHub stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square) ![License](https://img.shields.io/github/license/Serennity007/awesome-stock-quant-skills?style=flat-square) ![収録スキル](https://img.shields.io/badge/収録スキル-16-blue?style=flat-square) ![オリジナルスキル](https://img.shields.io/badge/オリジナルスキル-29-green?style=flat-square) ![言語](https://img.shields.io/badge/言語-中文%20%7C%20EN%20%7C%20JA-orange?style=flat-square)
+# AI 銘柄スクリーニング・クオンツ研究ツールチェーン
 
-株式トレード / クオンツトレード / 銘柄スクリーニング AI Skill コレクション：国内外の GitHub から株式分析・クオンツトレード・スクリーニング戦略の Agent Skills（Claude Code / Agent Skills 形式）を収録し、インデックスとライセンス遵守の転載を付記。
+`awesome-stock-quant-skills`
 
-- **コンプライアンス原則**：`skills/` ディレクトリには MIT / Apache-2.0 / BSD / CC0 ライセンスのプロジェクトのみを収録し、元の LICENSE ファイルと SOURCE.md の出典情報を保持します。ライセンスなし・GPL・AGPL・NOASSERTION のプロジェクトはインデックスのみで、ファイルはコピーしません。
-- 収録日：2026-08-25。
+[![GitHub Stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square&color=00d4ff)](https://github.com/Serennity007/awesome-stock-quant-skills/stargazers) [![GitHub Forks](https://img.shields.io/github/forks/Serennity007/awesome-stock-quant-skills?style=flat-square&color=8b5cf6)](https://github.com/Serennity007/awesome-stock-quant-skills/forks) [![Original code: MIT](https://img.shields.io/badge/original_code-MIT-22c55e?style=flat-square)](LICENSE)
+
+投資手法を Agent Skills と Python スクリプトで実装。財務スクリーニング、ファクター評価、複数手法の比較、取引費用を含むバックテストに対応し、A 株研究と米国注目銘柄の追跡を扱います。
+
+**拡張版：オリジナル Skill 30 件 · 投資手法の参考フレームワーク 23 件 · Python スクリプト 32 本 · 動作テスト 35 件合格。**
+
+GitHub は **41 Stars / 8 Forks**（2026-10-24 時点）。オリジナル実装と第三者ソースを区分し、16 のソースディレクトリに 225 の `SKILL.md` を収録しています。
+
+**バージョン：このブランチはオリジナル Skill 29 件を含みます。30 / 23 / 32 / 35 と検証記録は、研究フローとデータ・合意・回測の検証を追加した[拡張版](https://github.com/Serennity007/awesome-stock-quant-skills/tree/codex/quant-skills-refresh)に対応します。**
+
+**[拡張版を使う](https://github.com/Serennity007/awesome-stock-quant-skills/tree/codex/quant-skills-refresh) · [検証範囲](https://github.com/Serennity007/awesome-stock-quant-skills/blob/c46da26575289ddaab5587d31e7f718f9ac22a2e/docs/validation.md) · [実データ実行記録](https://github.com/Serennity007/awesome-stock-quant-skills/blob/c46da26575289ddaab5587d31e7f718f9ac22a2e/examples/verification/2026-10-24/buffett-check.json)**
+
+## 具体的な研究タスクと出力
+
+財務品質・割安度、成長・モメンタム・テーマ、複数フレームワークの順位比較、月次回測を扱います。項目別スコア、財報期、評価日、カバレッジ、入力ハッシュ、費用と保有明細を出力から確認できます。
+
+拡張版は年報期・TTM・評価日の整合性、欠損財務と合意入力を検証します。23 の手法 Skill は公開投資手法のルール化した参考実装です。
+
+## 実データと動作の検証
+
+2026-10-24、**AKShare 1.19.3** で **600519** の取得・スクリーニングを実行。**2021–2025 年報**と **2026-10-23** の評価観測を確認し、**35 件の動作テスト**に合格しました。JSON・CSV・再現手順を公開しています。これは取得と計算の検証であり、投資収益には別の根拠が必要です。
 
 ## 免責事項
 
 本リポジトリの内容は学習・研究目的のみを対象とし、投資助言を構成するものではありません。市場にはリスクが伴います。投資は慎重に行ってください。すべてのスキルの著作権は原作者および元リポジトリに帰属します。削除をご希望の場合はご連絡ください。
+
+第三者コンテンツの収録は MIT / Apache-2.0 / BSD / CC0 に限定し、ライセンスと `SOURCE.md` を保持します。他のプロジェクトは外部リンクのみです。初回収録日：2026-08-25。
 
 ## 使い方
 
