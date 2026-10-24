@@ -27,6 +27,8 @@ def load_one(path):
             raise ValueError(f"{path}: missing column '{col}'")
     if df.empty:
         raise ValueError(f"{path}: no rows")
+    if "score_status" in df and not df["score_status"].fillna("").eq("complete").all():
+        raise ValueError(f"{path}: partial financial scores cannot enter consensus; resolve data issues first")
     codes = df["code"].fillna("").str.strip()
     if not codes.str.fullmatch(r"[0-9]{1,6}").all():
         raise ValueError(f"{path}: code must be 1–6 ASCII digits (A-share codes)")

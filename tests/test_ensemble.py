@@ -48,6 +48,11 @@ class EnsembleTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "collide"):
             ensemble.combine(paths)
 
+    def test_partial_financial_scores_are_not_consensus_votes(self):
+        path = self.csv("partial.csv", "code,total,score_status\n1,80,partial\n")
+        with self.assertRaisesRegex(ValueError, "partial financial scores"):
+            ensemble.load_one(path)
+
     def test_partial_pools_require_explicit_opt_in(self):
         paths = self.pair()
         paths[1] = self.csv("momentum.csv", "code,total\n2,10\n3,20\n")

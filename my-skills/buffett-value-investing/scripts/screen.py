@@ -17,6 +17,7 @@ import sys
 import time
 
 import pandas as pd
+from research_data import annual_rows, numeric, valuation_snapshot
 
 if sys.platform == "win32":
     try:
@@ -28,7 +29,7 @@ if sys.platform == "win32":
 try:
     import akshare as ak
 except ImportError:
-    sys.exit("ERROR: 未安装 akshare，请先执行: pip install akshare pandas")
+    ak = None
 
 YEARS = 5
 
@@ -57,8 +58,7 @@ def annual_fin_indicator(code: str) -> pd.DataFrame:
         raise RuntimeError(f"获取 {code} 财务指标为空（可能接口限流或代码有误）")
     df.columns = [str(c).strip() for c in df.columns]
     date_col = next((c for c in df.columns if "日期" in c), df.columns[0])
-    df[date_col] = df[date_col].astype(str)
-    df = df[df[date_col].str.endswith("12-31")].sort_values(date_col).tail(YEARS)
+    df = annual_rows(df, date_col, YEARS)
     if df.empty:
         raise RuntimeError(f"{code} 无年度财务数据")
     return df
@@ -72,55 +72,48 @@ def annual_report(code: str, symbol: str) -> pd.DataFrame:
         return pd.DataFrame()
     if df is None or df.empty or "报告日" not in df.columns:
         return pd.DataFrame()
-    df["报告日"] = df["报告日"].astype(str).str.replace("-", "")
-    df = df[df["报告日"].str.endswith("1231")].sort_values("报告日").tail(YEARS)
-    return df
+    return annual_rows(df, "报告日", YEARS)
 
 
 def gross_margins(code: str) -> pd.Series:
     """由利润表计算近 YEARS 年毛利率(%)。"""
     inc = annual_report(code, "利润表")
-    if inc.empty or "营业收入" not in inc.columns or "营业成本" not in inc.columns:
+    revenue_col = next((col for col in ("营业收入", "营业总收入") if col in inc), None)
+    if inc.empty or revenue_col is None or "营业成本" not in inc.columns:
         return pd.Series(dtype=float)
-    rev = pd.to_numeric(inc["营业收入"], errors="coerce")
-    cost = pd.to_numeric(inc["营业成本"], errors="coerce")
+    rev = numeric(inc[revenue_col])
+    cost = numeric(inc["营业成本"])
     gm = ((rev - cost) / rev.where(rev > 0, float("nan")) * 100)
+    gm.index = pd.DatetimeIndex(inc["报告日"])
     return gm.dropna()
 
 
-def cashflow_positive_years(code: str) -> int:
-    """近 YEARS 年年报经营现金流净额为正的年数。"""
+def cashflow_values(code: str) -> pd.Series:
+    """Known cash-flow observations; missing data remains distinct from losses."""
     cf = annual_report(code, "现金流量表")
     col = next((c for c in cf.columns if "经营活动产生的现金流量净额" in str(c)), None)
     if col is None:
-        return 0
-    vals = pd.to_numeric(cf[col], errors="coerce").dropna()
-    return int((vals > 0).sum())
+        return pd.Series(dtype=float)
+    vals = numeric(cf[col])
+    vals.index = pd.DatetimeIndex(cf["报告日"])
+    return vals.dropna()
+
+
+def cashflow_positive_years(code: str) -> int:
+    return int((cashflow_values(code) > 0).sum())
+
+
+def valuation_data(code: str):
+    try:
+        return valuation_snapshot(_retry_call(lambda: ak.stock_value_em(symbol=code)))
+    except Exception:
+        return None
 
 
 def valuation_percentile(code: str):
     """(PE 分位, PB 分位)，基于近 5 年每日估值，0-1；失败返回 (None, None)。"""
-    try:
-        df = _retry_call(lambda: ak.stock_value_em(symbol=code))
-    except Exception:
-        return None, None
-    if df is None or df.empty:
-        return None, None
-    df.columns = [str(c).strip().upper() for c in df.columns]
-    out = []
-    for key, names in (("PE", ("PE",)), ("PB", ("PB", "市净率"))):
-        col = next((c for n in names for c in df.columns if c.startswith(n)), None)
-        if col is None:
-            out.append(None)
-            continue
-        s = pd.to_numeric(df[col], errors="coerce").dropna()
-        s = s[s > 0]
-        if len(s) < 60:
-            out.append(None)
-            continue
-        current = s.iloc[-1]
-        out.append(float((s <= current).mean()))
-    return out[0], out[1]
+    snapshot = valuation_data(code)
+    return (snapshot["pe_pct"], snapshot["pb_pct"]) if snapshot else (None, None)
 
 
 def score_one(code: str) -> dict:
@@ -131,12 +124,17 @@ def score_one(code: str) -> dict:
         for k in keys:
             col = next((c for c in ind.columns if k in c), None)
             if col is not None:
-                return pd.to_numeric(ind[col], errors="coerce")
+                return numeric(ind[col])
         return pd.Series(dtype=float)
 
     roe = series("净资产收益率").dropna()
-    debt = series("资产负债率").dropna()
+    debt = series("资产负债率")
     gross = gross_margins(code).dropna()
+    date_col = next((c for c in ind if "日期" in c), ind.columns[0])
+    periods = pd.DatetimeIndex(ind[date_col])
+    consecutive_periods = len(periods) == YEARS and periods.year.max() - periods.year.min() == YEARS - 1
+    if isinstance(gross.index, pd.DatetimeIndex):
+        gross = gross.reindex(periods).dropna()
 
     roe_score = sum(6 if v > 15 else (3 if v > 12 else 0) for v in roe)
 
@@ -145,18 +143,24 @@ def score_one(code: str) -> dict:
         mean_g = gross.mean()
         gross_score += 10 if mean_g > 40 else (6 if mean_g > 30 else 0)
         spread = gross.max() - gross.min()
-        gross_score += 10 if spread < 5 else (5 if spread < 10 else 0)
+        # One observation has a zero spread but proves no multi-year stability.
+        if len(gross) >= YEARS and consecutive_periods:
+            gross_score += 10 if spread < 5 else (5 if spread < 10 else 0)
 
     debt_score = 0
-    if len(debt):
+    if len(debt) and pd.notna(debt.iloc[-1]):
         latest_d = debt.iloc[-1]
         debt_score = 15 if latest_d < 40 else (8 if latest_d < 50 else (3 if latest_d < 65 else 0))
 
-    cf_years = cashflow_positive_years(code)
+    cash = cashflow_values(code)
+    if isinstance(cash.index, pd.DatetimeIndex):
+        cash = cash.reindex(periods).dropna()
+    cf_years = int((cash > 0).sum())
     cf_score = min(cf_years, YEARS) * 4
     time.sleep(0.15)
 
-    pe_pct, pb_pct = valuation_percentile(code)
+    valuation = valuation_data(code)
+    pe_pct, pb_pct = (valuation["pe_pct"], valuation["pb_pct"]) if valuation else (None, None)
     val_score = 0
     if pe_pct is not None:
         val_score += 8 if pe_pct < 0.3 else (4 if pe_pct < 0.5 else 0)
@@ -165,6 +169,17 @@ def score_one(code: str) -> dict:
 
     total = roe_score + gross_score + debt_score + cf_score + val_score
     data_years = int(len(roe))
+    issues = []
+    if data_years < YEARS or not consecutive_periods:
+        issues.append("roe_history_incomplete_or_nonconsecutive")
+    if len(gross) < YEARS:
+        issues.append("gross_history_incomplete_or_not_applicable")
+    if len(cash) < YEARS:
+        issues.append("cashflow_history_incomplete")
+    if debt.empty or pd.isna(debt.iloc[-1]):
+        issues.append("latest_debt_missing")
+    if pe_pct is None or pb_pct is None:
+        issues.append("valuation_incomplete")
     return {
         "code": code,
         "total": total,
@@ -180,6 +195,14 @@ def score_one(code: str) -> dict:
         "pe_pct": round(pe_pct, 2) if pe_pct is not None else None,
         "pb_pct": round(pb_pct, 2) if pb_pct is not None else None,
         "data_years": data_years,
+        "gross_years": len(gross), "cashflow_data_years": len(cash),
+        "score_status": "partial" if issues else "complete",
+        "decision": "needs_data" if issues else ("review_moat" if total >= 70 else "review_weakness" if total >= 50 else "below_threshold"),
+        "data_issues": ";".join(issues),
+        "financial_periods": ",".join(d.date().isoformat() for d in periods),
+        "valuation_date": valuation["date"] if valuation else None,
+        "valuation_history_start": valuation.get("history_start") if valuation else None,
+        "valuation_observations": valuation.get("observations") if valuation else None,
     }
 
 
@@ -204,8 +227,15 @@ def main():
     ap.add_argument("--out", default="screen_result.csv", help="CSV 输出路径")
     ap.add_argument("--sleep", type=float, default=0.3, help="每只股票间隔秒数(防限流)")
     args = ap.parse_args()
+    if ak is None:
+        ap.exit(2, "ERROR: 未安装 akshare，请执行 python -m pip install akshare pandas\n")
+    if args.top <= 0 or args.sleep < 0:
+        ap.error("--top 必须为正整数，--sleep 不能为负")
 
     codes = [c.strip() for c in args.codes.split(",") if c.strip()] if args.codes else get_pool(args.pool)
+    if not codes or any(len(c) != 6 or not c.isascii() or not c.isdigit() for c in codes):
+        ap.error("股票池须为非空的六位 ASCII 数字代码列表")
+    codes = list(dict.fromkeys(codes))
     print(f"股票池共 {len(codes)} 只，开始逐一打分（财务接口较慢，请耐心）...")
 
     rows, failed = [], []
@@ -223,7 +253,17 @@ def main():
         sys.exit("ERROR: 全部股票获取失败，请检查网络或升级 akshare（pip install -U akshare）")
 
     df = pd.DataFrame(rows).sort_values("total", ascending=False)
+    from pathlib import Path
+    Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(args.out, index=False, encoding="utf-8-sig")
+    import json
+    from datetime import datetime, timezone
+    manifest = {"generated_at_utc": datetime.now(timezone.utc).isoformat(),
+                "akshare_version": getattr(ak, "__version__", "unknown"), "codes": codes,
+                "success": len(rows), "failed": [{"code": code, "error": error} for code, error in failed],
+                "partial": int((df["score_status"] == "partial").sum()),
+                "historical_point_in_time": False}
+    Path(args.out + ".meta.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"\n=== 前 {min(args.top, len(df))} 名（完整结果见 {args.out}）===")
     display_cols = ["code", "total", "roe_score", "gross_score", "debt_score",
                     "cashflow_score", "valuation_score", "pe_pct", "pb_pct", "data_years"]
@@ -236,6 +276,7 @@ def main():
         print(f"\n注意: 以下 {len(incomplete)} 只股票财务数据未满 {YEARS} 年，分数基于部分年份，参考性下降：")
         print(", ".join(incomplete["code"].tolist()))
     print(f"\n成功 {len(rows)} 只，失败 {len(failed)} 只。")
+    print(f"数据不完整 {manifest['partial']} 只：decision=needs_data，不按总分自动列为候选。")
     print("判定线: >=70 进入人工护城河核查; 50-69 有短板; <50 不符合框架。")
 
 
