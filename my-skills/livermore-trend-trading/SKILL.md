@@ -1,7 +1,8 @@
 ---
 name: livermore-trend-trading
-description: A股杰西·利弗莫尔趋势投机：识别N日新高关键点突破、放量确认、缩量回踩二次入场与单日反转/放量滞涨危险信号，输出信号表与金字塔仓位试探框架 | A-share Jesse Livermore trend speculation: identifies N-day new-high pivotal-point breakout, volume confirmation, low-volume pullback secondary entry, and one-day reversal/volume-stagnation danger signals, outputs a signal table and pyramid position-probe framework | A株ジェシー・リバモア流トレンド投機：N日高値の軸となるポイントブレイクアウト、出来高確認、縮量押し目の2次エントリー、一日反転/出来高伴う行き詰まり危険シグナルを識別し、シグナル表とピラミッド建玉試行フレームワークを出力
-author: Serennity007
+description: "A股杰西·利弗莫尔趋势投机：识别N日新高关键点突破、放量确认、缩量回踩二次入场与单日反转/放量滞涨危险信号，输出信号表与金字塔仓位试探框架 | A-share Jesse Livermore trend speculation: identifies N-day new-high pivotal-point breakout, volume confirmation, low-volume pullback secondary entry, and one-day reversal/volume-stagnation danger signals, outputs a signal table and pyramid position-probe framework | A株ジェシー・リバモア流トレンド投機：N日高値の軸となるポイントブレイクアウト、出来高確認、縮量押し目の2次エントリー、一日反転/出来高伴う行き詰まり危険シグナルを識別し、シグナル表とピラミッド建玉試行フレームワークを出力"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

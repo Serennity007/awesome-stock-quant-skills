@@ -1,7 +1,8 @@
 ---
 name: lynch-garp-investing
-description: A股彼得·林奇GARP十倍股筛选器：PEG、连续盈利增长、低负债率、林奇六分类标签 | A-share Peter Lynch GARP/ten-bagger screener: PEG, continuous profit growth, low debt, six Lynch category labels | A株ピーター・リンチGARP/テンバガー選別：PEG、連続利益成長、低負債率、リンチ6分類タグ
-author: Serennity007
+description: "A股彼得·林奇GARP十倍股筛选器：PEG、连续盈利增长、低负债率、林奇六分类标签 | A-share Peter Lynch GARP/ten-bagger screener: PEG, continuous profit growth, low debt, six Lynch category labels | A株ピーター・リンチGARP/テンバガー選別：PEG、連続利益成長、低負債率、リンチ6分類タグ"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

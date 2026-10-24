@@ -1,7 +1,8 @@
 ---
 name: technical-pattern-recognition
-description: A股技术形态识别：均线多头/空头排列、MACD金叉死叉、放量突破N日新高、缩量回踩均线，输出信号表 | A-share technical pattern recognition: MA bullish/bearish alignment, MACD golden/death cross, volume-breakout to N-day high, low-volume pullback to MA, outputs a signal table | A株テクニカルパターン認識：移動平均線のパーフェクトオーダー/逆オーダー、MACDゴールデン/デッドクロス、出来高を伴うN日高値ブレイク、出来高減少の押し目、シグナル表を出力
-author: Serennity007
+description: "A股技术形态识别：均线多头/空头排列、MACD金叉死叉、放量突破N日新高、缩量回踩均线，输出信号表 | A-share technical pattern recognition: MA bullish/bearish alignment, MACD golden/death cross, volume-breakout to N-day high, low-volume pullback to MA, outputs a signal table | A株テクニカルパターン認識：移動平均線のパーフェクトオーダー/逆オーダー、MACDゴールデン/デッドクロス、出来高を伴うN日高値ブレイク、出来高減少の押し目、シグナル表を出力"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

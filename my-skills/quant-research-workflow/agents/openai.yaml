@@ -1,0 +1,4 @@
+interface:
+  display_name: "股票研究工作流"
+  short_description: "按投研目标选择技能并串联数据、评分、共识与回测的证据核对流程"
+  default_prompt: "使用 $quant-research-workflow 组织这次股票研究，选择相关技能，核对数据日期并交付可追溯的计算结果。"

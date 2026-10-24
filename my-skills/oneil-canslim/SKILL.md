@@ -1,7 +1,8 @@
 ---
 name: oneil-canslim
-description: A股威廉·欧奈尔CANSLIM七要素打分器：C最新季净利润同比≥25%、A近3年年度增长、N距250日新高≤15%、S量能放大、L相对沪深300超额强度、I机构持股、M大盘50日均线趋势，输出逐字母通过表与池内RPS百分位 | A-share William O'Neil CANSLIM 7-letter screener: quarterly earnings yoy, annual growth, 250d-high proximity, volume surge, excess relative strength vs CSI300, institutional holdings, market trend | A株ウィリアム・オニールCANSLIM7要素スクリーナー：四半期利益YoY、年間成長、250日高値接近、出来高急増、相对強度、機関保有、市場トレンド
-author: Serennity007
+description: "A股威廉·欧奈尔CANSLIM七要素打分器：C最新季净利润同比≥25%、A近3年年度增长、N距250日新高≤15%、S量能放大、L相对沪深300超额强度、I机构持股、M大盘50日均线趋势，输出逐字母通过表与池内RPS百分位 | A-share William O'Neil CANSLIM 7-letter screener: quarterly earnings yoy, annual growth, 250d-high proximity, volume surge, excess relative strength vs CSI300, institutional holdings, market trend | A株ウィリアム・オニールCANSLIM7要素スクリーナー：四半期利益YoY、年間成長、250日高値接近、出来高急増、相对強度、機関保有、市場トレンド"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

@@ -1,7 +1,8 @@
 ---
 name: templeton-global-contrarian
-description: A股邓普顿全球逆向投资扫描：在“极度悲观”中筛选股价近52周低位、PE/PB历史10%分位以下、缩量企稳且盈利为正的逆向买入观察清单 | A-share Templeton global contrarian scanner: screen for stocks near 52-week lows, with PE/PB below 10th percentile, volume-contracted stabilization, and still-positive earnings | A株テンプルトン式グローバル逆行投資スキャナー：52週安値圏、PE/PB過去10パーセンタイル以下、出来高縮小後の安定化、黒字維持銘柄の逆張りウォッチリスト
-author: Serennity007
+description: "A股邓普顿全球逆向投资扫描：在“极度悲观”中筛选股价近52周低位、PE/PB历史10%分位以下、缩量企稳且盈利为正的逆向买入观察清单 | A-share Templeton global contrarian scanner: screen for stocks near 52-week lows, with PE/PB below 10th percentile, volume-contracted stabilization, and still-positive earnings | A株テンプルトン式グローバル逆行投資スキャナー：52週安値圏、PE/PB過去10パーセンタイル以下、出来高縮小後の安定化、黒字維持銘柄の逆張りウォッチリスト"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

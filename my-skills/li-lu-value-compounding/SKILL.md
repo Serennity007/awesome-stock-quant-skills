@@ -1,7 +1,8 @@
 ---
 name: li-lu-value-compounding
-description: A股李录价值复利投资法：长期高ROE（资本回报质量）、ROE复利趋势（近2年vs前3年不失速）、利润再投资成长、盈利含金量、PE/PB历史低分位安全边际、低负债六维打分，找"持续创造价值的复利机器" | A-share Li Lu value-compounding investing: sustained high ROE, ROE trend (recent 2yr vs prior 3yr), reinvestment growth, cash quality, low PE/PB historical percentile margin of safety, low leverage | A株李録バリュー複利投資法：持続的高ROE、ROEトレンド、再投資成長、キャッシュの質、PE/PB歴史低パーセンタイルの安全マージン、低負債の6次元
-author: Serennity007
+description: "A股李录价值复利投资法：长期高ROE（资本回报质量）、ROE复利趋势（近2年vs前3年不失速）、利润再投资成长、盈利含金量、PE/PB历史低分位安全边际、低负债六维打分，找\"持续创造价值的复利机器\" | A-share Li Lu value-compounding investing: sustained high ROE, ROE trend (recent 2yr vs prior 3yr), reinvestment growth, cash quality, low PE/PB historical percentile margin of safety, low leverage | A株李録バリュー複利投資法：持続的高ROE、ROEトレンド、再投資成長、キャッシュの質、PE/PB歴史低パーセンタイルの安全マージン、低負債の6次元"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

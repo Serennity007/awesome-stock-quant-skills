@@ -1,7 +1,8 @@
 ---
 name: zhang-lei-longterm
-description: 张磊高瓴长期结构性价值投资：A股4维成长质量雷达，锁定连续双增、长期投入、行业空间、ROE向上的“时间的朋友” | Zhang Lei Hillhouse long-term structural value investing: 4-dimensional growth-quality radar for A-shares targeting sustained double growth, R&D/capex investment, industry headroom, and rising ROE | 張磊・高瓴の長期構造価値投資：A株4次元成長質スクリーナー、連続増収増益・長期投資・業界成長余地・ROE上昇を捕捉
-author: Serennity007
+description: "张磊高瓴长期结构性价值投资：A股4维成长质量雷达，锁定连续双增、长期投入、行业空间、ROE向上的“时间的朋友” | Zhang Lei Hillhouse long-term structural value investing: 4-dimensional growth-quality radar for A-shares targeting sustained double growth, R&D/capex investment, industry headroom, and rising ROE | 張磊・高瓴の長期構造価値投資：A株4次元成長質スクリーナー、連続増収増益・長期投資・業界成長余地・ROE上昇を捕捉"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

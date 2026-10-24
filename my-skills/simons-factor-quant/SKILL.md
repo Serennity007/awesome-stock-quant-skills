@@ -1,7 +1,8 @@
 ---
 name: simons-factor-quant
-description: A股西蒙斯风格多因子量化扫描：动量/反转/低波/量能/均线偏离五维复合打分，输出综合因子排名 | A-share Simons-style multi-factor quant scanner: momentum, reversal, low-vol, volume trend, and MA deviation composite scoring with ranked output | A株サイモンズ式マルチファクター定量スキャナ：モメンタム・リバーサル・低ボラ・出来高・移動平均乖離の5次元複合スコアリング
-author: Serennity007
+description: "A股西蒙斯风格多因子量化扫描：动量/反转/低波/量能/均线偏离五维复合打分，输出综合因子排名 | A-share Simons-style multi-factor quant scanner: momentum, reversal, low-vol, volume trend, and MA deviation composite scoring with ranked output | A株サイモンズ式マルチファクター定量スキャナ：モメンタム・リバーサル・低ボラ・出来高・移動平均乖離の5次元複合スコアリング"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

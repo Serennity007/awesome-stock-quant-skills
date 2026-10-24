@@ -1,7 +1,8 @@
 ---
 name: howard-marks-cycle
-description: A股霍华德·马克斯周期温度计：沪深300/中证全指估值分位、股债收益差、成交热度、两融趋势，合成0-100周期位置评分并输出行动框架 | A-share Howard Marks cycle gauge: CSI 300 / CSI All Share valuation percentiles, equity-bond spread, turnover heat, margin balance trend, synthesizes a 0-100 cycle-position score with action framework | A株ハワード・マークスサイクル温度計：滬深300/中证全指のバリュエーション分位、株式・債券収益差、出来高熱度、信用取引残高トレンドから0-100のサイクル位置スコアと行動フレームワークを出力
-author: Serennity007
+description: "A股霍华德·马克斯周期温度计：沪深300/中证全指估值分位、股债收益差、成交热度、两融趋势，合成0-100周期位置评分并输出行动框架 | A-share Howard Marks cycle gauge: CSI 300 / CSI All Share valuation percentiles, equity-bond spread, turnover heat, margin balance trend, synthesizes a 0-100 cycle-position score with action framework | A株ハワード・マークスサイクル温度計：滬深300/中证全指のバリュエーション分位、株式・債券収益差、出来高熱度、信用取引残高トレンドから0-100のサイクル位置スコアと行動フレームワークを出力"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

@@ -1,7 +1,8 @@
 ---
 name: framework-backtest
-description: 大师框架回测验证器：月度调仓回测各大师 skill 的打分框架在 A 股的历史真实表现（等权持有前N名 vs 沪深300），时点正确（point-in-time）无未来函数，输出年化/超额/最大回撤/夏普与逐年对照表，附幸存者偏差等局限说明 | Master-framework backtest validator: monthly-rebalanced backtest of each master framework on A-shares (equal-weight top-N vs CSI 300), point-in-time scoring, CAGR/excess/maxDD/Sharpe with yearly table, documented survivorship-bias caveats | マスター框架バックテスト検証器：月次リバランスで各框架のA株実績を検証（等上位N銘柄 vs 沪深300）、時点正確、年率/超過/最大DD/シャープ
-author: Serennity007
+description: "用固定当前沪深300池和120天年报滞后近似，对 danbin、lilu、mom12_1 框架进行月度等权回测，输出年化、超额、回撤与夏普。用于探索性比较；尚非按实际披露时间和历史成分构建的严格时点回测。"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 
@@ -9,7 +10,7 @@ license: MIT
 
 > **"回测是策略的照妖镜——所有讲不出来的收益都是故事。"**
 
-本技能把仓库里的大师框架变成**可证伪的策略**：每月末用某框架对全池打分 → 等权买入前 N 名 → 持有到下月末 → 累计净值对照沪深300。打分严格 point-in-time：只用调仓日已发布 ≥120 天的年报数据和调仓时点的估值，无未来函数。
+本技能把仓库里的大师框架变成**可证伪的策略**：每月末用某框架对全池打分 → 等权买入前 N 名 → 持有到下月末 → 累计净值对照沪深300。财务切片使用“报告期末 + 120 天 ≤ 调仓日”的固定滞后近似，并读取当期估值。它未核对真实披露日与历史修订版本，尚不能保证严格 point-in-time。
 
 v1 支持三个框架：**danbin**（但斌六维，分红维度剔除后 85 分重标定）、**lilu**（李录六维）、**mom12_1**（12-1 月价格动量，作为价值框架的对照基准）。
 
@@ -20,9 +21,9 @@ v1 支持三个框架：**danbin**（但斌六维，分红维度剔除后 85 分
 | **幸存者偏差** | 股票池固定为当前沪深300名单，"活到今天的好公司"被系统性高估，绝对收益偏乐观 | 引入历史成分股回溯可消除 |
 | 无交易成本 | 月度换手 10 只，成本侵蚀约 1-2pp/年 | 可加双边 0.1% 修正 |
 | PE/PB 历史 | 东财接口约自 2018 年起，早期分位窗口短 | 换乐咕/其他源 |
-| 年报滞后近似 | 按 120 天假设发布（实际 1-4 月底） | 保守方向，影响小 |
+| 年报滞后近似 | 报告期末加 120 天，不是实际披露时间，未处理历史修订 | 迟披露或重述可能引入前视信息 |
 
-**结论的正确用法：框架之间的相对比较（谁的超额高、谁的回撤小）比绝对数字可信。**
+**结果仅供探索。相同偏差对不同框架的影响可能不同，框架相对排名也需要历史成分、实际披露版本与成本敏感性复核。**
 
 ## 使用方法
 
@@ -67,7 +68,7 @@ python scripts/backtest.py --frameworks danbin --top 5 --start 2023-01-31 --out-
 
 ## 配套文件
 
-- `references/backtest_methodology.md` — 方法论：point-in-time 原则、幸存者偏差的量化影响、为什么相对比较更可信。
+- `references/backtest_methodology.md` — 方法论：时点近似、幸存者偏差与比较限制。
 
 ## 免责声明
 

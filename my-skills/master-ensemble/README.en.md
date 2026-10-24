@@ -4,7 +4,7 @@
 
 Author: Serennity007 | License: MIT | Dependency: pandas only (pure local CSV merging, no network calls)
 
-> **"When several independent methodologies point at the same stock at the same time, you are weighting probability."**
+> **"When several methodologies point at the same stock at the same time, you are weighting probability."**
 
 This skill merges scoring-result CSVs from any of the repo's master skills (each `screen.py` output with `code`/`total` columns) into a cross-framework consensus list: percentile-normalize within each framework → consensus score (mean percentile) + top-hit count + framework coverage, then output the intersection.
 
@@ -21,9 +21,9 @@ This skill merges scoring-result CSVs from any of the repo's master skills (each
 pip install pandas
 
 # Step 1: run full-pool screens for each master framework (same universe, e.g. --pool hs300)
-python ../dan-bin-rose-of-time/scripts/screen.py --pool hs300 --out danbin_hs300_result.csv
-python ../li-lu-value-compounding/scripts/screen.py --pool hs300 --out lilu_hs300_result.csv
-python ../oneil-canslim/scripts/screen.py --pool hs300 --out canslim_hs300_result.csv
+python ../dan-bin-rose-of-time/scripts/screen.py --pool hs300 --out ../dan-bin-rose-of-time/danbin_hs300_result.csv
+python ../li-lu-value-compounding/scripts/screen.py --pool hs300 --out ../li-lu-value-compounding/lilu_hs300_result.csv
+python ../oneil-canslim/scripts/screen.py --pool hs300 --out ../oneil-canslim/canslim_hs300_result.csv
 
 # Step 2: merge into a consensus list
 python scripts/ensemble.py \
@@ -51,3 +51,7 @@ python scripts/ensemble.py \
 ## Disclaimer
 
 For learning and research only; not investment advice. A consensus score does not check for shared data errors, frameworks are not fully independent, and historical agreement does not imply future agreement.
+
+## Validation and provenance (2026-10-24)
+
+Inputs must have matching stock pools by default. Missing columns, invalid codes/scores, duplicate codes and colliding framework names are errors. Use `--allow-partial-pools` explicitly for different universes. A `.meta.json` sidecar records input SHA-256 hashes and parameters. `--as-of` is user-declared, unverified and null when omitted. See [SKILL.md](SKILL.md) for the current contract.

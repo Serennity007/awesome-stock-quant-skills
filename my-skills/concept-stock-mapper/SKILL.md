@@ -1,7 +1,8 @@
 ---
 name: concept-stock-mapper
-description: A股题材关键词→概念股映射器：用akshare概念板块接口模糊匹配板块，取成分股并按涨幅/换手/主力资金排序，支持多关键词题材强度对比 | A-share theme keyword → concept stock mapper: fuzzy-match concept boards via akshare, extract constituents and sort by gain/turnover/main-force capital, supports multi-keyword theme strength comparison | A株テーマキーワード→概念股マッパー：akshareの概念セクターインターフェースであいまい一致し、構成銘柄を取得して騰落率/回転率/主力資金で並べ替え、複数キーワードの題材強度比較に対応
-author: Serennity007
+description: "A股题材关键词→概念股映射器：用akshare概念板块接口模糊匹配板块，取成分股并按涨幅/换手/主力资金排序，支持多关键词题材强度对比 | A-share theme keyword → concept stock mapper: fuzzy-match concept boards via akshare, extract constituents and sort by gain/turnover/main-force capital, supports multi-keyword theme strength comparison | A株テーマキーワード→概念股マッパー：akshareの概念セクターインターフェースであいまい一致し、構成銘柄を取得して騰落率/回転率/主力資金で並べ替え、複数キーワードの題材強度比較に対応"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

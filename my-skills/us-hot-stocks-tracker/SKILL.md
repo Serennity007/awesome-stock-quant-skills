@@ -1,7 +1,8 @@
 ---
 name: us-hot-stocks-tracker
-description: 美股热门AI股追踪器：内置AI算力/存储/AI应用/robotaxi主题清单，输出现价、涨跌幅、20/60日动量、52周高低位距离、成交量异动快照表 | US hot AI stocks tracker: built-in AI compute/storage/AI application/robotaxi watchlist, outputs current price, change%, 20/60-day momentum, 52-week high/low distance, volume anomaly snapshot | 米国人気AI株トラッカー：AIコンピュート/ストレージ/AIアプリ/robotaxiテーマのウォッチリストを内蔵し、現在値、騰落率、20/60日モメンタム、52週高安値距離、出来高異常を出力
-author: Serennity007
+description: "美股热门AI股追踪器：内置AI算力/存储/AI应用/robotaxi主题清单，输出现价、涨跌幅、20/60日动量、52周高低位距离、成交量异动快照表 | US hot AI stocks tracker: built-in AI compute/storage/AI application/robotaxi watchlist, outputs current price, change%, 20/60-day momentum, 52-week high/low distance, volume anomaly snapshot | 米国人気AI株トラッカー：AIコンピュート/ストレージ/AIアプリ/robotaxiテーマのウォッチリストを内蔵し、現在値、騰落率、20/60日モメンタム、52週高安値距離、出来高異常を出力"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

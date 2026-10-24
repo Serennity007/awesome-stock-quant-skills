@@ -1,7 +1,8 @@
 ---
 name: munger-quality-investing
-description: A股芒格优质企业投资法：连续5年ROIC/ROE、低负债、高稳定毛利率、盈利质量、少股本稀释五维质量打分 | A-share Munger-style quality investing: 5-dimensional quality scoring on 5-year ROIC/ROE, low debt, high & stable gross margin, earnings quality, and low share dilution | A株マンガー式クオリティ投資：5年連続ROIC/ROE、低負債、高く安定した粗利率、収益の質、希薄化の少なさで5次元品質スコアリング
-author: Serennity007
+description: "A股芒格优质企业投资法：连续5年ROIC/ROE、低负债、高稳定毛利率、盈利质量、少股本稀释五维质量打分 | A-share Munger-style quality investing: 5-dimensional quality scoring on 5-year ROIC/ROE, low debt, high & stable gross margin, earnings quality, and low share dilution | A株マンガー式クオリティ投資：5年連続ROIC/ROE、低負債、高く安定した粗利率、収益の質、希薄化の少なさで5次元品質スコアリング"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

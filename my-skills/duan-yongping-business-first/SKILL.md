@@ -1,7 +1,8 @@
 ---
 name: duan-yongping-business-first
-description: A股段永平「商业模式第一」投资法：高毛利率稳定性+连续ROE+盈利含金量+低负债+盈利稳定+行业龙头六维打分，"敢为天下后"筛选好生意 | A-share Duan Yongping-style "business model first" investing: 6-dimension scoring on gross-margin quality, sustained ROE, cash conversion, low leverage, earnings stability, and industry leadership ("dare to be the follower") | A株段永平「ビジネスモデル第一」投資法：粗利率の安定性・連続ROE・キャッシュ変換・低負債・収益安定性・業界リーダーシップの6次元スコアリング
-author: Serennity007
+description: "A股段永平「商业模式第一」投资法：高毛利率稳定性+连续ROE+盈利含金量+低负债+盈利稳定+行业龙头六维打分，\"敢为天下后\"筛选好生意 | A-share Duan Yongping-style \"business model first\" investing: 6-dimension scoring on gross-margin quality, sustained ROE, cash conversion, low leverage, earnings stability, and industry leadership (\"dare to be the follower\") | A株段永平「ビジネスモデル第一」投資法：粗利率の安定性・連続ROE・キャッシュ変換・低負債・収益安定性・業界リーダーシップの6次元スコアリング"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

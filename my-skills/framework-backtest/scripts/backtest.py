@@ -12,15 +12,15 @@
     lilu     李录框架（ROE质量/复利趋势/再投资成长/含金量/PB历史分位安全边际/财务纪律）
     mom12_1  价格动量基准（12-1 月动量，即 12 个月前到 1 个月前的涨幅；作为价值框架的对照组）
 
-数据: fetch_history.py 的本地缓存（cache/），打分只用调仓日 T 已发布 ≥120 天的
-年报数据 + T 时点的 PE/PB——时点正确（point-in-time），无未来函数。
+数据: fetch_history.py 的本地缓存（cache/），财务切片仅按报告期末 +120 天近似可得日，
+配合 T 时点的 PE/PB；未核对实际披露日与历史修订，不保证严格 point-in-time。
 
 已知局限（务必先读 references/backtest_methodology.md）:
     1. 幸存者偏差: 股票池固定为当前沪深300名单，历史成分未回溯，收益被系统性高估。
     2. 无交易成本/冲击成本。
     3. PE/PB 历史约自 2018 年起，分位窗口短于 5 年。
     4. 年报发布滞后按 120 天近似（实际 1-4 月底发布）。
-    结果用于框架间相对比较，不能当作绝对收益预期。
+    结果仅供探索；不同框架的相对排名也可能受偏差影响。
 """
 import os
 import sys
@@ -142,7 +142,7 @@ def fetch_benchmark(cache_dir: str) -> pd.Series:
 # ---------------------------------------------------------------------------
 
 def _annual_slice(stock: dict, t: pd.Timestamp, lag_days: int = 120) -> tuple:
-    """取 T 时点已发布(≥lag_days)的最近 5 个年报行。"""
+    """按报告期末 +lag_days 近似可得日切片；不校验真实披露或修订时间。"""
     cutoff = t - pd.Timedelta(days=lag_days)
     ind = stock["ind"]
     sl = ind[ind["日期"] <= cutoff].tail(5)

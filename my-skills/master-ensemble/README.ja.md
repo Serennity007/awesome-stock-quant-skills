@@ -21,9 +21,9 @@
 pip install pandas
 
 # ステップ1：各マスターフレームワークを全量実行（同一プール、例：--pool hs300）
-python ../dan-bin-rose-of-time/scripts/screen.py --pool hs300 --out danbin_hs300_result.csv
-python ../li-lu-value-compounding/scripts/screen.py --pool hs300 --out lilu_hs300_result.csv
-python ../oneil-canslim/scripts/screen.py --pool hs300 --out canslim_hs300_result.csv
+python ../dan-bin-rose-of-time/scripts/screen.py --pool hs300 --out ../dan-bin-rose-of-time/danbin_hs300_result.csv
+python ../li-lu-value-compounding/scripts/screen.py --pool hs300 --out ../li-lu-value-compounding/lilu_hs300_result.csv
+python ../oneil-canslim/scripts/screen.py --pool hs300 --out ../oneil-canslim/canslim_hs300_result.csv
 
 # ステップ2：合意リストに合成
 python scripts/ensemble.py \
@@ -51,3 +51,7 @@ python scripts/ensemble.py \
 ## 免責事項
 
 学習・研究目的のみ。投資助言ではありません。合意スコアは共通のデータ誤りを検証せず、フレームワーク間も完全に独立ではなく、過去の一致は将来の一致を保証しません。
+
+## 入力検証と追跡（2026-10-24）
+
+既定では銘柄集合の一致が必要です。列の不足、不正なコード・点数、重複コード、框架名の衝突はエラーです。異なる集合には `--allow-partial-pools` を明示します。`.meta.json` に入力 SHA-256 とパラメータを保存します。`--as-of` は未検証の申告日で、省略時は null です。詳細は [SKILL.md](SKILL.md) を参照してください。
