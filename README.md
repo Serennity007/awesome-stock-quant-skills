@@ -10,13 +10,26 @@
 
 将价值、成长、动量、宏观周期与资产配置方法实现为 Agent Skills 和 Python 脚本，支持财务筛选、因子打分、多框架共识与含交易成本的回测。面向 A 股研究，并提供美股热门股追踪。
 
-**增强版：30 个原创 Skill · 23 套投资方法参考框架 · 32 个 Python 脚本 · 35 项行为测试通过。**
+**30 个原创 Skill · 23 套投资方法参考框架 · 32 个 Python 脚本 · 40 项测试通过。**
 
 GitHub 已获 **41 Stars / 8 Forks**（截至 2026-10-24）。原创实现、第三方来源快照与外部资源索引分别维护；16 个第三方来源目录收录 225 份 `SKILL.md`。
 
-**版本说明：本分支保留 29 个原创 Skill。上面的 30 / 23 / 32 / 35 与实测记录对应 [增强版](https://github.com/Serennity007/awesome-stock-quant-skills/tree/codex/quant-skills-refresh)，该版本新增研究工作流入口及数据、共识和回测校验。**
+<!-- inventory: originals=30 mirrors=16 vendored=225 -->
 
-**[使用增强版](https://github.com/Serennity007/awesome-stock-quant-skills/tree/codex/quant-skills-refresh) · [验证范围](https://github.com/Serennity007/awesome-stock-quant-skills/blob/c46da26575289ddaab5587d31e7f718f9ac22a2e/docs/validation.md) · [真实取数记录](https://github.com/Serennity007/awesome-stock-quant-skills/blob/c46da26575289ddaab5587d31e7f718f9ac22a2e/examples/verification/2026-10-24/buffett-check.json)**
+**[一条命令离线演示](docs/quickstart.md) · [验证范围](docs/validation.md) · [真实取数记录](examples/verification/2026-10-24/buffett-check.json)**
+
+## 第一次使用：先跑两个离线示例
+
+默认分支已包含 30 个原创 Skill、数据校验与回测功能，无需切分支。安装演示依赖后，一条命令运行共识排序和回测核算两个独立的合成场景，生成可阅读报告、CSV、输入哈希和运行日志。
+
+```bash
+git clone https://github.com/Serennity007/awesome-stock-quant-skills.git
+cd awesome-stock-quant-skills
+python -m pip install -r requirements-demo.txt
+python scripts/run_demo.py
+```
+
+打开终端提示的 `output/demo/run-…/REPORT.md`。每次运行创建新目录，不覆盖已有产物；缺依赖会给出安装命令，计算失败会写入失败状态并非零退出。**示例使用合成数据，只核对程序行为。** [完整上手说明](docs/quickstart.md)。
 
 ## 你可以用它完成什么
 
@@ -31,7 +44,7 @@ GitHub 已获 **41 Stars / 8 Forks**（截至 2026-10-24）。原创实现、第
 
 **任务路由、数据取数、规则评分、共识排序、历史检验**可以按研究目标组合。Python 脚本支持直接运行，Agent 按需加载 Skill；CSV 与 JSON 记录把计算结果留在本地，便于检查和二次分析。
 
-增强版已落实年报期对齐、估值日期与 TTM 字段核对、缺失财务状态、共识输入校验，以及回测交易成本和持仓审计。参考方法覆盖 16 个海外投资方法 Skill 与 7 个国内投资方法 Skill；这些是公开方法的规则化参考实现。
+当前版本已落实年报期对齐、估值日期与 TTM 字段核对、缺失财务状态、共识输入校验，以及回测交易成本和持仓审计。参考方法覆盖 16 个海外投资方法 Skill 与 7 个国内投资方法 Skill；这些是公开方法的规则化参考实现。
 
 ## 个人实测与验证
 
@@ -39,50 +52,117 @@ GitHub 已获 **41 Stars / 8 Forks**（截至 2026-10-24）。原创实现、第
 
 原始 JSON、筛选 CSV、验证范围和本地复现命令均已公开。实测说明取数与计算链路已验证；收益与策略有效性需要另行检验。
 
-## 免责声明
+## 核心能力，经得起看代码和重跑
 
-本仓库内容仅供学习研究使用，不构成任何投资建议。股市有风险，投资需谨慎。所有技能版权归原作者及原仓库所有，如有侵权请联系删除。
+本轮优先升级**巴菲特财务筛选、单股估值、框架回测与共识衔接**，把会改变研究结果的日期、缺失数据和收益计算问题落实到脚本里。
 
-第三方收录仅复制 MIT / Apache-2.0 / BSD / CC0 授权内容，保留原许可证与 `SOURCE.md`；其他项目仅作外部索引。初始收录日期为 2026-08-25。
+| 能力 | 实际行为 | 验证入口 |
+|---|---|---|
+| 估值有明确时间口径 | TTM 字段精确匹配；历史按日期排序并截取五年窗口；同一交易日的价格和 PE 推算 EPS | [估值数据契约](my-skills/buffett-value-investing/scripts/research_data.py)、[回归测试](tests/test_buffett_data.py) |
+| 缺失财务数据有明确状态 | ROE、毛利率、现金流按年报期对齐；单年毛利率不冒充五年稳定；`partial` 评分优先补数 | [筛选器](my-skills/buffett-value-investing/scripts/screen.py)、[评分规则](my-skills/buffett-value-investing/references/scoring_rules.md) |
+| 共识有数据门槛 | 拒绝无效代码、重复、重名、默认情况下不同的股票池，以及声明为不完整的财务评分；保留输入哈希 | [共识合成器](my-skills/master-ensemble/scripts/ensemble.py) |
+| 回测不根据未来缺价预选股 | 先按调仓时点选股，再计算持有收益；已选持仓缺少退出价时终止；基准按相同实际交易日计算 | [回测引擎](my-skills/framework-backtest/scripts/backtest.py)、[回归测试](tests/test_backtest.py) |
+| 毛收益、成本、净收益可逐期核对 | 价格漂移后计算调仓额，首期建仓和换股买卖分别计成本；输出持仓、进出价格、换手与缓存哈希 | [可重跑的合成场景](examples/backtest/SCENARIO.md) |
+| 研究流程按任务选择 | 按需调用相关 skill，并核对筛选、共识、回测产物是否满足解释条件 | [研究工作流](my-skills/quant-research-workflow/SKILL.md)、[产物契约](my-skills/quant-research-workflow/references/data-contracts.md) |
 
-## 使用说明
+**2026-10-25 本地验证：40 项测试通过。** 此前在 2026-10-24 使用 AKShare 1.19.3 跑通单股实时筛选，取得 2021–2025 五个年报期间，估值交易日为 2026-10-23。[原始实跑记录](examples/verification/2026-10-24/buffett-check.json)与 [CSV](examples/verification/2026-10-24/buffett-screen.csv)可直接查看。它证明这条取数与计算链路跑通，不代表所有接口可用或策略盈利。
 
-将 `skills/` 下需要的技能目录复制到你的技能目录即可使用：
+“30 / 16 / 225”是可由脚本复核的目录统计，分别指原创 skill、第三方来源目录和第三方 `SKILL.md` 文件。完整范围见 [验证记录](docs/validation.md)。上游更新检查以 [巡检模板](docs/workflows/upstream-watch.yml)提供，启用条件见 [维护说明](docs/maintenance.md)。
+
+## 快速开始
+
+### 先用一分钟跑通本地链路
+
+以下是**合成数据**，只验证计算和产物，不访问行情服务，不需要 API key。请从仓库根目录执行：
 
 ```bash
-# Claude Code
-cp -r skills/<作者>__<技能名> ~/.claude/skills/
-
-# 或通用 agents skills 目录
-cp -r skills/<作者>__<技能名> ~/.agents/skills/
+git clone https://github.com/Serennity007/awesome-stock-quant-skills.git
+cd awesome-stock-quant-skills
+python -m pip install pandas
+python my-skills/master-ensemble/scripts/ensemble.py --csvs examples/ensemble/quality.csv examples/ensemble/momentum.csv --out output/consensus.csv
 ```
 
-多技能合集（如 `agiprolabs__claude-trading-skills/skills/...`）请将其内部的具体技能子目录复制到技能目录下。每个收录目录中的 `SOURCE.md` 记录了原始仓库 URL、作者与 License。
+预期得到：
 
-## 已收录技能
+| 代码 | 共识分 | 顶级命中数 | 覆盖框架数 |
+|---|---:|---:|---:|
+| 000003 | 83.3 | 1 | 2 |
+| 000001 | 66.7 | 1 | 2 |
+| 000002 | 50.0 | 0 | 2 |
 
-| 目录 | 简介 | 来源 | License |
-|---|---|---|---|
-| [simonlin1212__a-stock-data](skills/simonlin1212__a-stock-data) | A股全栈数据 SKILL | [simonlin1212/a-stock-data](https://github.com/simonlin1212/a-stock-data) | Apache-2.0 |
-| [wbh604__UZI-Skill](skills/wbh604__UZI-Skill) | 游资UZI炒股 Skill（深度分析/龙虎榜/陷阱识别等） | [wbh604/UZI-Skill](https://github.com/wbh604/UZI-Skill) | MIT |
-| [BitSoulTech__BitSoulStockSkill](skills/BitSoulTech__BitSoulStockSkill) | A股选股+因子+回测（核心目录，assets 未收录） | [BitSoulTech/BitSoulStockSkill](https://github.com/BitSoulTech/BitSoulStockSkill) | Apache-2.0 |
-| [fadewalk__serenity-stock-choke](skills/fadewalk__serenity-stock-choke) | A股"卡脖子"选股 | [fadewalk/serenity-stock-choke](https://github.com/fadewalk/serenity-stock-choke) | MIT |
-| [shouldnotappearcalm__a-share-skill](skills/shouldnotappearcalm__a-share-skill) | A股分析+选股+模拟交易（多个技能子目录） | [shouldnotappearcalm/a-share-skill](https://github.com/shouldnotappearcalm/a-share-skill) | MIT |
-| [StanleyChanH__Tushare-Finance-Skill](skills/StanleyChanH__Tushare-Finance-Skill) | Tushare 数据技能包 | [StanleyChanH/Tushare-Finance-Skill-for-Claude-Code](https://github.com/StanleyChanH/Tushare-Finance-Skill-for-Claude-Code) | MIT |
-| [Geralt-L__Stock-Analysis-3D](skills/Geralt-L__Stock-Analysis-3D) | 3D 评分股票分析 | [Geralt-L/Stock-Analysis-3D](https://github.com/Geralt-L/Stock-Analysis-3D) | MIT |
-| [atorber__qmt-trading-skill](skills/atorber__qmt-trading-skill) | QMT 交易 21 个 skills | [atorber/qmt-trading-skill](https://github.com/atorber/qmt-trading-skill) | MIT |
-| [staruhub__a-share-analyst](skills/staruhub__a-share-analyst) | A股分析师技能（取自 ClaudeSkills） | [staruhub/ClaudeSkills](https://github.com/staruhub/ClaudeSkills) | MIT |
-| [tradermonty__claude-trading-skills](skills/tradermonty__claude-trading-skills) | 美股分析 / CANSLIM 选股等 | [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills) | MIT |
-| [agiprolabs__claude-trading-skills](skills/agiprolabs__claude-trading-skills) | 67 个交易 skills（含加密/期权/风控） | [agiprolabs/claude-trading-skills](https://github.com/agiprolabs/claude-trading-skills) | MIT |
-| [zubair-trabzada__ai-trading-claude](skills/zubair-trabzada__ai-trading-claude) | 16 个 trade-* skills + 5 agents | [zubair-trabzada/ai-trading-claude](https://github.com/zubair-trabzada/ai-trading-claude) | MIT |
-| [yennanliu__InvestSkill](skills/yennanliu__InvestSkill) | 美股分析 + stock-screener 等 | [yennanliu/InvestSkill](https://github.com/yennanliu/InvestSkill) | MIT |
-| [tellmefrankie__ai-investment-skills](skills/tellmefrankie__ai-investment-skills) | 期权流/新闻情绪/价格提醒等 5 个投资 skills | [tellmefrankie/ai-investment-skills](https://github.com/tellmefrankie/ai-investment-skills) | MIT |
-| [cruisekkk__trading-ledger](skills/cruisekkk__trading-ledger) | 交易日志 skill | [cruisekkk/trading-ledger](https://github.com/cruisekkk/trading-ledger) | MIT |
-| [AlexLiu0130__ibkr-options-assistant](skills/AlexLiu0130__ibkr-options-assistant) | IBKR 期权助手 | [AlexLiu0130/ibkr-options-assistant](https://github.com/AlexLiu0130/ibkr-options-assistant) | MIT |
+同时生成 `output/consensus.csv.meta.json`，记录输入哈希、参数和运行时间。样例没有真实数据日期，所以 `as_of` 为 `null`。完整字段见 [master-ensemble](my-skills/master-ensemble/SKILL.md)。
+
+### 再跑一遍有成本、有持仓明细的回测链路
+
+同样使用**合成数据**，无需行情服务：
+
+```bash
+python my-skills/framework-backtest/scripts/backtest.py --cache-dir examples/backtest/cache --results-dir output/backtest-demo --frameworks danbin --start 2026-07-31 --top 1 --min-stocks 2 --cost-bps 10
+```
+
+输入价格人为设为 `100 → 110 → 99`。首期建仓成本为 10 bps，持仓不变的下一期不再次收费，期末不强制清仓。两期净期末资产应为 **0.98901**，基准为 **1.01**；可以逐项核对 `bt_result_danbin.csv`、`bt_holdings_danbin.csv` 与 `bt_manifest.json`。[完整场景说明](examples/backtest/SCENARIO.md)。
+
+### 接入真实研究数据
+
+```bash
+python -m pip install akshare pandas numpy
+python my-skills/buffett-value-investing/scripts/screen.py --codes 600519,000858,600036 --out output/buffett.csv
+```
+
+输出同时包含分项得分、财报期间、估值交易日、数据问题和运行记录。先看 `score_status` / `decision`；`partial` / `needs_data` 优先补数，不按总分直接列为候选。
+
+真实取数依赖网络、数据源与接口版本；成功以实际输出为准。请记录行情交易日、财报期间和包版本。旧 Demo 中的价格、评分和样本日期均不能当作今天的结果。
+
+### 在 Agent 中按需安装
+
+把需要的**单个 skill 文件夹**复制到助手的技能目录。例如使用通用 `~/.agents/skills/` 目录的环境：
+
+```bash
+mkdir -p ~/.agents/skills
+cp -r my-skills/quant-research-workflow ~/.agents/skills/
+cp -r my-skills/buffett-value-investing ~/.agents/skills/
+cp -r my-skills/master-ensemble ~/.agents/skills/
+```
+
+Windows PowerShell：
+
+```powershell
+New-Item -ItemType Directory -Force "$HOME/.agents/skills" | Out-Null
+Copy-Item -Recurse my-skills/quant-research-workflow,my-skills/buffett-value-investing,my-skills/master-ensemble "$HOME/.agents/skills/"
+```
+
+Claude Code 可改用 `~/.claude/skills/`。第三方多技能合集要复制内部含 `SKILL.md` 的具体子目录，例如 `skills/agiprolabs__claude-trading-skills/skills/walk-forward-validation/`。导航器只负责选择流程，所需 skill 和数据依赖仍须安装。
+
+可直接提出这样的任务：
+
+> 用 quant-research-workflow 组织研究：对这三家公司做财务质量初筛，注明数据日期、各项扣分理由，以及需要人工判断的护城河问题。
+>
+> 对同池同日的质量与动量 CSV 做共识排序，说明共有因子、覆盖数和冲突，保留输入来源。
+>
+> 检查一个框架过去三年的表现，先列出历史成分、实际披露时间和交易成本能否满足，再解释回测结果。
+
+## 按任务选技能
+
+| 研究目标 | 从这里开始 |
+|---|---|
+| 不知道选哪个，或需要串联流程 | [quant-research-workflow](my-skills/quant-research-workflow) |
+| 公司质量、护城河与安全边际 | [buffett](my-skills/buffett-value-investing)、[munger](my-skills/munger-quality-investing)、[li-lu](my-skills/li-lu-value-compounding) |
+| 成长、GARP 与强势股 | [lynch](my-skills/lynch-garp-investing)、[fisher](my-skills/fisher-growth-15)、[CANSLIM](my-skills/oneil-canslim) |
+| 低估、防御与红利 | [graham](my-skills/graham-defensive-investing)、[klarman](my-skills/klarman-margin-safety)、[neff](my-skills/neff-low-pe-total-return) |
+| A 股题材与美股热门股 | [hot-theme](my-skills/hot-theme-scanner)、[concept-mapper](my-skills/concept-stock-mapper)、[us-tracker](my-skills/us-hot-stocks-tracker) |
+| 指数估值、资产配置与周期 | [bogle](my-skills/bogle-index-investing)、[dalio](my-skills/dalio-all-weather)、[marks](my-skills/howard-marks-cycle) |
+| 多框架交集与历史检验 | [master-ensemble](my-skills/master-ensemble)、[framework-backtest](my-skills/framework-backtest) |
 
 ## 原创技能
 
+
 本仓库作者（Serennity007）原创的技能，放在 `my-skills/` 目录，与 `skills/` 收录区区分：
+
+### 研究工作流入口
+
+| 目录 | 简介 | License |
+|---|---|---|
+| [quant-research-workflow](my-skills/quant-research-workflow) | 按研究任务选择和串联 skill，核对接口、数据时点与结论证据，生成可追溯的研究结果 | MIT |
 
 ### 投资大师方法论系列
 
@@ -129,8 +209,8 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 
 | 目录 | 简介 | License |
 |---|---|---|
-| [master-ensemble](my-skills/master-ensemble) | 大师共识筛选器：把任意多个大师 skill 的打分结果 CSV 按框架内百分位归一化，合成共识分与顶级命中数，输出"多条独立思路同时指向"的跨框架交集标的（纯本地合成，秒级） | MIT |
-| [framework-backtest](my-skills/framework-backtest) | 大师框架回测验证器：月度调仓回测各大师 skill 的打分框架在 A 股的历史真实表现（等权持有前 N 名 vs 沪深300），时点正确（point-in-time）无未来函数，输出年化/超额/最大回撤/夏普与逐年对照表 | MIT |
+| [master-ensemble](my-skills/master-ensemble) | 大师共识筛选器：把任意多个大师 skill 的打分结果 CSV 按框架内百分位归一化，合成共识分与顶级命中数，输出"多个框架同时覆盖"的跨框架交集标的（纯本地合成，秒级） | MIT |
+| [framework-backtest](my-skills/framework-backtest) | 大师框架回测验证器：月度调仓回测各大师 skill 的打分框架在 A 股的历史真实表现（等权持有前 N 名 vs 沪深300），固定 120 天财报滞后近似（尚非严格 point-in-time），输出毛净收益、成交额成本、持仓审计、年化/超额/最大回撤/夏普与逐年对照表 | MIT |
 
 ### 原有
 
@@ -138,105 +218,47 @@ cp -r skills/<作者>__<技能名> ~/.agents/skills/
 |---|---|---|
 | [technical-pattern-recognition](my-skills/technical-pattern-recognition) | A股技术形态识别：均线多头/空头排列、MACD 金叉死叉、放量突破 N 日新高、缩量回踩均线，输出信号表（基于 akshare 新浪日线） | MIT |
 
-## 演示 / Demo
+## 第三方收录
 
-原创技能均为真实可运行代码，多数附实跑输出（2026-09-30 实测，akshare 1.18.96，数据为当日真实行情与财务数据）：
+以下 16 个来源目录保留上游署名与许可证。部分包含多个 skill；接口、密钥和运行环境要求各不相同。
 
-- **巴菲特筛股实测**：`screen.py --codes 600519,000858,600036` → 贵州茅台 100 分（5 年 ROE 27.7%–37.0%、毛利率 91.7%、PE/PB 分位 0.07/0.03）、五粮液 94 分、招商银行 47 分（金融业高杠杆被正确扣分）。完整输出：[my-skills/buffett-value-investing/docs/demo.md](my-skills/buffett-value-investing/docs/demo.md)
-- **单股分析实测**：`analyze.py 600519` → 护城河清单 + 5 年财务趋势 + 估值区间（保守估值 1547.89 元 / 安全边际参考价 1083.52 元）。
-- **技术形态识别实测**：`patterns.py` 6 只实测 → 601318/000001 命中 `MACD_GOLDEN`，其余 `NO_SIGNAL`。完整输出：[my-skills/technical-pattern-recognition/docs/demo.md](my-skills/technical-pattern-recognition/docs/demo.md)
-- **每日自动报告**：GitHub Action 每天 UTC 01:00 对 20 只 A 股代表股自动运行巴菲特筛股，结果提交到 [`reports/`](reports/)（最新报告：[reports/latest.md](reports/latest.md)）。
-- **段永平全池实测**（2026-09-26）：`screen.py --pool hs300`（300 只）→ 山西汾酒 86 分、迈瑞医疗 83 分、贵州茅台 82 分、五粮液 81 分、中国海油 81 分居前——高毛利现金牛行业整体领先。
-- **费雪/聂夫小样实测**（2026-09-26）：费雪框架下迈瑞医疗 78 分、海康威视 76 分居前（高研发成长股），茅台因研发率低被扣分；聂夫框架下招商银行 88 分（PE 仅为市场中位数 0.18 倍、股息率 6.34%、总回报率 2.33 过黄金线）。
-- **但斌/李录/欧奈尔小样实测**（2026-09-28）：但斌框架下贵州茅台 88 分（毛利率 91.9%、ROE 32.9%、财年口径股息率 4.18%）、五粮液 79 分；李录框架下茅台 88 分（PB 仅处 5 年 1.9% 分位，安全边际满分）；欧奈尔 CANSLIM 框架下海康威视 [C,N,L] 三项成立（季同比 39.6%），茅台低分正是动量框架与价值框架的互补性所在。
-- **但斌/李录/欧奈尔全量沪深300实测**（2026-09-28，各 300/300 成功）：但斌框架下山西汾酒 97、泸州老窖 91、茅台 88 居前（高毛利白酒霸榜符合"厚雪"直觉）；李录框架下东鹏饮料 94、亿联网络 92、新和成 91 居前；CANSLIM 框架下瑞芯微 79 [C,A,N,L]、药明康德 77 [C,A,N,L,I] 居前（当日大盘在 50 日线下方 M=0，全池扣 10 分——欧奈尔纪律的正确打开方式）。结果见各 skill 目录 `*_hs300_result.csv`。
-- **大师共识实测**（2026-09-28）：三框架共识筛选器 `master-ensemble` 上线——亿联网络 96.4（3 框架全部前 10%）、药明康德 95.9、新易盛 92.0、中际旭创 91.9 居前，通信设备板块被价值与动量框架同时看好（AI 算力业绩兑现的典型形态）。见 [my-skills/master-ensemble/consensus_hs300_demo.csv](my-skills/master-ensemble/consensus_hs300_demo.csv)。
-- **博格指数温度计实测**（2026-09-28）：沪深300 PE 12.59（10 年分位 60%）、上证50 PE 10.64（58%）、中证500 78% 分位（减半档）；近 5 年月定投沪深300 年化 1.81% vs 一次性买入 -1.79%。
-- **收录技能实测对比**：16 个收录技能的结构化检查表（SKILL.md 规范性、依赖、API key、是否实测跑通）见 [docs/skill-review.md](docs/skill-review.md)。
 
-## 索引目录
+| 目录 | 简介 | 来源 | License |
+|---|---|---|---|
+| [simonlin1212__a-stock-data](skills/simonlin1212__a-stock-data) | A股全栈数据 SKILL | [simonlin1212/a-stock-data](https://github.com/simonlin1212/a-stock-data) | Apache-2.0 |
+| [wbh604__UZI-Skill](skills/wbh604__UZI-Skill) | 游资UZI炒股 Skill（深度分析/龙虎榜/陷阱识别等） | [wbh604/UZI-Skill](https://github.com/wbh604/UZI-Skill) | MIT |
+| [BitSoulTech__BitSoulStockSkill](skills/BitSoulTech__BitSoulStockSkill) | A股选股+因子+回测（核心目录，assets 未收录） | [BitSoulTech/BitSoulStockSkill](https://github.com/BitSoulTech/BitSoulStockSkill) | Apache-2.0 |
+| [fadewalk__serenity-stock-choke](skills/fadewalk__serenity-stock-choke) | A股"卡脖子"选股 | [fadewalk/serenity-stock-choke](https://github.com/fadewalk/serenity-stock-choke) | MIT |
+| [shouldnotappearcalm__a-share-skill](skills/shouldnotappearcalm__a-share-skill) | A股分析+选股+模拟交易（多个技能子目录） | [shouldnotappearcalm/a-share-skill](https://github.com/shouldnotappearcalm/a-share-skill) | MIT |
+| [StanleyChanH__Tushare-Finance-Skill](skills/StanleyChanH__Tushare-Finance-Skill) | Tushare 数据技能包 | [StanleyChanH/Tushare-Finance-Skill-for-Claude-Code](https://github.com/StanleyChanH/Tushare-Finance-Skill-for-Claude-Code) | MIT |
+| [Geralt-L__Stock-Analysis-3D](skills/Geralt-L__Stock-Analysis-3D) | 3D 评分股票分析 | [Geralt-L/Stock-Analysis-3D](https://github.com/Geralt-L/Stock-Analysis-3D) | MIT |
+| [atorber__qmt-trading-skill](skills/atorber__qmt-trading-skill) | QMT 交易 21 个 skills | [atorber/qmt-trading-skill](https://github.com/atorber/qmt-trading-skill) | MIT |
+| [staruhub__a-share-analyst](skills/staruhub__a-share-analyst) | A股分析师技能（取自 ClaudeSkills） | [staruhub/ClaudeSkills](https://github.com/staruhub/ClaudeSkills) | MIT |
+| [tradermonty__claude-trading-skills](skills/tradermonty__claude-trading-skills) | 美股分析 / CANSLIM 选股等 | [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills) | MIT |
+| [agiprolabs__claude-trading-skills](skills/agiprolabs__claude-trading-skills) | 67 个交易 skills（含加密/期权/风控） | [agiprolabs/claude-trading-skills](https://github.com/agiprolabs/claude-trading-skills) | MIT |
+| [zubair-trabzada__ai-trading-claude](skills/zubair-trabzada__ai-trading-claude) | 16 个 trade-* skills + 5 agents | [zubair-trabzada/ai-trading-claude](https://github.com/zubair-trabzada/ai-trading-claude) | MIT |
+| [yennanliu__InvestSkill](skills/yennanliu__InvestSkill) | 美股分析 + stock-screener 等 | [yennanliu/InvestSkill](https://github.com/yennanliu/InvestSkill) | MIT |
+| [tellmefrankie__ai-investment-skills](skills/tellmefrankie__ai-investment-skills) | 期权流/新闻情绪/价格提醒等 5 个投资 skills | [tellmefrankie/ai-investment-skills](https://github.com/tellmefrankie/ai-investment-skills) | MIT |
+| [cruisekkk__trading-ledger](skills/cruisekkk__trading-ledger) | 交易日志 skill | [cruisekkk/trading-ledger](https://github.com/cruisekkk/trading-ledger) | MIT |
+| [AlexLiu0130__ibkr-options-assistant](skills/AlexLiu0130__ibkr-options-assistant) | IBKR 期权助手 | [AlexLiu0130/ibkr-options-assistant](https://github.com/AlexLiu0130/ibkr-options-assistant) | MIT |
 
-以下项目仅提供链接索引，未转载文件（License 不允许转载、体量过大或为完整应用/框架）。Stars 数据为 2026-08-25 查询。
+## 验证、更新与贡献
 
-### A. 中文 Skill / Agent 项目
+```bash
+python -m pip install pandas pyyaml
+python scripts/validate_repository.py
+python -m unittest discover -s tests -v
+python scripts/check_upstreams.py
+```
 
-| 项目 | 简介 | Stars | License | 备注 |
-|---|---|---|---|---|
-| [ZhuLinsen/daily_stock_analysis](https://github.com/ZhuLinsen/daily_stock_analysis) | LLM驱动多市场智能分析系统 | 63.8k | MIT | 完整应用，建议直接用原仓库，仅索引未转载 |
-| [jwangkun/claude-for-financial-services-cn](https://github.com/jwangkun/claude-for-financial-services-cn) | 63个A股金融 Claude Skills | 720 | Apache-2.0 | 体量大，仅索引未转载 |
-| [liangdabiao/Claude-Code-Stock-Deep-Research-Agent](https://github.com/liangdabiao/Claude-Code-Stock-Deep-Research-Agent) | 8阶段股票尽调+28并行研究智能体 | 367 | 无License | 仅索引，未转载 |
-| [MobiusQuant/Gendangzou-skill](https://github.com/MobiusQuant/Gendangzou-skill) | 跟庄走：A股板块研究 Skill | 306 | Apache-2.0 | 仅索引未转载 |
-| [lzwme/finance-quant-skills](https://github.com/lzwme/finance-quant-skills) | A股量化 Agent Skills 维护仓库 | 264 | 无License | 仅索引，未转载 |
-| [joutaojian/arkvol-skill](https://github.com/joutaojian/arkvol-skill) | arkvol 数据接入 Agent | 169 | 无License | 仅索引，未转载 |
-| [liusai0820/Stock-Analysis-Skill](https://github.com/liusai0820/Stock-Analysis-Skill) | 股票分析师 skill（A/港/美） | 130 | 无License | 仅索引，未转载 |
-| [shouldnotappearcalm/hk-us-market-skill](https://github.com/shouldnotappearcalm/hk-us-market-skill) | 港美股量化研究+模拟交易 | 3 | 无License | 仅索引，未转载 |
-| [Patrickristal/DaA-left-side-trading-rookie](https://github.com/Patrickristal/DaA-left-side-trading-rookie) | A股港股左侧交易 skill（超预测框架） | 2 | 无License | 仅索引，未转载 |
-| [quantskills/skill-stock-screener](https://github.com/quantskills/skill-stock-screener) | 自然语言A股选股 | 2 | GPL-3.0 | GPL 不转载，仅索引 |
-| [samyakjain0606/awesome-stock-skills](https://github.com/samyakjain0606/awesome-stock-skills) | 印度股市研究 skills | 24 | 无License | 仅索引，未转载 |
-| [rigneshroot/hyperbot-ai-trading-claude-skill](https://github.com/rigneshroot/hyperbot-ai-trading-claude-skill) | 可解释交易情报框架 | 0 | NOASSERTION | 仅索引，未转载 |
-| [hsliuping/TradingAgents-CN](https://github.com/hsliuping/TradingAgents-CN) | 中文多智能体LLM交易框架 | 31.4k | NOASSERTION | 仅索引，未转载 |
-| [24mlight/A_Share_investment_Agent](https://github.com/24mlight/A_Share_investment_Agent) | A股投资多智能体系统 | 2.5k | NOASSERTION | 仅索引，未转载 |
-| [HiThink-Tech/Financial-API](https://github.com/HiThink-Tech/Financial-API) | 同花顺官方金融数据 MCP/API | 1.8k | MIT | 仅索引未转载 |
-| [wolfjkd/tradex-hub](https://github.com/wolfjkd/tradex-hub) | A股AI决策中台，129个MCP工具（通达信+akshare+同花顺） | 32 | 无License | 仅索引，未转载 |
-| [guangxiangdebizi/FinanceMCP-DCTHS](https://github.com/guangxiangdebizi/FinanceMCP-DCTHS) | 东财+同花顺 MCP 数据服务 | 39 | Apache-2.0 | 仅索引未转载 |
-| [zhuyifang/tonghuasun-codex](https://github.com/zhuyifang/tonghuasun-codex) | 本机同花顺接入 Codex | 27 | 无License | 仅索引，未转载 |
-| [binance/binance-skills-hub](https://github.com/binance/binance-skills-hub) | 币安官方 skills 市场 | 982 | 未标注 | 仅索引，未转载 |
+前三条构成离线验证；最后一条需要联网。质量与巡检工作流以 [待启用模板](docs/workflows) 交付，质量模板覆盖 Python 3.11 / 3.13。当前 GitHub 授权缺少 `workflow` 权限，尚未部署新工作流；获得相应权限后将模板放入 `.github/workflows/` 并推送到默认分支即可启用，详见 [维护说明](docs/maintenance.md)。
 
-### B. AI Agent / LLM 交易框架
+本次升级日期：**2026-10-24**。第三方代码仍为历史快照；旧来源未记录提交号时，巡检如实标记，不能宣称已经同步最新版。[本次验证](docs/validation.md)与[历史运行记录](docs/historical-demos.md)分别查看。
 
-| 项目 | 简介 | Stars | License | 备注 |
-|---|---|---|---|---|
-| [TauricResearch/TradingAgents](https://github.com/TauricResearch/TradingAgents) | 多智能体LLM金融交易框架 | 100k | Apache-2.0 | 框架类，仅索引 |
-| [virattt/ai-hedge-fund](https://github.com/virattt/ai-hedge-fund) | AI对冲基金多agent模拟 | 63k | MIT | 框架类，仅索引 |
-| [AI4Finance-Foundation/FinRL](https://github.com/AI4Finance-Foundation/FinRL) | 金融强化学习框架 | 16.1k | MIT | 框架类，仅索引 |
-| [AI4Finance-Foundation/FinRobot](https://github.com/AI4Finance-Foundation/FinRobot) | LLM金融AI Agent平台 | 7.9k | Apache-2.0 | 框架类，仅索引 |
+欢迎提交可复现的问题：目标 skill、命令、包版本、数据日期、预期与实际输出。贡献新 skill 时说明适用任务、依赖、输入输出与验证方式；更新转载内容时保留许可证、署名并记录上游提交。
 
-### C. 量化框架 / 回测
+## 使用边界与许可
 
-| 项目 | 简介 | Stars | License | 备注 |
-|---|---|---|---|---|
-| [vnpy/vnpy](https://github.com/vnpy/vnpy) | 国内最知名开源量化交易平台 | 44.7k | MIT | 框架类，仅索引 |
-| [microsoft/qlib](https://github.com/microsoft/qlib) | 微软AI量化投研平台 | 47.9k | MIT | 框架类，仅索引 |
-| [freqtrade/freqtrade](https://github.com/freqtrade/freqtrade) | 加密货币交易机器人 | 53.6k | GPL-3.0 | GPL 不转载，仅索引 |
-| [mementum/backtrader](https://github.com/mementum/backtrader) | 经典回测库（已停更） | 23k | GPL-3.0 | GPL 不转载，仅索引 |
-| [quantopian/zipline](https://github.com/quantopian/zipline) | 经典算法交易回测库 | 20.1k | Apache-2.0 | 仅索引 |
-| [QuantConnect/Lean](https://github.com/QuantConnect/Lean) | 算法交易引擎 | 21.3k | Apache-2.0 | 仅索引 |
-| [polakowo/vectorbt](https://github.com/polakowo/vectorbt) | 向量化回测 | 8.8k | Apache-2.0 + Commons Clause | 仅索引，未转载 |
-| [hummingbot/hummingbot](https://github.com/hummingbot/hummingbot) | 高频做市/套利 | 19.6k | Apache-2.0 | 仅索引 |
-| [jesse-ai/jesse](https://github.com/jesse-ai/jesse) | 加密货币交易机器人 | 8.4k | MIT | 仅索引 |
-| [ricequant/rqalpha](https://github.com/ricequant/rqalpha) | 米筐A股回测框架 | 6.7k | NOASSERTION | 仅索引，未转载 |
-| [zvtvz/zvt](https://github.com/zvtvz/zvt) | 模块化量化框架 | 4.3k | MIT | 仅索引 |
+本项目用于学习和研究，不构成投资建议。投资大师系列是公开方法的规则化近似，不代表本人背书或真实交易体系复刻。评分、共识和历史回测均不证明未来收益。涉及实盘交易的第三方能力须另行核对其权限和执行行为。
 
-### D. 数据接口
-
-| 项目 | 简介 | Stars | License | 备注 |
-|---|---|---|---|---|
-| [akfamily/akshare](https://github.com/akfamily/akshare) | A股数据首选开源库 | 22.2k | MIT | 仅索引 |
-| [waditu/tushare](https://github.com/waditu/tushare) | 老牌A股数据（免费版停更，Pro需积分） | 15.2k | BSD-3-Clause | 仅索引 |
-| [Micro-sheep/efinance](https://github.com/Micro-sheep/efinance) | 东财数据快速获取 | 4k | MIT | 仅索引 |
-| [shidenggui/easyquotation](https://github.com/shidenggui/easyquotation) | 新浪/腾讯实时行情 | 5.4k | MIT | 仅索引 |
-| [rainx/pytdx](https://github.com/rainx/pytdx) | 通达信行情接口 | 1.6k | 无License已归档 | 仅索引，未转载 |
-| [ccxt/ccxt](https://github.com/ccxt/ccxt) | 统一100+交易所API | 43.7k | MIT | 仅索引 |
-| [OpenBB-finance/OpenBB](https://github.com/OpenBB-finance/OpenBB) | 开放金融数据平台 | 72.3k | AGPL-3.0 | AGPL 不转载，仅索引 |
-
-### E. 因子 / 策略 / 指标
-
-| 项目 | 简介 | Stars | License | 备注 |
-|---|---|---|---|---|
-| [mpquant/MyTT](https://github.com/mpquant/MyTT) | 通达信/同花顺指标 Python 移植 | 2.8k | 无License | 仅索引，未转载 |
-| [yli188/WorldQuant_alpha101_code](https://github.com/yli188/WorldQuant_alpha101_code) | WorldQuant 101 Alpha 因子实现 | 860 | 无License | 仅索引，未转载 |
-
-### F. 学习资源 / 索引
-
-| 项目 | 简介 | Stars | License | 备注 |
-|---|---|---|---|---|
-| [wilsonfreitas/awesome-quant](https://github.com/wilsonfreitas/awesome-quant) | 量化库精选列表 | 29.2k | 无License | 仅索引，未转载 |
-| [thuquant/awesome-quant](https://github.com/thuquant/awesome-quant) | 中国Quant资源索引 | 5.6k | MIT | 仅索引 |
-| [Barca0412/Introduction-to-Quantitative-Finance](https://github.com/Barca0412/Introduction-to-Quantitative-Finance) | 中文量化金融入门知识库 | 1.7k | MIT | 仅索引 |
-| [VoltAgent/awesome-claude-skills](https://github.com/VoltAgent/awesome-claude-skills) | 含 Web3/Trading 分区 | — | — | 仅索引 |
-| [shishirui/awesome-claude-skills-zh](https://github.com/shishirui/awesome-claude-skills-zh) | 中文 skills 索引 | 15 | CC0-1.0 | 仅索引 |
-| [yzfly/awesome-skills-zh](https://github.com/yzfly/awesome-skills-zh) | 中文 skills 索引 | 29 | Apache-2.0 | 仅索引 |
-
-## License
-
-本合集自身的整理内容（README、索引、SOURCE.md）采用 [MIT License](LICENSE)。`skills/` 下各技能以各自原仓库 License 为准，详见各目录内的 LICENSE 与 SOURCE.md，完整转载清单见 [docs/NOTICE.md](docs/NOTICE.md)。
+原创技能采用 MIT；整理内容采用根目录 [MIT License](LICENSE)。第三方作品归各自作者所有，以各目录原许可证为准，来源与转载范围见 [NOTICE](docs/NOTICE.md)。当前收录政策仅复制 MIT / Apache-2.0 / BSD / CC0 项目，其余仅作链接索引；这是一项收录政策，不是对其他许可证法律效果的判断。

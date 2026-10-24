@@ -1,7 +1,8 @@
 ---
 name: feng-liu-weak-side
-description: A股冯柳弱者体系/逆向投资扫描器：大跌后的高赔率标的，基本面未崩+估值历史低位+低关注度，输出赔率/概率逆向观察清单 | A-share Feng Liu "weak-side" contrarian screener: high-odds candidates after deep drawdowns, intact fundamentals, low valuation percentile, and low attention | A株馮柳「弱者体系」逆張りスクリーナー：大幅下落後の高利ざや候補、崩れぬファンダメンタルズ、低バリュエーション、低関心度
-author: Serennity007
+description: "A股冯柳弱者体系/逆向投资扫描器：大跌后的高赔率标的，基本面未崩+估值历史低位+低关注度，输出赔率/概率逆向观察清单 | A-share Feng Liu \"weak-side\" contrarian screener: high-odds candidates after deep drawdowns, intact fundamentals, low valuation percentile, and low attention | A株馮柳「弱者体系」逆張りスクリーナー：大幅下落後の高利ざや候補、崩れぬファンダメンタルズ、低バリュエーション、低関心度"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

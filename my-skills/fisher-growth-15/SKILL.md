@@ -1,7 +1,8 @@
 ---
 name: fisher-growth-15
-description: A股费雪《怎样选择成长股》15要点机械化：营收CAGR成长跑道、研发费用率、毛利率趋势、连续ROE、盈利含金量、财务保守六维打分，为"闲聊法"调研筛出成长股候选 | A-share Philip Fisher growth-stock scoring: revenue CAGR runway, R&D intensity, margin trend, sustained ROE, cash quality, financial conservatism — a shortlist for scuttlebutt research | A株フィリップ・フィッシャー成長株スコアリング：売上CAGR、研究開発比率、利益率トレンド、持続ROE、キャッシュの質、財務健全性の6次元
-author: Serennity007
+description: "A股费雪《怎样选择成长股》15要点机械化：营收CAGR成长跑道、研发费用率、毛利率趋势、连续ROE、盈利含金量、财务保守六维打分，为\"闲聊法\"调研筛出成长股候选 | A-share Philip Fisher growth-stock scoring: revenue CAGR runway, R&D intensity, margin trend, sustained ROE, cash quality, financial conservatism — a shortlist for scuttlebutt research | A株フィリップ・フィッシャー成長株スコアリング：売上CAGR、研究開発比率、利益率トレンド、持続ROE、キャッシュの質、財務健全性の6次元"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

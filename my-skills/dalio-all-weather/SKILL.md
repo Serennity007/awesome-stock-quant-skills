@@ -1,7 +1,8 @@
 ---
 name: dalio-all-weather
-description: A股达利欧全天候/债务周期参考配置：用宽基指数、国债ETF、黄金ETF与商品指数计算相关性、波动率与风险平价权重，并回测年化/最大回撤/夏普 | A-share Ray Dalio all-weather / debt-cycle reference allocator: computes correlations, volatilities, risk-parity-style weights across stocks/bonds/gold/commodities, and backtests CAGR/max-drawdown/Sharpe | A株レイ・ダリオ式オールウェザー／債務サイクル参照配分：幅基指数、国債ETF、金ETF、商品指数から相関・ボラティリティ・リスクパリティ風ウェイトを算出し、年率リターン・最大ドローダウン・シャープレシオでバックテスト
-author: Serennity007
+description: "A股达利欧全天候/债务周期参考配置：用宽基指数、国债ETF、黄金ETF与商品指数计算相关性、波动率与风险平价权重，并回测年化/最大回撤/夏普 | A-share Ray Dalio all-weather / debt-cycle reference allocator: computes correlations, volatilities, risk-parity-style weights across stocks/bonds/gold/commodities, and backtests CAGR/max-drawdown/Sharpe | A株レイ・ダリオ式オールウェザー／債務サイクル参照配分：幅基指数、国債ETF、金ETF、商品指数から相関・ボラティリティ・リスクパリティ風ウェイトを算出し、年率リターン・最大ドローダウン・シャープレシオでバックテスト"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

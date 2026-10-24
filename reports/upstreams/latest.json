@@ -1,0 +1,247 @@
+{
+  "checked_at_utc": "2026-10-24T13:23:47.169631+00:00",
+  "sources": [
+    {
+      "directory": "agiprolabs__claude-trading-skills",
+      "repository": "agiprolabs/claude-trading-skills",
+      "declared_license": "MIT",
+      "mirrored_commit": null,
+      "status": "ok",
+      "head_sha": "981e1d736cdc02bdc1c55c74ec9224e956414706",
+      "upstream_license": "MIT",
+      "archived": false,
+      "stars": 437,
+      "url": "https://github.com/agiprolabs/claude-trading-skills",
+      "flags": [
+        "snapshot-unpinned"
+      ]
+    },
+    {
+      "directory": "AlexLiu0130__ibkr-options-assistant",
+      "repository": "AlexLiu0130/ibkr-options-assistant",
+      "declared_license": "MIT",
+      "mirrored_commit": null,
+      "status": "error",
+      "error_type": "HTTPError",
+      "flags": [
+        "fetch-failed"
+      ],
+      "http_status": 404
+    },
+    {
+      "directory": "atorber__qmt-trading-skill",
+      "repository": "atorber/qmt-trading-skill",
+      "declared_license": "MIT",
+      "mirrored_commit": null,
+      "status": "ok",
+      "head_sha": "036f6262eb8efb17f395b07b083a0a31d39bcce7",
+      "upstream_license": "MIT",
+      "archived": false,
+      "stars": 25,
+      "url": "https://github.com/atorber/qmt-trading-skill",
+      "flags": [
+        "snapshot-unpinned"
+      ]
+    },
+    {
+      "directory": "BitSoulTech__BitSoulStockSkill",
+      "repository": "BitSoulTech/BitSoulStockSkill",
+      "declared_license": "Apache-2.0",
+      "mirrored_commit": null,
+      "status": "ok",
+      "head_sha": "0364f1e97bb0e74a33b69e2625fcb7df21573fdd",
+      "upstream_license": "Apache-2.0",
+      "archived": false,
+      "stars": 578,
+      "url": "https://github.com/BitSoulTech/BitSoulStockSkill",
+      "flags": [
+        "snapshot-unpinned"
+      ]
+    },
+    {
+      "directory": "cruisekkk__trading-ledger",
+      "repository": "cruisekkk/trading-ledger",
+      "declared_license": "MIT",
+      "mirrored_commit": null,
+      "status": "ok",
+      "head_sha": "990512836f13020a61960ccae9a47c51e7dd822e",
+      "upstream_license": "MIT",
+      "archived": false,
+      "stars": 5,
+      "url": "https://github.com/cruisekkk/trading-ledger",
+      "flags": [
+        "snapshot-unpinned"
+      ]
+    },
+    {
+      "directory": "fadewalk__serenity-stock-choke",
+      "repository": "fadewalk/serenity-stock-choke",
+      "declared_license": "MIT",
+      "mirrored_commit": null,
+      "status": "ok",
+      "head_sha": "d119762568110edd34752af12538b5993f468588",
+      "upstream_license": "MIT",
+      "archived": false,
+      "stars": 501,
+      "url": "https://github.com/fadewalk/serenity-stock-choke",
+      "flags": [
+        "snapshot-unpinned"
+      ]
+    },
+    {
+      "directory": "Geralt-L__Stock-Analysis-3D",
+      "repository": "Geralt-L/Stock-Analysis-3D",
+      "declared_license": "MIT",
+      "mirrored_commit": null,
+      "status": "ok",
+      "head_sha": "a44ca35d6ac82366f8e43ae4cc525891321fc2ec",
+      "upstream_license": "MIT",
+      "archived": false,
+      "stars": 4,
+      "url": "https://github.com/Geralt-L/Stock-Analysis-3D",
+      "flags": [
+        "snapshot-unpinned"
+      ]
+    },
+    {
+      "directory": "shouldnotappearcalm__a-share-skill",
+      "repository": "shouldnotappearcalm/a-share-skill",
+      "declared_license": "MIT",
+      "mirrored_commit": null,
+      "status": "ok",
+      "head_sha": "8874bd1c46813ddb188aa293e6f9ae34f016ba4d",
+      "upstream_license": "MIT",
+      "archived": false,
+      "stars": 251,
+      "url": "https://github.com/shouldnotappearcalm/a-share-skill",
+      "flags": [
+        "snapshot-unpinned"
+      ]
+    },
+    {
+      "directory": "simonlin1212__a-stock-data",
+      "repository": "simonlin1212/a-stock-data",
+      "declared_license": "Apache-2.0",
+      "mirrored_commit": null,
+      "status": "ok",
+      "head_sha": "02aa8b4d1316629e819cdc17a14297ca1a70edcd",
+      "upstream_license": "Apache-2.0",
+      "archived": false,
+      "stars": 11081,
+      "url": "https://github.com/simonlin1212/a-stock-data",
+      "flags": [
+        "snapshot-unpinned"
+      ]
+    },
+    {
+      "directory": "StanleyChanH__Tushare-Finance-Skill",
+      "repository": "StanleyChanH/Tushare-Finance-Skill-for-Claude-Code",
+      "declared_license": "MIT",
+      "mirrored_commit": null,
+      "status": "ok",
+      "head_sha": "7736d44c4c9b79d1271a906990be9f835b18a1b2",
+      "upstream_license": "MIT",
+      "archived": false,
+      "stars": 79,
+      "url": "https://github.com/StanleyChanH/Tushare-Finance-Skill-for-Claude-Code",
+      "flags": [
+        "snapshot-unpinned"
+      ]
+    },
+    {
+      "directory": "staruhub__a-share-analyst",
+      "repository": "staruhub/ClaudeSkills",
+      "declared_license": "MIT",
+      "mirrored_commit": null,
+      "status": "ok",
+      "head_sha": "66e02d23642f0c63ccb07b46a88104eade402d44",
+      "upstream_license": "MIT",
+      "archived": false,
+      "stars": 732,
+      "url": "https://github.com/staruhub/ClaudeSkills",
+      "flags": [
+        "snapshot-unpinned"
+      ]
+    },
+    {
+      "directory": "tellmefrankie__ai-investment-skills",
+      "repository": "tellmefrankie/ai-investment-skills",
+      "declared_license": "MIT",
+      "mirrored_commit": null,
+      "status": "ok",
+      "head_sha": "7e0fdb584f5f8d6022b0a767a40634237e1a5693",
+      "upstream_license": "MIT",
+      "archived": false,
+      "stars": 22,
+      "url": "https://github.com/tellmefrankie/ai-investment-skills",
+      "flags": [
+        "snapshot-unpinned"
+      ]
+    },
+    {
+      "directory": "tradermonty__claude-trading-skills",
+      "repository": "tradermonty/claude-trading-skills",
+      "declared_license": "MIT",
+      "mirrored_commit": null,
+      "status": "ok",
+      "head_sha": "cb0f3aadffed6d1089db4b224162c964368baa46",
+      "upstream_license": "MIT",
+      "archived": false,
+      "stars": 3243,
+      "url": "https://github.com/tradermonty/claude-trading-skills",
+      "flags": [
+        "snapshot-unpinned"
+      ]
+    },
+    {
+      "directory": "wbh604__UZI-Skill",
+      "repository": "wbh604/UZI-Skill",
+      "declared_license": "MIT",
+      "mirrored_commit": null,
+      "status": "ok",
+      "head_sha": "3dc556bdad8229fad01dc54c83d6d9402ef6218c",
+      "upstream_license": "MIT",
+      "archived": false,
+      "stars": 7398,
+      "url": "https://github.com/wbh604/UZI-Skill",
+      "flags": [
+        "snapshot-unpinned"
+      ]
+    },
+    {
+      "directory": "yennanliu__InvestSkill",
+      "repository": "yennanliu/InvestSkill",
+      "declared_license": "MIT",
+      "mirrored_commit": null,
+      "status": "ok",
+      "head_sha": "cba40eebdfcca95f0ccbde7afadd96014dfe685d",
+      "upstream_license": "MIT",
+      "archived": false,
+      "stars": 256,
+      "url": "https://github.com/yennanliu/InvestSkill",
+      "flags": [
+        "snapshot-unpinned"
+      ]
+    },
+    {
+      "directory": "zubair-trabzada__ai-trading-claude",
+      "repository": "zubair-trabzada/ai-trading-claude",
+      "declared_license": "MIT",
+      "mirrored_commit": null,
+      "status": "ok",
+      "head_sha": "c6d7252211a72405cefaff3e62d27a032c58348c",
+      "upstream_license": "MIT",
+      "archived": false,
+      "stars": 278,
+      "url": "https://github.com/zubair-trabzada/ai-trading-claude",
+      "flags": [
+        "snapshot-unpinned"
+      ]
+    }
+  ],
+  "akshare": {
+    "status": "ok",
+    "version": "1.19.3",
+    "url": "https://pypi.org/project/akshare/"
+  }
+}

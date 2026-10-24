@@ -1,7 +1,8 @@
 ---
 name: druckenmiller-macro-flex
-description: 德鲁肯米勒式宏观灵活仪表盘：用akshare跟踪美元/人民币汇率、中美10Y国债收益率、黄金、原油、铜、A股指数及个股的近N日趋势与动量，输出多空倾向快照 | Druckenmiller-style macro-flex dashboard: tracks USD/CNY, China/US 10Y yields, gold, crude oil, copper, A-share indices and individual stocks' N-day trend/momentum, outputs a long/short bias snapshot | ドラッケンミラー式マクロ・フレックス・ダッシュボード：USD/CNY、中米10年国債利回り、金、原油、銅、A株指数と個別銘柄のN日トレンド/モメンタムを追跡し、多空バイアス・スナップショットを出力
-author: Serennity007
+description: "德鲁肯米勒式宏观灵活仪表盘：用akshare跟踪美元/人民币汇率、中美10Y国债收益率、黄金、原油、铜、A股指数及个股的近N日趋势与动量，输出多空倾向快照 | Druckenmiller-style macro-flex dashboard: tracks USD/CNY, China/US 10Y yields, gold, crude oil, copper, A-share indices and individual stocks' N-day trend/momentum, outputs a long/short bias snapshot | ドラッケンミラー式マクロ・フレックス・ダッシュボード：USD/CNY、中米10年国債利回り、金、原油、銅、A株指数と個別銘柄のN日トレンド/モメンタムを追跡し、多空バイアス・スナップショットを出力"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

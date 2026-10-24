@@ -1,0 +1,3 @@
+# Dependencies for the synthetic, offline quick-start demo.
+numpy
+pandas

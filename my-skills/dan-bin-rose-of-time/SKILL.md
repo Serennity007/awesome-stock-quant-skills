@@ -1,7 +1,8 @@
 ---
 name: dan-bin-rose-of-time
-description: A股但斌"时间的玫瑰"伟大企业投资法：长坡（营收CAGR成长跑道）、厚雪（高毛利率定价权）、复利引擎（连续5年ROE）、时间的玫瑰（持续分红）、盈利含金量、财务健康、成长质量七维打分，找"与伟大企业共成长"的传家生意 | A-share Dan Bin "Rose of Time" great-enterprise investing: long slope (revenue CAGR), thick snow (gross margin), compounding engine (5yr ROE), sustained dividends, cash quality, low leverage, growth consistency | A株但斌「時間の薔薇」偉大な企業投資法：長い坂（売上CAGR）、深い雪（粗利率）、複利エンジン（5年ROE）、持続配当、キャッシュの質、低負債、成長の一貫性の7次元
-author: Serennity007
+description: "A股但斌\"时间的玫瑰\"伟大企业投资法：长坡（营收CAGR成长跑道）、厚雪（高毛利率定价权）、复利引擎（连续5年ROE）、时间的玫瑰（持续分红）、盈利含金量、财务健康、成长质量七维打分，找\"与伟大企业共成长\"的传家生意 | A-share Dan Bin \"Rose of Time\" great-enterprise investing: long slope (revenue CAGR), thick snow (gross margin), compounding engine (5yr ROE), sustained dividends, cash quality, low leverage, growth consistency | A株但斌「時間の薔薇」偉大な企業投資法：長い坂（売上CAGR）、深い雪（粗利率）、複利エンジン（5年ROE）、持続配当、キャッシュの質、低負債、成長の一貫性の7次元"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

@@ -1,7 +1,8 @@
 ---
 name: klarman-margin-safety
-description: A股卡拉曼安全边际深度价值筛股：PB<1或历史极低位、PE低分位、市值/净现金比、52周高点回撤，剔除ST/亏损股 | A-share Seth Klarman-style deep value screener: PB<1 or historical low, low PE percentile, market-cap-to-net-cash ratio, 52-week drawdown, exclude ST/loss makers | A株セス・クラーマン式ディープバリュー選別：PB<1または歴史的低位、PE低パーセンタイル、時価総額/純キャッシュ比、52週高値からの下落、ST/赤字銘柄を除外
-author: Serennity007
+description: "A股卡拉曼安全边际深度价值筛股：PB less than 1或历史极低位、PE低分位、市值/净现金比、52周高点回撤，剔除ST/亏损股 | A-share Seth Klarman-style deep value screener: PB less than 1 or historical low, low PE percentile, market-cap-to-net-cash ratio, 52-week drawdown, exclude ST/loss makers | A株セス・クラーマン式ディープバリュー選別：PB less than 1または歴史的低位、PE低パーセンタイル、時価総額/純キャッシュ比、52週高値からの下落、ST/赤字銘柄を除外"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

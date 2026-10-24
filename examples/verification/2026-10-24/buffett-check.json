@@ -1,0 +1,30 @@
+{
+  "status": "ok",
+  "returncode": 0,
+  "generated_at_utc": "2026-10-24T13:46:56.046146+00:00",
+  "akshare_version": "1.19.3",
+  "codes": [
+    "600519"
+  ],
+  "success": 1,
+  "failed": [],
+  "partial": 0,
+  "historical_point_in_time": false,
+  "rows": [
+    {
+      "code": "600519",
+      "total": 100,
+      "score_status": "complete",
+      "decision": "review_moat",
+      "data_issues": "",
+      "financial_periods": "2021-12-31,2022-12-31,2023-12-31,2024-12-31,2025-12-31",
+      "valuation_date": "2026-10-23"
+    }
+  ],
+  "scope": "Single live screening smoke test; verifies retrieval and calculation only, not investment performance or all interfaces.",
+  "source_interfaces": [
+    "akshare.stock_financial_analysis_indicator",
+    "akshare.stock_financial_report_sina",
+    "akshare.stock_value_em"
+  ]
+}

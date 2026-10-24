@@ -46,3 +46,6 @@ test_*.csv
 *_test_result.csv
 *_test.csv
 smoke_*.csv
+
+# Reproducible local demo outputs
+/output/

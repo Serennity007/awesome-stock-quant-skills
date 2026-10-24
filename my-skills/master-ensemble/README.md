@@ -21,9 +21,9 @@
 pip install pandas
 
 # 第一步：各大师框架全量跑测（同一股票池，如 --pool hs300）
-python ../dan-bin-rose-of-time/scripts/screen.py --pool hs300 --out danbin_hs300_result.csv
-python ../li-lu-value-compounding/scripts/screen.py --pool hs300 --out lilu_hs300_result.csv
-python ../oneil-canslim/scripts/screen.py --pool hs300 --out canslim_hs300_result.csv
+python ../dan-bin-rose-of-time/scripts/screen.py --pool hs300 --out ../dan-bin-rose-of-time/danbin_hs300_result.csv
+python ../li-lu-value-compounding/scripts/screen.py --pool hs300 --out ../li-lu-value-compounding/lilu_hs300_result.csv
+python ../oneil-canslim/scripts/screen.py --pool hs300 --out ../oneil-canslim/canslim_hs300_result.csv
 
 # 第二步：合成共识
 python scripts/ensemble.py \
@@ -51,3 +51,9 @@ python scripts/ensemble.py \
 ## 免责声明
 
 仅供学习研究，不构成投资建议。共识分不校验"共同的数据错误"，框架间也非完全独立，历史一致不代表未来一致。
+
+## 输入校验与追溯（2026-10-24）
+
+默认拒绝股票池不一致；缺列、无效代码或分数、重复代码、框架重名均报错。需要比较不同池时显式添加 `--allow-partial-pools`。输出伴随 `.meta.json`，记录输入 SHA-256 与参数；`--as-of` 为用户声明日期，未提供则留空。详细定义以 [SKILL.md](SKILL.md) 为准。
+
+输入带 `score_status` 列时，仅接受全部为 `complete` 的评分；不完整财务数据先补数，不能作为完整共识票。

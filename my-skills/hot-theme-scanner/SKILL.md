@@ -1,7 +1,8 @@
 ---
 name: hot-theme-scanner
-description: A股热点题材扫描器：基于akshare概念板块与资金流向接口，识别近N日最热题材、列出领涨股并输出结构化热度表 | A-share hot theme scanner: identifies the hottest themes over N days, lists leading stocks, and outputs a structured heat table based on akshare concept-board and capital-flow APIs | A株ホットテーマスキャナー：akshareのコンセプト板・資金フローAPIを使い、N日間の人気テーマを特定し、上昇先導株をリストアップして構造化ヒート表を出力
-author: Serennity007
+description: "A股热点题材扫描器：基于akshare概念板块与资金流向接口，识别近N日最热题材、列出领涨股并输出结构化热度表 | A-share hot theme scanner: identifies the hottest themes over N days, lists leading stocks, and outputs a structured heat table based on akshare concept-board and capital-flow APIs | A株ホットテーマスキャナー：akshareのコンセプト板・資金フローAPIを使い、N日間の人気テーマを特定し、上昇先導株をリストアップして構造化ヒート表を出力"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

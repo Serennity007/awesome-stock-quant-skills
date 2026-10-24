@@ -1,7 +1,8 @@
 ---
 name: soros-reflexivity
-description: A股索罗斯反身性/宏观投机扫描器：在价格动量与基本面的裂缝中标记正反馈/负反馈阶段与潜在拐点 | A-share Soros reflexivity / macro speculation scanner: labels positive/negative feedback stages and potential inflection points from the gap between price momentum and fundamentals | A株ソロス反身性／マクロ投機スキャナー：価格モメンタムとファンダメンタルの乖離から正のフィードバック／負のフィードバック段階と転換点候補をマーク
-author: Serennity007
+description: "A股索罗斯反身性/宏观投机扫描器：在价格动量与基本面的裂缝中标记正反馈/负反馈阶段与潜在拐点 | A-share Soros reflexivity / macro speculation scanner: labels positive/negative feedback stages and potential inflection points from the gap between price momentum and fundamentals | A株ソロス反身性／マクロ投機スキャナー：価格モメンタムとファンダメンタルの乖離から正のフィードバック／負のフィードバック段階と転換点候補をマーク"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

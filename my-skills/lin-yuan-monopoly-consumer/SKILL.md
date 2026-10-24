@@ -1,7 +1,8 @@
 ---
 name: lin-yuan-monopoly-consumer
-description: A股林园垄断+成瘾性消费投资法：只投嘴巴相关的刚需龙头、毛利率>50%、ROE高位、分红高、申万行业过滤+成瘾行业白名单多维打分 | A-share Lin Yuan-style monopoly + addictive consumer investing: mouth-related necessities, gross margin >50%, high ROE, high dividends, SW industry filter + addictive-industry whitelist scoring | A株林園式独占+依存性消費投資：口元関連の必需品、粗利率50%超、高ROE、高配当、申万業種フィルタ+依存業界ホワイトリスト採点
-author: Serennity007
+description: "A股林园垄断+成瘾性消费投资法：只投嘴巴相关的刚需龙头、毛利率 greater than 50%、ROE高位、分红高、申万行业过滤+成瘾行业白名单多维打分 | A-share Lin Yuan-style monopoly + addictive consumer investing: mouth-related necessities, gross margin  greater than 50%, high ROE, high dividends, SW industry filter + addictive-industry whitelist scoring | A株林園式独占+依存性消費投資：口元関連の必需品、粗利率50%超、高ROE、高配当、申万業種フィルタ+依存業界ホワイトリスト採点"
+metadata:
+  author: Serennity007
 license: MIT
 ---
 

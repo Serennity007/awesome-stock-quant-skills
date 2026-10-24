@@ -34,3 +34,7 @@ python scripts/analyze.py 600519
 ## 免責事項
 
 学習・研究目的のみ。投資助言ではありません。スコアリングは初回フィルターに過ぎず、最終判断はビジネス自体への理解（能力圏の原則）に基づく必要があります。
+
+## データ充足と評価日付（2026-10-24）
+
+`score_status`、`decision`、`data_issues`、実際の年報期と評価日、`.meta.json` を出力します。`partial` / `needs_data` は追加確認が必要で、単年の粗利益率を5年の安定性と見なしません。5年の日付範囲と TTM 列を明示し、最新の無効値を古い値で補わず、同日の価格・PE から EPS を推算します。共通処理は `scripts/research_data.py`、詳細は [SKILL.md](SKILL.md)。

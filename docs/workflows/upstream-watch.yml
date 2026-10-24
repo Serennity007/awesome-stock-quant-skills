@@ -1,0 +1,53 @@
+name: upstream-watch
+
+on:
+  schedule:
+    - cron: "23 2 * * 1" # Monday 10:23 Asia/Shanghai
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Restore previous metadata baseline
+        uses: actions/cache/restore@v4
+        with:
+          path: .upstream-baseline
+          key: upstream-baseline-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: upstream-baseline-
+      - name: Check upstreams
+        id: check
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/check_upstreams.py --previous .upstream-baseline/latest.json
+      - name: Preserve observations even when one upstream fails
+        if: always()
+        run: |
+          mkdir -p .upstream-baseline
+          cp reports/upstreams/latest.json .upstream-baseline/latest.json
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: .upstream-baseline
+          key: upstream-baseline-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Publish report in run summary
+        if: always()
+        run: cat reports/upstreams/latest.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: upstream-status
+          path: reports/upstreams/
+          if-no-files-found: error
+      - name: Surface fetch errors as job failure
+        if: always() && steps.check.outcome == 'failure'
+        run: exit 1

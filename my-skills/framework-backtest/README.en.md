@@ -6,7 +6,7 @@ Author: Serennity007 | License: MIT | Data: akshare (East Money / Sina public AP
 
 > **"A backtest is the demon-revealing mirror of a strategy — returns you can't show are just stories."**
 
-This skill turns the repo's master frameworks into **falsifiable strategies**: score the whole pool at each month-end → equal-weight the top N → hold to next month-end → compare cumulative NAV against CSI 300. Scoring is strictly point-in-time (only annual reports published ≥120 days prior + contemporaneous valuations), no look-ahead. v1 supports danbin (6-dim), lilu (6-dim), and mom12_1 (12-1 month momentum benchmark).
+This skill turns the repo's master frameworks into **falsifiable strategies**: score the whole pool at each month-end → equal-weight the top N → hold to next month-end → compare cumulative NAV against CSI 300. Financial availability is approximated as reporting-period end +120 days, alongside contemporaneous valuations. Actual disclosure dates and historical revisions are not verified, so strict point-in-time correctness is not established. v1 supports danbin (6-dim), lilu (6-dim), and mom12_1 (12-1 month momentum benchmark).
 
 ## Contents
 
@@ -31,11 +31,15 @@ python scripts/backtest.py
 
 ## Known Limitations (read before reading results)
 
-1. **Survivorship bias**: the universe is fixed to today's CSI 300 — absolute returns are systematically flattered; **use for cross-framework comparison only**.
-2. No transaction costs (~1-2pp/year for monthly top-10 turnover).
+1. **Survivorship bias**: the universe is fixed to today's CSI 300 — absolute returns are systematically flattered; **exploratory use only; relative rankings may also be biased**.
+2. Configurable traded-notional costs (default 10 bps per unit); impact, suspensions and limit-price execution remain unmodeled.
 3. PE/PB history starts ~2018.
 4. Annual-report publication lag approximated at 120 days.
 
 ## Disclaimer
 
 For learning and research only; not investment advice. Backtested returns do not represent future results.
+
+## Implemented audit behavior (2026-10-24)
+
+Ranking never filters on future exit-price availability; a selected holding with missing exit data stops the run. Strategy and benchmark intervals use the same trading dates, and initial losses count toward drawdown. New `--cost-bps`, `--cache-dir` and `--results-dir` options expose gross/net returns, drift-aware turnover, holding details and input hashes. No forced final liquidation; unadjusted prices remain a limitation. See [SKILL.md](SKILL.md) for the full contract and synthetic CLI example.
