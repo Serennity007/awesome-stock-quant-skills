@@ -32,10 +32,14 @@ python scripts/backtest.py
 ## Known Limitations (read before reading results)
 
 1. **Survivorship bias**: the universe is fixed to today's CSI 300 — absolute returns are systematically flattered; **exploratory use only; relative rankings may also be biased**.
-2. No transaction costs (~1-2pp/year for monthly top-10 turnover).
+2. Configurable traded-notional costs (default 10 bps per unit); impact, suspensions and limit-price execution remain unmodeled.
 3. PE/PB history starts ~2018.
 4. Annual-report publication lag approximated at 120 days.
 
 ## Disclaimer
 
 For learning and research only; not investment advice. Backtested returns do not represent future results.
+
+## Implemented audit behavior (2026-10-24)
+
+Ranking never filters on future exit-price availability; a selected holding with missing exit data stops the run. Strategy and benchmark intervals use the same trading dates, and initial losses count toward drawdown. New `--cost-bps`, `--cache-dir` and `--results-dir` options expose gross/net returns, drift-aware turnover, holding details and input hashes. No forced final liquidation; unadjusted prices remain a limitation. See [SKILL.md](SKILL.md) for the full contract and synthetic CLI example.

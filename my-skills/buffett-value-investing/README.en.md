@@ -34,3 +34,7 @@ Dependencies: `akshare`, `pandas` (Python 3.9+).
 ## Disclaimer
 
 For learning and research only; not investment advice. Scoring is just a first-pass filter — final decisions must rest on your own understanding of the business (circle of competence).
+
+## Data coverage and valuation dates (2026-10-24)
+
+Screening now records `score_status`, `decision`, `data_issues`, actual annual periods and valuation dates, plus a `.meta.json` manifest. `partial` / `needs_data` requires more evidence; a single gross-margin observation earns no five-year stability reward. Valuation uses exact TTM fields in a five-year date window, never substitutes an older valid value for an invalid latest value, and estimates EPS from same-day price and PE. Shared logic lives in `scripts/research_data.py`; see [SKILL.md](SKILL.md).

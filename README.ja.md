@@ -26,12 +26,20 @@ A 株の企業品質・割安度・成長・モメンタム・テーマ・指数
 
 件数はディレクトリとファイルの集計であり、全 API の動作保証ではありません。[検証記録](docs/validation.md)では構造検証、オフライン動作、過去の実行記録と実データ検証を区別します。
 
+## 実行検証を伴うコア改善
+
+今回の対象は Buffett 財務スクリーニング、個別評価、回測と合意判定の接続です。評価履歴を日付順に並べ、過去5年の範囲と TTM 列を厳密に選択。同じ取引日の価格と PE から EPS を推算します。欠損財務データを `partial` と明示し、完全な合意票として扱いません。
+
+回測は調整時点の情報で銘柄を選び、保有後の収益を計算します。退出価格・基準データの不足は停止。実取引日を揃え、初月損失もドローダウンに含め、価格変動後のウェイトで売買額を計算します。毛収益・費用・純収益と保有明細を追跡できます。
+
+**動作テスト35件に合格。2026-10-24 に AKShare 1.19.3 で単一銘柄の取得・評価にも成功しました。** 年報期は2021–2025、評価取引日は2026-10-23です。[記録](examples/verification/2026-10-24/buffett-check.json)と [CSV](examples/verification/2026-10-24/buffett-screen.csv)を確認できます。利益や全 API の保証ではありません。
+
 ## まずオフラインで実行
 
 リポジトリ直下で実行します。入力は**合成データ**で、現在の株価ではありません。API key は不要です。
 
 ```bash
-git clone https://github.com/Serennity007/awesome-stock-quant-skills.git
+git clone --branch codex/quant-skills-refresh https://github.com/Serennity007/awesome-stock-quant-skills.git
 cd awesome-stock-quant-skills
 python -m pip install pandas
 python my-skills/master-ensemble/scripts/ensemble.py --csvs examples/ensemble/quality.csv examples/ensemble/momentum.csv --out output/consensus.csv
@@ -46,7 +54,15 @@ python -m pip install akshare pandas numpy
 python my-skills/buffett-value-investing/scripts/screen.py --codes 600519,000858,600036 --out output/buffett.csv
 ```
 
-取得はネットワーク・データ提供元・API 版に依存します。実際の取引日と財務報告期を記録してください。今回の更新では全市場 API の再検証は行っていません。
+取得はネットワーク・データ提供元・API 版に依存します。実際の取引日と財務報告期を記録してください。`score_status` / `decision` を先に確認し、`partial` / `needs_data` なら追加データが必要です。全市場 API の再検証は行っていません。
+
+## 費用と保有明細を再現する
+
+```bash
+python my-skills/framework-backtest/scripts/backtest.py --cache-dir examples/backtest/cache --results-dir output/backtest-demo --frameworks danbin --start 2026-07-31 --top 1 --min-stocks 2 --cost-bps 10
+```
+
+合成価格 `100 → 110 → 99`、初回購入費用10 bps、期末の強制売却なし。純期末資産は **0.98901**、基準は **1.01** です。月次毛・純収益、売買額、保有明細、入力ハッシュを確認できます。これは計算検証であり、過去の運用成績ではありません。[場面説明](examples/backtest/SCENARIO.md)。
 
 ## Agent に組み込む
 

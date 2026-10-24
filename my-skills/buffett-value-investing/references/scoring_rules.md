@@ -53,10 +53,10 @@
 
 分析估值的 EPS 使用**同一估值交易日**的收盘价 ÷ PE(TTM)，不再把最新行情与较旧 PE 混合。推算 EPS 不等于直接读取的经审计每股收益。
 
-字段契约参照 [AKShare 个股估值](https://akshare.akfamily.xyz/data/stock/stock.html) 的 `stock_value_em` 文档（维护时核对接口名；网页锚点可能变化）。
+字段契约参照 [AKShare 个股估值](https://akshare.akfamily.xyz/data/stock/stock.html) 的 `stock_value_em` 文档（按接口名核对字段）。
 
 ## 已知局限
 
 - akshare 财务数据存在更新滞后与口径差异，重大决策前请以公司年报原文复核。
-- 历史分位估值对上市不足 5 年的公司不适用，脚本会给出警告。
+- 上市不足 5 年时只能报告窗口内的可得历史分位；60 条正值观测门槛不代表完整五年历史，应读取实际历史起点与观测数。
 - 金融、地产等高杠杆行业的负债率标准不适用，需另行人工分析。

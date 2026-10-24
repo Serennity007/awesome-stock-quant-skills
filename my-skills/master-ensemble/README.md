@@ -55,3 +55,5 @@ python scripts/ensemble.py \
 ## 输入校验与追溯（2026-10-24）
 
 默认拒绝股票池不一致；缺列、无效代码或分数、重复代码、框架重名均报错。需要比较不同池时显式添加 `--allow-partial-pools`。输出伴随 `.meta.json`，记录输入 SHA-256 与参数；`--as-of` 为用户声明日期，未提供则留空。详细定义以 [SKILL.md](SKILL.md) 为准。
+
+输入带 `score_status` 列时，仅接受全部为 `complete` 的评分；不完整财务数据先补数，不能作为完整共识票。

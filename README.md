@@ -1,6 +1,6 @@
 # Awesome Stock Quant Skills
 
-**把一句投研问题，推进到可运行、可复核的股票研究。**
+**让股票研究跑得通、查得清、经得起重算。**
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
@@ -17,18 +17,22 @@
 
 [快速开始](#快速开始) · [按任务选技能](#按任务选技能) · [验证证据](docs/validation.md) · [原创技能全表](#原创技能) · [第三方收录](#第三方收录) · [外部资源索引](docs/resource-index.md)
 
-## 为什么值得放进你的研究工作台
+## 核心能力，经得起看代码和重跑
 
-| 能力 | 你能得到什么 | 直接看证据 |
+本轮优先升级**巴菲特财务筛选、单股估值、框架回测与共识衔接**，把会改变研究结果的日期、缺失数据和收益计算问题落实到脚本里。
+
+| 能力 | 实际行为 | 验证入口 |
 |---|---|---|
-| 多种投资视角，可单独运行 | 财务质量、估值、成长与动量的分项打分；知道入选与扣分原因 | [原创技能](#原创技能)、[巴菲特评分规则](my-skills/buffett-value-investing/references/scoring_rules.md) |
-| 研究任务有统一入口 | 按目标选少量相关 skill，核对数据时点，保留计算产物与待核实项 | [研究工作流](my-skills/quant-research-workflow/SKILL.md) |
-| 跨框架排序有输入约束 | 百分位归一、覆盖数与命中数；拒绝重复代码、无效分数、框架重名和默认情况下不一致的股票池 | [共识合成器](my-skills/master-ensemble/scripts/ensemble.py) |
-| 结果可追溯 | 共识输出附输入 SHA-256、参数、运行时间；未提供数据日期则明确留空 | [离线示例](examples/ensemble)、[行为测试](tests/test_ensemble.py) |
-| 历史假设可以接受检验 | 月度回测与沪深300对照，明确固定池和财报滞后近似的限制 | [回测方法与局限](my-skills/framework-backtest/references/backtest_methodology.md) |
-| 更新有检查机制 | 提供每周巡检模板，检查上游默认分支提交、许可元数据、归档状态及 AKShare 版本，生成复核报告 | [维护机制](docs/maintenance.md)、[巡检模板](docs/workflows/upstream-watch.yml) |
+| 估值有明确时间口径 | TTM 字段精确匹配；历史按日期排序并截取五年窗口；同一交易日的价格和 PE 推算 EPS | [估值数据契约](my-skills/buffett-value-investing/scripts/research_data.py)、[回归测试](tests/test_buffett_data.py) |
+| 缺失财务数据有明确状态 | ROE、毛利率、现金流按年报期对齐；单年毛利率不冒充五年稳定；`partial` 评分优先补数 | [筛选器](my-skills/buffett-value-investing/scripts/screen.py)、[评分规则](my-skills/buffett-value-investing/references/scoring_rules.md) |
+| 共识有数据门槛 | 拒绝无效代码、重复、重名、默认情况下不同的股票池，以及声明为不完整的财务评分；保留输入哈希 | [共识合成器](my-skills/master-ensemble/scripts/ensemble.py) |
+| 回测不根据未来缺价预选股 | 先按调仓时点选股，再计算持有收益；已选持仓缺少退出价时终止；基准按相同实际交易日计算 | [回测引擎](my-skills/framework-backtest/scripts/backtest.py)、[回归测试](tests/test_backtest.py) |
+| 毛收益、成本、净收益可逐期核对 | 价格漂移后计算调仓额，首期建仓和换股买卖分别计成本；输出持仓、进出价格、换手与缓存哈希 | [可重跑的合成场景](examples/backtest/SCENARIO.md) |
+| 研究流程按任务选择 | 按需调用相关 skill，并核对筛选、共识、回测产物是否满足解释条件 | [研究工作流](my-skills/quant-research-workflow/SKILL.md)、[产物契约](my-skills/quant-research-workflow/references/data-contracts.md) |
 
-“30 / 16 / 225”是可由脚本复核的目录统计：16 指来源目录，225 指其中实际存在的 `SKILL.md` 文件，不代表 225 项均已联网跑通。[质量检查范围与验证记录](docs/validation.md)区分结构检查、离线行为测试、历史记录和实时接口验证。
+**本次验证：35 项行为测试通过；AKShare 1.19.3 单股实时筛选跑通。** 2026-10-24 的实跑取得 2021–2025 五个年报期间，估值交易日为 2026-10-23。[原始实跑记录](examples/verification/2026-10-24/buffett-check.json)与 [CSV](examples/verification/2026-10-24/buffett-screen.csv)可直接查看。它证明这条取数与计算链路跑通，不代表所有接口可用或策略盈利。
+
+“30 / 16 / 225”是可由脚本复核的目录统计，分别指原创 skill、第三方来源目录和第三方 `SKILL.md` 文件。完整范围见 [验证记录](docs/validation.md)。上游更新检查以 [巡检模板](docs/workflows/upstream-watch.yml)提供，启用条件见 [维护说明](docs/maintenance.md)。
 
 ## 快速开始
 
@@ -37,7 +41,7 @@
 以下是**合成数据**，只验证计算和产物，不访问行情服务，不需要 API key。请从仓库根目录执行：
 
 ```bash
-git clone https://github.com/Serennity007/awesome-stock-quant-skills.git
+git clone --branch codex/quant-skills-refresh https://github.com/Serennity007/awesome-stock-quant-skills.git
 cd awesome-stock-quant-skills
 python -m pip install pandas
 python my-skills/master-ensemble/scripts/ensemble.py --csvs examples/ensemble/quality.csv examples/ensemble/momentum.csv --out output/consensus.csv
@@ -53,12 +57,24 @@ python my-skills/master-ensemble/scripts/ensemble.py --csvs examples/ensemble/qu
 
 同时生成 `output/consensus.csv.meta.json`，记录输入哈希、参数和运行时间。样例没有真实数据日期，所以 `as_of` 为 `null`。完整字段见 [master-ensemble](my-skills/master-ensemble/SKILL.md)。
 
-### 再接入真实研究数据
+### 再跑一遍有成本、有持仓明细的回测链路
+
+同样使用**合成数据**，无需行情服务：
+
+```bash
+python my-skills/framework-backtest/scripts/backtest.py --cache-dir examples/backtest/cache --results-dir output/backtest-demo --frameworks danbin --start 2026-07-31 --top 1 --min-stocks 2 --cost-bps 10
+```
+
+输入价格人为设为 `100 → 110 → 99`。首期建仓成本为 10 bps，持仓不变的下一期不再次收费，期末不强制清仓。两期净期末资产应为 **0.98901**，基准为 **1.01**；可以逐项核对 `bt_result_danbin.csv`、`bt_holdings_danbin.csv` 与 `bt_manifest.json`。[完整场景说明](examples/backtest/SCENARIO.md)。
+
+### 接入真实研究数据
 
 ```bash
 python -m pip install akshare pandas numpy
 python my-skills/buffett-value-investing/scripts/screen.py --codes 600519,000858,600036 --out output/buffett.csv
 ```
+
+输出同时包含分项得分、财报期间、估值交易日、数据问题和运行记录。先看 `score_status` / `decision`；`partial` / `needs_data` 优先补数，不按总分直接列为候选。
 
 真实取数依赖网络、数据源与接口版本；成功以实际输出为准。请记录行情交易日、财报期间和包版本。旧 Demo 中的价格、评分和样本日期均不能当作今天的结果。
 
@@ -159,7 +175,7 @@ Claude Code 可改用 `~/.claude/skills/`。第三方多技能合集要复制内
 | 目录 | 简介 | License |
 |---|---|---|
 | [master-ensemble](my-skills/master-ensemble) | 大师共识筛选器：把任意多个大师 skill 的打分结果 CSV 按框架内百分位归一化，合成共识分与顶级命中数，输出"多个框架同时覆盖"的跨框架交集标的（纯本地合成，秒级） | MIT |
-| [framework-backtest](my-skills/framework-backtest) | 大师框架回测验证器：月度调仓回测各大师 skill 的打分框架在 A 股的历史真实表现（等权持有前 N 名 vs 沪深300），固定 120 天财报滞后近似（尚非严格 point-in-time），输出年化/超额/最大回撤/夏普与逐年对照表 | MIT |
+| [framework-backtest](my-skills/framework-backtest) | 大师框架回测验证器：月度调仓回测各大师 skill 的打分框架在 A 股的历史真实表现（等权持有前 N 名 vs 沪深300），固定 120 天财报滞后近似（尚非严格 point-in-time），输出毛净收益、成交额成本、持仓审计、年化/超额/最大回撤/夏普与逐年对照表 | MIT |
 
 ### 原有
 

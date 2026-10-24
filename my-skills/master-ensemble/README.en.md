@@ -55,3 +55,5 @@ For learning and research only; not investment advice. A consensus score does no
 ## Validation and provenance (2026-10-24)
 
 Inputs must have matching stock pools by default. Missing columns, invalid codes/scores, duplicate codes and colliding framework names are errors. Use `--allow-partial-pools` explicitly for different universes. A `.meta.json` sidecar records input SHA-256 hashes and parameters. `--as-of` is user-declared, unverified and null when omitted. See [SKILL.md](SKILL.md) for the current contract.
+
+When inputs include `score_status`, all rows must be `complete`; partial financial scores are rejected instead of treated as complete consensus votes.

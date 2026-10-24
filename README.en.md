@@ -1,6 +1,6 @@
 # Awesome Stock Quant Skills
 
-**Turn a stock research question into a runnable, reviewable workflow.**
+**Stock research you can run, inspect and reproduce.**
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
@@ -26,12 +26,20 @@ The useful chain is **choose a framework → fetch data → inspect component sc
 
 Counts describe files and source directories, not independently verified integrations. The [validation record](docs/validation.md) separates structural checks, offline behavior, historical examples and live-data verification.
 
+## Core upgrades, backed by executable checks
+
+The current pass strengthens Buffett screening, single-stock valuation, framework backtesting and their consensus handoff. Valuation uses an explicit five-year date window and exact TTM fields; price and PE come from the same observation. Partial financial scores carry data issues and cannot enter consensus as complete votes.
+
+Backtests rank using information at rebalance time, then evaluate selected holdings. Missing exit prices and benchmark data stop the run. Trading dates stay aligned, first-month losses count toward drawdown, and drift-aware turnover produces separate gross returns, costs, net returns and holding-level audit records.
+
+**35 behavior tests pass. A single-stock live screen also passed with AKShare 1.19.3 on 2026-10-24**, using 2021–2025 annual periods and a 2026-10-23 valuation observation. See the [record](examples/verification/2026-10-24/buffett-check.json) and [CSV](examples/verification/2026-10-24/buffett-screen.csv). This verifies that path, not strategy profitability or every integration.
+
 ## Quick start: no market API required
 
 Run from the repository root. These are **synthetic data**, not current stock observations:
 
 ```bash
-git clone https://github.com/Serennity007/awesome-stock-quant-skills.git
+git clone --branch codex/quant-skills-refresh https://github.com/Serennity007/awesome-stock-quant-skills.git
 cd awesome-stock-quant-skills
 python -m pip install pandas
 python my-skills/master-ensemble/scripts/ensemble.py --csvs examples/ensemble/quality.csv examples/ensemble/momentum.csv --out output/consensus.csv
@@ -46,7 +54,15 @@ python -m pip install akshare pandas numpy
 python my-skills/buffett-value-investing/scripts/screen.py --codes 600519,000858,600036 --out output/buffett.csv
 ```
 
-Live retrieval depends on network, provider availability and package/API versions. Record actual trading dates and financial reporting periods. This maintenance pass did not rerun all live-market integrations.
+Live retrieval depends on network, provider availability and package/API versions. Record actual trading dates and financial reporting periods. Read `score_status` and `decision` before using a score: `partial` / `needs_data` requires more evidence. This maintenance pass did not rerun all live-market integrations.
+
+## Reproduce the cost and holdings audit
+
+```bash
+python my-skills/framework-backtest/scripts/backtest.py --cache-dir examples/backtest/cache --results-dir output/backtest-demo --frameworks danbin --start 2026-07-31 --top 1 --min-stocks 2 --cost-bps 10
+```
+
+This uses synthetic prices `100 → 110 → 99`, a 10 bps initial entry cost and no forced final liquidation. Expected net ending wealth: **0.98901**; benchmark: **1.01**. Inspect monthly gross/net returns, turnover, holding details and the input-hash manifest. This is a calculation fixture, not historical performance. [Scenario](examples/backtest/SCENARIO.md).
 
 ## Use in an agent
 
