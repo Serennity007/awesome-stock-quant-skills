@@ -10,7 +10,7 @@
 
 Investment research implemented as Agent Skills and Python scripts: financial screening, factor ranking, multi-framework consensus and backtesting with transaction costs. Covers A-share research and US hot-stock tracking.
 
-**30 original Skills · 23 investment-method reference frameworks · 32 Python scripts · 40 passing tests.**
+**30 original Skills · 23 investment-method reference frameworks · 32 Python scripts · 52 passing local tests.**
 
 **41 Stars / 8 Forks** on GitHub as of 2026-10-24. Original implementations, third-party source snapshots and external links are maintained separately; 16 source directories contain 225 vendored `SKILL.md` files.
 
@@ -30,6 +30,12 @@ python scripts/run_demo.py
 ```
 
 Open the printed `output/demo/run-…/REPORT.md` path. Runs use fresh directories; missing dependencies produce an install hint, and failed calculations return a nonzero exit code with a failure record. **Inputs are synthetic and validate program behavior only.** [Full guide](docs/quickstart.md).
+
+## Paper records and reviews
+
+Freeze screening inputs with `scripts/paper_journal.py start`, then append dated buy-and-hold paper reviews with `review`. The saved [2026-10-25 market snapshot](reports/paper/2026-10-25/INITIAL_REVIEW.md) is pending execution: 14 complete and 6 partial records, with no invented prices or returns. The separately labeled [synthetic account](examples/paper/journal/reviews/2026-09-30.md) demonstrates round lots, costs, residual cash, benchmark comparisons and a loss. Historical fixture dates are not a live track record; these examples were created on 2026-10-25.
+
+[Guide and commands](docs/paper-journal.md) · [Daily data-quality report](reports/latest.md). Existing daily automation saves independent pending snapshots; continuous reviews must keep using the same journal.
 
 ## Research tasks, concrete outputs
 

@@ -10,7 +10,7 @@
 
 将价值、成长、动量、宏观周期与资产配置方法实现为 Agent Skills 和 Python 脚本，支持财务筛选、因子打分、多框架共识与含交易成本的回测。面向 A 股研究，并提供美股热门股追踪。
 
-**30 个原创 Skill · 23 套投资方法参考框架 · 32 个 Python 脚本 · 40 项测试通过。**
+**30 个原创 Skill · 23 套投资方法参考框架 · 32 个 Python 脚本 · 52 项本地测试通过。**
 
 GitHub 已获 **41 Stars / 8 Forks**（截至 2026-10-24）。原创实现、第三方来源快照与外部资源索引分别维护；16 个第三方来源目录收录 225 份 `SKILL.md`。
 
@@ -30,6 +30,16 @@ python scripts/run_demo.py
 ```
 
 打开终端提示的 `output/demo/run-…/REPORT.md`。每次运行创建新目录，不覆盖已有产物；缺依赖会给出安装命令，计算失败会写入失败状态并非零退出。**示例使用合成数据，只核对程序行为。** [完整上手说明](docs/quickstart.md)。
+
+## 模拟记录与复盘
+
+已写入两套可直接阅读的记录：
+
+- **真实筛选快照，待建仓**：[2026-10-25 起始记录](reports/paper/2026-10-25/INITIAL_REVIEW.md)。冻结 20 只股票输入，14 只完整、6 只不完整；按公开规则生成观察清单，无后续价格时不编造持仓或收益。
+- **合成数据账户，两次复盘**：[首次观察](examples/paper/journal/reviews/2026-08-31.md)、[第二次观察](examples/paper/journal/reviews/2026-09-30.md)。演示整手买入、费用、剩余现金、持仓损益及基准比较，包含亏损示例。历史日期是场景标签，实际创建于 2026-10-25。
+- **可继续追加**：`scripts/paper_journal.py start / review` 保存输入、参数、价格、人工备注和哈希链；同日记录禁止覆盖。每日报告分开展示完整与不完整数据，现有定时脚本会保存独立的待建仓快照。
+
+[功能说明与复现命令](docs/paper-journal.md) · [本日数据质量报告](reports/latest.md)。这些是模拟研究产物，不代表实盘经历或盈利证明。
 
 ## 你可以用它完成什么
 
@@ -65,7 +75,7 @@ python scripts/run_demo.py
 | 毛收益、成本、净收益可逐期核对 | 价格漂移后计算调仓额，首期建仓和换股买卖分别计成本；输出持仓、进出价格、换手与缓存哈希 | [可重跑的合成场景](examples/backtest/SCENARIO.md) |
 | 研究流程按任务选择 | 按需调用相关 skill，并核对筛选、共识、回测产物是否满足解释条件 | [研究工作流](my-skills/quant-research-workflow/SKILL.md)、[产物契约](my-skills/quant-research-workflow/references/data-contracts.md) |
 
-**2026-10-25 本地验证：40 项测试通过。** 此前在 2026-10-24 使用 AKShare 1.19.3 跑通单股实时筛选，取得 2021–2025 五个年报期间，估值交易日为 2026-10-23。[原始实跑记录](examples/verification/2026-10-24/buffett-check.json)与 [CSV](examples/verification/2026-10-24/buffett-screen.csv)可直接查看。它证明这条取数与计算链路跑通，不代表所有接口可用或策略盈利。
+**2026-10-25 本地验证：52 项本地测试通过。** 此前在 2026-10-24 使用 AKShare 1.19.3 跑通单股实时筛选，取得 2021–2025 五个年报期间，估值交易日为 2026-10-23。[原始实跑记录](examples/verification/2026-10-24/buffett-check.json)与 [CSV](examples/verification/2026-10-24/buffett-screen.csv)可直接查看。它证明这条取数与计算链路跑通，不代表所有接口可用或策略盈利。
 
 “30 / 16 / 225”是可由脚本复核的目录统计，分别指原创 skill、第三方来源目录和第三方 `SKILL.md` 文件。完整范围见 [验证记录](docs/validation.md)。上游更新检查以 [巡检模板](docs/workflows/upstream-watch.yml)提供，启用条件见 [维护说明](docs/maintenance.md)。
 

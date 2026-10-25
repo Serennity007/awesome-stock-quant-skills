@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "model": "equal-budget-round-lot-buy-and-hold-v1",
+  "created_at_utc": "2026-10-25T06:21:32.029614+00:00",
+  "engine_sha256": "fde71c7b8924d97f45fa966d20fef9139b84f788ece5cc068d8855071c7ac5cc",
+  "signal_date": "2026-07-31",
+  "data_kind": "synthetic",
+  "timing": "retrospective",
+  "state": "watchlist_pending_execution",
+  "initial_cash": 100000.0,
+  "cost_bps": 10.0,
+  "lot_size": 100,
+  "selection_rule": "score_status=complete AND decision=review_moat AND total>=70; score descending, code ascending",
+  "top": 1,
+  "universe_count": 3,
+  "complete_count": 2,
+  "partial_count": 1,
+  "eligible_count": 2,
+  "candidates": [
+    {
+      "code": "000001",
+      "total": 90.0,
+      "score_status": "complete",
+      "decision": "review_moat",
+      "valuation_date": "2026-07-31",
+      "data_issues": ""
+    }
+  ],
+  "excluded": [
+    {
+      "code": "000003",
+      "score_status": "partial",
+      "decision": "needs_data",
+      "data_issues": "cashflow_history_incomplete"
+    }
+  ],
+  "source_file": "screen.csv",
+  "source_sha256": "e8791069dfc2aa03a28d6f1cf77f07f05a70b939c202607e80d66851b16f41d6",
+  "execution_assumption": "Buy at the first common imported closing-price observation strictly AFTER signal_date; fixed equal budgets, round lots, no rebalancing or forced final sale",
+  "benchmark": "BENCHMARK rows in imported prices; untraded normalized price reference",
+  "limitations": [
+    "paper account, not broker trades or personal invested capital",
+    "imported data not independently verified; local timestamps/hashes are not notarized",
+    "closing-price execution assumption; no suspension, limit-price, spread or market-impact model",
+    "no dividend/corporate-action adjustment; provide consistently defined prices",
+    "review-observation drawdown is not a full daily drawdown"
+  ]
+}

@@ -37,7 +37,10 @@ def main():
 
     paths = [ROOT / name for name in ("README.md", "README.en.md", "README.ja.md")]
     paths += list((ROOT / "my-skills/quant-research-workflow").rglob("*.md"))
-    paths += [ROOT / "docs/validation.md", ROOT / "docs/maintenance.md", ROOT / "docs/historical-demos.md"]
+    paths += [ROOT / name for name in ("docs/validation.md", "docs/maintenance.md", "docs/historical-demos.md",
+                                      "docs/quickstart.md", "docs/paper-journal.md", "reports/latest.md")]
+    paths += list((ROOT / "examples/paper").rglob("*.md"))
+    paths += list((ROOT / "reports/paper").rglob("*.md"))
     for path in paths:
         for target in re.findall(r"!?\[[^\]]*\]\(([^\s)]+)(?:\s+[^)]*)?\)", path.read_text(encoding="utf-8")):
             if "://" in target or target.startswith(("#", "mailto:")):

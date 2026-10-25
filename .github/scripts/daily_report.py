@@ -1,58 +1,49 @@
 #!/usr/bin/env python3
-"""daily_report.py — 每日巴菲特筛股自动报告（供 GitHub Action 调用）。
-
-对固定的 20 只 A 股代表股运行 buffett-value-investing 的打分逻辑，
-输出 reports/YYYY-MM-DD.csv 与 reports/latest.md。
-网络/接口失败时不让 CI 变红：生成"数据获取失败"报告并以 0 退出。
-"""
-import subprocess
-import sys
+"""Run the daily screen, expose data quality, and freeze a pending paper watchlist."""
 import datetime
 from pathlib import Path
+import subprocess
+import sys
 
 ROOT = Path(__file__).resolve().parents[2]
-REPORTS = ROOT / "reports"
-REPORTS.mkdir(exist_ok=True)
+sys.path.insert(0, str(ROOT / "scripts"))
+from paper_journal import create_journal, verify_seal
+from screen_report import render_report
 
-# 固定的 20 只代表股（hs300 全池在 CI 上过慢）
 CODES = "600519,000858,600036,601318,300750,000001,600900,601012,000333,600276," \
         "002415,601888,600887,603288,000651,600030,601899,002594,600585,601166"
 
-today = datetime.date.today().isoformat()
-csv_path = REPORTS / f"{today}.csv"
-latest_md = REPORTS / "latest.md"
 
-TITLE = (
-    f"# 每日巴菲特筛股报告 {today} / Daily Buffett Screen {today} / 日次バフェットスクリーニング {today}\n\n"
-)
+def main():
+    reports = ROOT / "reports"
+    reports.mkdir(exist_ok=True)
+    today = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).date().isoformat()
+    csv_path = reports / f"{today}.csv"
+    latest = reports / "latest.md"
+    result = subprocess.run(
+        [sys.executable, str(ROOT / "my-skills/buffett-value-investing/scripts/screen.py"),
+         "--codes", CODES, "--top", "20", "--out", str(csv_path), "--sleep", "0.5"],
+        capture_output=True, text=True, encoding="utf-8", errors="replace",
+    )
+    try:
+        if result.returncode != 0 or not csv_path.is_file():
+            raise ValueError("screening failed: " + (result.stderr or result.stdout or "no output")[-1000:])
+        report = render_report(csv_path, today)
+        journal = reports / "paper" / today
+        if journal.exists():
+            verify_seal(journal, "checksums.json")
+            print("Existing first snapshot preserved; a rerun does not replace its frozen inputs.")
+        else:
+            create_journal(csv_path, journal, today, "market_snapshot")
+        report += f"\n[本日首次冻结的模拟观察清单](paper/{today}/INITIAL_REVIEW.md)（待建仓，不含虚构收益）。\n"
+        latest.write_text(report, encoding="utf-8")
+        print(f"OK: {csv_path}; quality report and pending paper snapshot saved.")
+        return 0
+    except (ValueError, OSError, KeyError) as exc:
+        latest.write_text(f"# 每日筛选失败 · {today}\n\n本次没有新模拟记录；不得将失败当成正常筛选。\n\n```text\n{str(exc).replace('```', '')}\n```\n", encoding="utf-8")
+        print(f"FAILED: {exc}", file=sys.stderr)
+        return 1
 
-result = subprocess.run(
-    [sys.executable, str(ROOT / "my-skills/buffett-value-investing/scripts/screen.py"),
-     "--codes", CODES, "--top", "20", "--out", str(csv_path), "--sleep", "0.5"],
-    capture_output=True, text=True, encoding="utf-8", errors="replace",
-)
 
-if result.returncode == 0 and csv_path.exists():
-    import pandas as pd
-    df = pd.read_csv(csv_path, dtype={"code": str})
-    lines = [TITLE,
-             "数据源 / Data source / データ源: akshare（新浪财务 + 东财估值）。"
-             "仅供学习研究，不构成投资建议 / Not investment advice / 投資助言ではありません。\n",
-             "| 排名 Rank 順位 | 代码 Code コード | 总分 Score スコア | ROE 5年 | 毛利率% Gross | 负债率% Debt | PE分位 PE-pct | PB分位 PB-pct |",
-             "|---|---|---|---|---|---|---|---|"]
-    for i, r in enumerate(df.itertuples(), 1):
-        pe = f"{r.pe_pct:.2f}" if pd.notna(r.pe_pct) else "-"
-        pb = f"{r.pb_pct:.2f}" if pd.notna(r.pb_pct) else "-"
-        gm = f"{r.gross_mean:.1f}" if pd.notna(r.gross_mean) else "-"
-        lines.append(f"| {i} | {r.code} | {r.total} | {r.roe_annual} | {gm} | {r.debt_latest} | {pe} | {pb} |")
-    latest_md.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"OK: {csv_path} + {latest_md}")
-else:
-    csv_path.write_text("# 数据获取失败 / data fetch failed / データ取得失敗\n", encoding="utf-8")
-    latest_md.write_text(
-        TITLE + "数据获取失败（可能是 akshare 接口限流或网络问题），本次无结果。\n\n"
-        "Data fetch failed (akshare API throttling or network issue); no results this run.\n\n"
-        "データ取得に失敗しました（akshare API のレート制限またはネットワーク問題）。今回の結果はありません。\n\n"
-        "```\n" + (result.stderr or result.stdout or "")[-1500:] + "\n```\n",
-        encoding="utf-8")
-    print("FAILED but tolerated:", (result.stderr or "")[-300:])
+if __name__ == "__main__":
+    raise SystemExit(main())

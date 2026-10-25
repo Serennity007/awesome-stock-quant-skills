@@ -1,0 +1,5 @@
+# Frozen research evidence must retain its exact bytes so committed SHA256 records
+# remain valid across Windows/Linux checkouts.
+reports/paper/** -text whitespace=cr-at-eol
+examples/paper/journal/** -text whitespace=cr-at-eol
+scripts/paper_journal.py text eol=lf

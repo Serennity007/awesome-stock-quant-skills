@@ -1,0 +1,4 @@
+code,total,score_status,decision,valuation_date,data_issues
+000001,90,complete,review_moat,2026-07-31,
+000002,80,complete,review_moat,2026-07-31,
+000003,99,partial,needs_data,2026-07-31,cashflow_history_incomplete

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "data_kind": "synthetic",
+  "model": "equal-budget-round-lot-buy-and-hold-v1",
+  "engine_sha256": "fde71c7b8924d97f45fa966d20fef9139b84f788ece5cc068d8855071c7ac5cc",
+  "created_at_utc": "2026-10-25T06:21:32.377121+00:00",
+  "review_date": "2026-09-30",
+  "signal_date": "2026-07-31",
+  "entry_date": "2026-08-31",
+  "state": "paper_holding",
+  "snapshot_sha256": "39980b1fbaa0b1c65d129ef65bc7ba406e580d7bedaffa75a70fd353bd60bc07",
+  "previous_review_sha256": "5753e8f362c38b18b1419611b855eb183b3c79a17b362db47986f0091a3ae86c",
+  "prices_sha256": "2bf29c61fcf6c4c87ab4e817c5c04f1b760ffb4065c6e12fb411870661844b6e",
+  "entries": [
+    {
+      "code": "000001",
+      "shares": 900,
+      "entry_price": 110.0,
+      "fee": 99.0
+    }
+  ],
+  "holdings": [
+    {
+      "code": "000001",
+      "shares": 900,
+      "entry_price": 110.0,
+      "fee": 99.0,
+      "close": 99.0,
+      "market_value": 89100.0
+    }
+  ],
+  "cash_after_entry": 901.0,
+  "benchmark_entry": 102.0,
+  "equity": 90001.0,
+  "net_pnl": -9999.0,
+  "net_return": -0.09999,
+  "benchmark_return": -0.00980392156862745,
+  "excess_return_pp": -9.018607843137255,
+  "max_drawdown_at_reviews": -0.09999,
+  "observed_closes": {
+    "000001": 99.0,
+    "BENCHMARK": 101.0
+  },
+  "notes": "合成演示说明：价格路径人为设定，不对应真实证券行情；本段不解释市场新闻或声称个人实盘经历。\n\n价格从 110 变为 99，900 股市值为 89,100，加剩余现金 901 后总资产 90,001。累计净损失为 9,999，其中包含首次费用 99。第二次观察没有重新收费，也没有为改善结果而更换持仓或回写入选理由。\n\n本例说明完整财务分数、确定的筛选规则和程序测试都不保证持有期获利。若要研究退出条件，应先冻结新的规则，再用独立样本或后续观察验证；不能根据这一条合成路径倒推“最佳止损线”。\n",
+  "note_origin": "user_supplied",
+  "limitations": [
+    "paper account, not broker trades or personal invested capital",
+    "imported data not independently verified; local timestamps/hashes are not notarized",
+    "closing-price execution assumption; no suspension, limit-price, spread or market-impact model",
+    "no dividend/corporate-action adjustment; provide consistently defined prices",
+    "review-observation drawdown is not a full daily drawdown"
+  ]
+}
