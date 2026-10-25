@@ -10,17 +10,17 @@
 
 将价值、成长、动量、宏观周期与资产配置方法实现为 Agent Skills 和 Python 脚本，支持财务筛选、因子打分、多框架共识与含交易成本的回测。面向 A 股研究，并提供美股热门股追踪。
 
-**30 个原创 Skill · 23 套投资方法参考框架 · 32 个 Python 脚本 · 52 项本地测试通过。**
+**31 个原创 Skill · 23 套投资方法参考框架 · 33 个 Python 脚本 · 60 项本地测试通过。**
 
 GitHub 已获 **41 Stars / 8 Forks**（截至 2026-10-24）。原创实现、第三方来源快照与外部资源索引分别维护；16 个第三方来源目录收录 225 份 `SKILL.md`。
 
-<!-- inventory: originals=30 mirrors=16 vendored=225 -->
+<!-- inventory: originals=31 mirrors=16 vendored=225 -->
 
 **[一条命令离线演示](docs/quickstart.md) · [验证范围](docs/validation.md) · [真实取数记录](examples/verification/2026-10-24/buffett-check.json)**
 
 ## 第一次使用：先跑两个离线示例
 
-默认分支已包含 30 个原创 Skill、数据校验与回测功能，无需切分支。安装演示依赖后，一条命令运行共识排序和回测核算两个独立的合成场景，生成可阅读报告、CSV、输入哈希和运行日志。
+默认分支已包含 31 个原创 Skill、数据校验与回测功能，无需切分支。安装演示依赖后，一条命令运行共识排序和回测核算两个独立的合成场景，生成可阅读报告、CSV、输入哈希和运行日志。
 
 ```bash
 git clone https://github.com/Serennity007/awesome-stock-quant-skills.git
@@ -30,6 +30,16 @@ python scripts/run_demo.py
 ```
 
 打开终端提示的 `output/demo/run-…/REPORT.md`。每次运行创建新目录，不覆盖已有产物；缺依赖会给出安装命令，计算失败会写入失败状态并非零退出。**示例使用合成数据，只核对程序行为。** [完整上手说明](docs/quickstart.md)。
+
+## 我的黄金跨资产研究方法
+
+新增 **[gold-cross-asset-research](my-skills/gold-cross-asset-research/SKILL.md)**：用时间窗口、H4 主结构、H1/M30 触发、MA/MACD 与关键位收回组织黄金研究，并分别验证白银、原油和集运欧线 EC 的传导。
+
+- 分开记录个人观点、数据事实和可执行触发，允许金油方向未知，不用既有偏空观点覆盖反证。
+- 保存“近期偏空金银/偏多原油”与“2026 年 3 月重点看多 EC、金油方向不确定”的分时段个人回顾，未补成已验证的收益战绩。
+- 附本地 OHLC 校验脚本与 48 根合成 K 线示例：按明确截止时间计算 MA/MACD、边界观察、参照柱数与窗口过期；不请求行情或生成交易指令。
+
+[结构方法](my-skills/gold-cross-asset-research/references/structure-method.md) · [跨资产传导与官方来源](my-skills/gold-cross-asset-research/references/cross-asset-map.md) · [历史观点的证据口径](my-skills/gold-cross-asset-research/references/evidence-and-cases.md) · [合成输出](my-skills/gold-cross-asset-research/references/example-output.json)
 
 ## 模拟记录与复盘
 
@@ -75,9 +85,9 @@ python scripts/run_demo.py
 | 毛收益、成本、净收益可逐期核对 | 价格漂移后计算调仓额，首期建仓和换股买卖分别计成本；输出持仓、进出价格、换手与缓存哈希 | [可重跑的合成场景](examples/backtest/SCENARIO.md) |
 | 研究流程按任务选择 | 按需调用相关 skill，并核对筛选、共识、回测产物是否满足解释条件 | [研究工作流](my-skills/quant-research-workflow/SKILL.md)、[产物契约](my-skills/quant-research-workflow/references/data-contracts.md) |
 
-**2026-10-25 本地验证：52 项本地测试通过。** 此前在 2026-10-24 使用 AKShare 1.19.3 跑通单股实时筛选，取得 2021–2025 五个年报期间，估值交易日为 2026-10-23。[原始实跑记录](examples/verification/2026-10-24/buffett-check.json)与 [CSV](examples/verification/2026-10-24/buffett-screen.csv)可直接查看。它证明这条取数与计算链路跑通，不代表所有接口可用或策略盈利。
+**2026-10-25 本地验证：60 项本地测试通过。** 此前在 2026-10-24 使用 AKShare 1.19.3 跑通单股实时筛选，取得 2021–2025 五个年报期间，估值交易日为 2026-10-23。[原始实跑记录](examples/verification/2026-10-24/buffett-check.json)与 [CSV](examples/verification/2026-10-24/buffett-screen.csv)可直接查看。它证明这条取数与计算链路跑通，不代表所有接口可用或策略盈利。
 
-“30 / 16 / 225”是可由脚本复核的目录统计，分别指原创 skill、第三方来源目录和第三方 `SKILL.md` 文件。完整范围见 [验证记录](docs/validation.md)。上游更新检查以 [巡检模板](docs/workflows/upstream-watch.yml)提供，启用条件见 [维护说明](docs/maintenance.md)。
+“31 / 16 / 225”是可由脚本复核的目录统计，分别指原创 skill、第三方来源目录和第三方 `SKILL.md` 文件。完整范围见 [验证记录](docs/validation.md)。上游更新检查以 [巡检模板](docs/workflows/upstream-watch.yml)提供，启用条件见 [维护说明](docs/maintenance.md)。
 
 ## 快速开始
 

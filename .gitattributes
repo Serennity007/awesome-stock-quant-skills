@@ -3,3 +3,5 @@
 reports/paper/** -text whitespace=cr-at-eol
 examples/paper/journal/** -text whitespace=cr-at-eol
 scripts/paper_journal.py text eol=lf
+my-skills/gold-cross-asset-research/references/example-bars.csv text eol=lf
+my-skills/gold-cross-asset-research/references/example-output.json text eol=lf

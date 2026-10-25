@@ -75,8 +75,12 @@ python scripts/validate_repository.py
 python -m unittest discover -s tests -v
 ```
 
-2026-10-25 本地验证为 52 项本地测试通过，环境与范围见 [验证记录](validation.md)。
+2026-10-25 本地验证为 60 项本地测试通过，环境与范围见 [验证记录](validation.md)。
 
 ## 继续做模拟记录与复盘
 
 查看 [真实筛选起始记录与合成复盘](paper-journal.md)。`paper_journal.py` 是独立的模拟账户功能，沿用同一套合成价格，但资金、整手买入和建仓日期规则与上述算术演示不同。没有后续市场观察时保留待建仓状态。
+
+## 黄金、白银、原油与欧线研究
+
+使用 [黄金跨资产研究 Skill](../my-skills/gold-cross-asset-research/SKILL.md)。它面向价格结构与事件传导，提供独立的本地 OHLC 描述器；不能把 A 股样本或股票模拟账户直接当成期货账户。个人观点与当前数据分别验证。

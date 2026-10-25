@@ -10,17 +10,17 @@
 
 投資手法を Agent Skills と Python スクリプトで実装。財務スクリーニング、ファクター評価、複数手法の比較、取引費用を含むバックテストに対応し、A 株研究と米国注目銘柄の追跡を扱います。
 
-**オリジナル Skill 30 件 · 投資手法の参考フレームワーク 23 件 · Python スクリプト 32 本 · ローカルテスト 52 件合格。**
+**オリジナル Skill 31 件 · 投資手法の参考フレームワーク 23 件 · Python スクリプト 33 本 · ローカルテスト 60 件合格。**
 
 GitHub は **41 Stars / 8 Forks**（2026-10-24 時点）。オリジナル実装と第三者ソースを区分し、16 のソースディレクトリに 225 の `SKILL.md` を収録しています。
 
-<!-- inventory: originals=30 mirrors=16 vendored=225 -->
+<!-- inventory: originals=31 mirrors=16 vendored=225 -->
 
 **[オフラインデモ](docs/quickstart.md) · [検証範囲](docs/validation.md) · [実データ記録](examples/verification/2026-10-24/buffett-check.json)**
 
 ## 初回実行：2 つのオフライン例
 
-デフォルトブランチにオリジナル Skill 30 件とデータ・回測の検証を収録しました。依存を入れた後、1 コマンドで合意順位と回測計算の独立した合成例を実行し、レポート・CSV・入力ハッシュ・ログを生成します。
+デフォルトブランチにオリジナル Skill 31 件とデータ・回測の検証を収録しました。依存を入れた後、1 コマンドで合意順位と回測計算の独立した合成例を実行し、レポート・CSV・入力ハッシュ・ログを生成します。
 
 ```bash
 git clone https://github.com/Serennity007/awesome-stock-quant-skills.git
@@ -30,6 +30,12 @@ python scripts/run_demo.py
 ```
 
 出力された `output/demo/run-…/REPORT.md` を開きます。実行ごとに新規ディレクトリを作成し、依存不足には導入コマンドを表示、計算失敗には非ゼロ終了と失敗記録を返します。**入力は合成データで、動作検証のみです。** [詳細](docs/quickstart.md)。
+
+## 個人の金・クロスアセット研究
+
+**[gold-cross-asset-research](my-skills/gold-cross-asset-research/SKILL.md)** を追加。時間窓、H4 構造、H1/M30、MA/MACD と金・銀・原油・EC 海運先物の伝達経路を区別します。個人の過去の見方は未検証の回顧として保存し、運用成績とは扱いません。
+
+ローカル OHLC スクリプトと [合成出力例](my-skills/gold-cross-asset-research/references/example-output.json)を収録。時点以降の足を除き、参照足数と検証期限を確認します。行情取得や取引指示は行いません。
 
 ## 模擬記録とレビュー
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "黄金跨资产研究"
+  short_description: "结合时间窗口、多周期结构与跨资产传导，形成有证据和失效条件的黄金研究计划"
+  default_prompt: "使用 $gold-cross-asset-research 分析黄金与金银油运的关系，核对时间和数据，区分个人观点与证据，并给出可证伪情景。"

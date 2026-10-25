@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "instrument": "GOLD_DEMO",
+  "declared_timeframe": "H4",
+  "data_kind": "synthetic",
+  "as_of_utc": "2024-01-09T00:00:00+00:00",
+  "source_sha256": "4bb5b1a88b744ea5b6f220892802af29a2d38d196379ecd1498bdeb172ba6c5e",
+  "completed_bar_count": 48,
+  "excluded_after_cutoff": 0,
+  "latest_completed_bar": {
+    "close_time": "2024-01-09T00:00:00+00:00",
+    "open": 98.0,
+    "high": 102.5,
+    "low": 97.5,
+    "close": 102.0
+  },
+  "observation_age_seconds": 0.0,
+  "moving_averages": {
+    "ma5": 97.6,
+    "ma10": 98.8,
+    "ma20": 102.23799999999999
+  },
+  "ma_ordering": "descending",
+  "macd": {
+    "ready": true,
+    "dif": -2.4893168090675317,
+    "dea": -2.3260266125064257,
+    "histogram": -0.326580393122212,
+    "histogram_previous": -1.2421249018730176,
+    "sign": "negative",
+    "absolute_magnitude": "shrinking",
+    "flip": null,
+    "definition": "EMA12-EMA26; EMA9 signal; histogram=2*(DIF-DEA); first-close EMA seed"
+  },
+  "boundary_observations": {
+    "support": {
+      "level": 100.0,
+      "observation": "reclaimed_after_closed_break"
+    },
+    "resistance": {
+      "level": 112.0,
+      "observation": "below_resistance_no_rejection_pattern"
+    }
+  },
+  "reference_window": {
+    "reference_close_time": "2024-01-06T00:00:00+00:00",
+    "completed_bars_after_reference": 18,
+    "includes_reference_bar": false,
+    "window_bars": 12,
+    "window_state": "expired"
+  },
+  "scope": "Descriptive facts only; no live quotes, price target, trade instruction or win-rate estimate.",
+  "limitations": [
+    "Input close_time is assumed to mean bar close, not bar open; provider convention must be checked",
+    "No session-calendar, missing-bar, contract-roll, unit or quote-source verification",
+    "Manual support/resistance and analog anchors are not validated predictive features",
+    "A reclaim/rejection observation does not establish a confirmed reversal or successful retest"
+  ],
+  "source_file": "example-bars.csv",
+  "generated_at_utc": "2026-10-25T07:22:30.867479+00:00"
+}

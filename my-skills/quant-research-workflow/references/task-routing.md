@@ -10,6 +10,7 @@
 | 找题材和概念关联 | hot-theme-scanner | concept-stock-mapper | 板块列表、成分与抓取日期；题材归属不等于收入暴露 |
 | 看美股热门股 | us-hot-stocks-tracker | 需要深度财报时选择第三方美股分析 skill | 主题清单是静态配置，须核对最新业务与价格日期 |
 | 看指数估值和配置 | bogle-index-investing | dalio-all-weather、howard-marks-cycle | 估值窗口、资产代理、相关性期间与配置假设 |
+| 分析黄金与金银油运 | gold-cross-asset-research | 按具体市场补充官方事件、合约与 OHLC 数据 | 高低周期分工、结构触发/失效、跨资产反证；个人回顾不当作已验证战绩 |
 | 对比多个框架 | master-ensemble | 回到入选框架定性复核 | 同池同日输入、百分位、覆盖数、输入哈希 |
 | 检验历史表现 | framework-backtest | 样本外与成本敏感性需单独实施 | 明确固定池、120 天滞后近似和未建模的交易约束 |
 | 识别技术形态 | technical-pattern-recognition | livermore-trend-trading | 复权方式、信号日、指标参数；信号不等于成交 |

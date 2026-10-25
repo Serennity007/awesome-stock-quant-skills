@@ -10,17 +10,17 @@
 
 Investment research implemented as Agent Skills and Python scripts: financial screening, factor ranking, multi-framework consensus and backtesting with transaction costs. Covers A-share research and US hot-stock tracking.
 
-**30 original Skills · 23 investment-method reference frameworks · 32 Python scripts · 52 passing local tests.**
+**31 original Skills · 23 investment-method reference frameworks · 33 Python scripts · 60 passing local tests.**
 
 **41 Stars / 8 Forks** on GitHub as of 2026-10-24. Original implementations, third-party source snapshots and external links are maintained separately; 16 source directories contain 225 vendored `SKILL.md` files.
 
-<!-- inventory: originals=30 mirrors=16 vendored=225 -->
+<!-- inventory: originals=31 mirrors=16 vendored=225 -->
 
 **[One-command offline demo](docs/quickstart.md) · [Validation scope](docs/validation.md) · [Live-data record](examples/verification/2026-10-24/buffett-check.json)**
 
 ## First run: two offline examples
 
-The default branch now contains all 30 original Skills and the data/backtest checks. After installing demo dependencies, one command runs two independent synthetic scenarios: consensus ranking and backtest arithmetic. It writes a readable report, CSVs, provenance and logs.
+The default branch now contains all 31 original Skills and the data/backtest checks. After installing demo dependencies, one command runs two independent synthetic scenarios: consensus ranking and backtest arithmetic. It writes a readable report, CSVs, provenance and logs.
 
 ```bash
 git clone https://github.com/Serennity007/awesome-stock-quant-skills.git
@@ -30,6 +30,12 @@ python scripts/run_demo.py
 ```
 
 Open the printed `output/demo/run-…/REPORT.md` path. Runs use fresh directories; missing dependencies produce an install hint, and failed calculations return a nonzero exit code with a failure record. **Inputs are synthetic and validate program behavior only.** [Full guide](docs/quickstart.md).
+
+## Personal gold and cross-asset research
+
+**[gold-cross-asset-research](my-skills/gold-cross-asset-research/SKILL.md)** combines explicit time windows, H4 structure, H1/M30 triggers, MA/MACD observations and separate transmission checks for gold, silver, crude and INE EC shipping futures. It preserves the owner's dated recollections as unverified recollections rather than a trading track record.
+
+The included offline OHLC helper checks closing-time cutoffs, manual boundaries and reference-bar expiry. A [synthetic example](my-skills/gold-cross-asset-research/references/example-output.json) is provided; it does not fetch quotes or issue trade instructions. [Method and inputs](my-skills/gold-cross-asset-research/references/data-contract.md).
 
 ## Paper records and reviews
 

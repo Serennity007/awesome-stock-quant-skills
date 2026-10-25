@@ -41,6 +41,7 @@ def main():
                                       "docs/quickstart.md", "docs/paper-journal.md", "reports/latest.md")]
     paths += list((ROOT / "examples/paper").rglob("*.md"))
     paths += list((ROOT / "reports/paper").rglob("*.md"))
+    paths += list((ROOT / "my-skills/gold-cross-asset-research").rglob("*.md"))
     for path in paths:
         for target in re.findall(r"!?\[[^\]]*\]\(([^\s)]+)(?:\s+[^)]*)?\)", path.read_text(encoding="utf-8")):
             if "://" in target or target.startswith(("#", "mailto:")):
