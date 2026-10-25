@@ -155,3 +155,6 @@ Maintenance baseline: **2026-10-24**. Third-party files remain historical snapsh
 For research and education; not investment advice. Named-investor frameworks are rule-based approximations of public ideas, without endorsement or claims to replicate their decisions. Consensus scores are not win probabilities. The current backtest uses a present-day pool and a fixed 120-day reporting-lag approximation; actual disclosure dates and historical revisions are unverified, so strict point-in-time correctness is not established. Relative strategy rankings may also be biased.
 
 Original skills and curation use [MIT](LICENSE); vendored works retain their own licenses and authorship. See [NOTICE](docs/NOTICE.md). The collection policy copies MIT / Apache-2.0 / BSD / CC0 projects and links other projects without copying them.
+
+- [DoomPay](https://github.com/doomsday-network/doom-pay) - Non-custodial 3-line Web3 checkout widget, REST API, and remote MCP payment receipt verifier (`wDOOM` on Base Mainnet & `DOOM` Layer-1).
+- [BountyGuard](https://github.com/doomsday-network/bounty-guard) - Zero-dependency MCP security server & CLI auditor that verifies on-chain bounty escrow before AI agents start work.
