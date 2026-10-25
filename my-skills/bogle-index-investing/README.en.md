@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🎯 John Bogle Index Investing｜A-Share Index Valuation Thermometer + DCA Backtest
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 Author: Serennity007 | License: MIT | Data: akshare (LeguLegu / Sina / Tencent public APIs)
 

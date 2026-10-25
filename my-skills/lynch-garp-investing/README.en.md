@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🚀 Peter Lynch GARP / Ten-Bagger A-Share Screener | Shop for Stocks Like Lynch
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 Author: Serennity007 | License: MIT | Data: akshare (East Money / 10jqka / Tencent public APIs)
 

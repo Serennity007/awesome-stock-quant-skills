@@ -1,3 +1,5 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🌧️ All-Weather Allocator: A Dalio-Style Reference for A-Shares
 
 > The economy has only four weathers: growth ↑/↓ × inflation ↑/↓. This script uses common A-share proxies for the four quadrants and outputs risk-parity-style reference weights plus a backtest summary.

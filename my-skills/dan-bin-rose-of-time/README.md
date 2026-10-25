@@ -1,66 +1,67 @@
-# 🌹 但斌"时间的玫瑰"｜伟大企业七维打分器（A股）
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
+# 🌹 Dan Bin "Rose of Time"｜A 7-Dimension Great-Enterprise Screener for A-Shares
 
-作者：Serennity007 | 许可证：MIT | 数据源：akshare（东财/巨潮/腾讯公开接口）
 
-> **"时间是最有价值的资产，我们应当与伟大企业共成长。"**
+Author: Serennity007 | License: MIT | Data: akshare (East Money / CNINFO / Tencent public APIs)
 
-本技能把但斌（东方港湾创始人，《时间的玫瑰》作者）的伟大企业体系机械化到 A 股：长坡（营收 CAGR 成长跑道）、厚雪（高毛利率=定价权）、复利引擎（连续 5 年 ROE）、时间的玫瑰（持续分红）、盈利含金量、财务健康、成长质量，共七维打分。脚本只负责缩小范围，"这是否是一门能传给下一代的生意"必须人工定性复核。
+> **"Time is the most valuable asset; we should grow together with great enterprises."**
 
-## 目录结构
+This skill mechanizes Dan Bin's (founder of Oriental Harbor, author of *The Rose of Time*) great-enterprise framework for A-shares: long slope (revenue CAGR runway), thick snow (high gross margin = pricing power), compounding engine (5-year ROE), the rose of time (sustained dividends), cash quality, financial health, and growth consistency — 7 dimensions in total. The script only narrows the list; "is this a business you can pass to the next generation" remains a human judgment.
 
-- `SKILL.md` — 技能定义、七维打分逻辑与使用方法
-- `scripts/screen.py` — A 股伟大企业打分器（CSV + 终端表格）
-- `references/danbin_rose_principles.md` — 但斌投资思想整理：时间的玫瑰、伟大企业标准、两条路线、买卖纪律
-- `danbin_test_result.csv` — 小样本实测输出
+## Contents
 
-## 快速开始
+- `SKILL.md` — Skill definition, 7-dimension scoring logic, and usage
+- `scripts/screen.py` — A-share great-enterprise screener (CSV + terminal table)
+- `references/danbin_rose_principles.md` — Dan Bin's philosophy: the rose of time, what makes an enterprise great, two routes (brand consumer vs. tech), buy/sell discipline
+- `danbin_test_result.csv` — Small-sample test output
+
+## Quick Start
 
 ```bash
 pip install akshare pandas
 
-# 默认股票池：沪深300，展示前 20 名
+# Default pool: CSI 300 constituents, top 20 output
 python scripts/screen.py --pool hs300 --top 20 --out result.csv
 
-# 自定义小池测试
+# Custom small pool for testing
 python scripts/screen.py --codes 600519,000858,600036 --out result.csv
 ```
 
-## 参数说明
+## Parameters
 
-- `--pool`: 股票池，目前支持 `hs300`。
-- `--codes`: 逗号分隔的自定义代码，优先于 `--pool`。
-- `--top`: 终端展示前 N 名（默认 20）。
-- `--out`: CSV 输出路径（默认 `danbin_result.csv`）。
-- `--sleep`: 每只股票间隔秒数（默认 0.3，防限流）。
+- `--pool`: Stock universe; currently supports `hs300`.
+- `--codes`: Comma-separated custom codes; takes precedence over `--pool`.
+- `--top`: Number of top results to display (default 20).
+- `--out`: CSV output path (default `danbin_result.csv`).
+- `--sleep`: Seconds between per-stock calls (default 0.3, rate-limit friendly).
 
-## 七维伟大企业雷达
+## 7-Dimension Great-Enterprise Radar
 
-| 维度 | 指标 | 说明 |
+| Dimension | Metric | Notes |
 |---|---|---|
-| 长坡 | 近 5 年营收 CAGR | 成长跑道（满分 15） |
-| 厚雪 | 毛利率均值 | 品牌定价权（满分 20） |
-| 复利引擎 | ROE 5 年均值 | 复利发动机（满分 20） |
-| 时间的玫瑰 | 年化股息率（近 5 次派息跨度年化） | 分享复利（满分 15） |
-| 盈利含金量 | 经营现金流/净利润 | 利润为真（满分 10） |
-| 财务健康 | 最新资产负债率 | 低杠杆（满分 10） |
-| 成长质量 | 净利润正增长年数 | 稳定性（满分 10） |
+| Long slope | 5-year revenue CAGR | Growth runway (max 15) |
+| Thick snow | Average gross margin | Brand pricing power (max 20) |
+| Compounding engine | 5-year average ROE | The compounding motor (max 20) |
+| Rose of time | Annualized dividend yield (span-based) | Sharing the compounding (max 15) |
+| Cash quality | Operating cash flow / net profit | Are profits real? (max 10) |
+| Financial health | Latest debt-to-asset ratio | Low leverage (max 10) |
+| Growth quality | Years of positive profit growth | Consistency (max 10) |
 
-判定线：**≥75 伟大企业候选**；**55–74 观察**；**<55 不符合框架**。
+Verdict lines: **≥75 great-enterprise candidate**; **55–74 watch list**; **<55 outside the framework**.
 
-## 输出字段
+## Output Fields
 
-- `code` / `name` / `industry`：代码 / 简称 / 行业
-- `total`：综合得分（满分 100）
-- `runway_score` / `snow_score` / `roe_engine_score` / `rose_score` / `cash_score` / `debt_score` / `growth_quality_score`：各维度得分
-- `rev_cagr` / `gross_mean` / `roe_mean` / `dividend_yield` / `ocf_mean` / `debt_latest` / `profit_pos_years` / `close`：原始指标
-- `data_years` / `fin_source` / `note`：数据年数 / 来源 / 降级说明
+- `code` / `name` / `industry`: Stock code / name / industry
+- `total`: Composite score (max 100)
+- `runway_score` / `snow_score` / `roe_engine_score` / `rose_score` / `cash_score` / `debt_score` / `growth_quality_score`: Dimension scores
+- `rev_cagr` / `gross_mean` / `roe_mean` / `dividend_yield` / `ocf_mean` / `debt_latest` / `profit_pos_years` / `close`: Raw metrics
+- `data_years` / `fin_source` / `note`: Valid years / data source / fallback notes
 
-## 数据来源与降级
+## Data Sources & Fallbacks
 
-东财财务指标 + 巨潮分红 + 腾讯快照；主接口失败自动降级新浪三大报表手工计算；股息率按近 5 次派息实际时间跨度年化，不会因特别分红虚高；脚本默认禁用系统代理，网络调用带指数退避重试。
+East Money financial indicators + CNINFO dividends + Tencent snapshot; falls back to Sina statements recomputed by hand when the primary source fails; dividend yield is annualized over the actual span of the last 5 payouts so special dividends don't inflate it; system proxies disabled at startup, exponential-backoff retries on all network calls.
 
-## 免责声明
+## Disclaimer
 
-仅供学习研究，不构成投资建议。"伟大"的判定远超量化范围，筛选结果必须经过生意本质的定性复核。
+For learning and research only; not investment advice. "Greatness" extends far beyond quantification — always validate screening results through qualitative research on the business itself.

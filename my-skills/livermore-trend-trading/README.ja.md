@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🎯 リバモア流A株トレンド投機｜5つの纪律で突破点と損切りを守る
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007 | License：MIT | データ：akshare（東方財富/新浪公開API）
 

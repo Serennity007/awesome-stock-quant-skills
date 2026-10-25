@@ -1,4 +1,4 @@
-[中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
 ![Stock Quant Skills](.github/quant-research.svg)
 
@@ -17,6 +17,8 @@ Investment research implemented as Agent Skills and Python scripts: financial sc
 <!-- inventory: originals=31 mirrors=16 vendored=225 -->
 
 **[One-command offline demo](docs/quickstart.md) · [Validation scope](docs/validation.md) · [Live-data record](examples/verification/2026-10-24/buffett-check.json)**
+
+[Language and release coverage](docs/LANGUAGES.md): English is the default entry, Chinese guides are preserved, and Japanese guides remain where supplied. This is a source / Skill bundle; research scripts, reports and third-party snapshots are not fully localized.
 
 ## First run: two offline examples
 
@@ -67,7 +69,7 @@ On 2026-10-24, **AKShare 1.19.3** retrieved real financial data and completed sc
 | Capability | Inspect the implementation |
 |---|---|
 | A research entry point that selects relevant skills and checks data dates | [quant-research-workflow](my-skills/quant-research-workflow/SKILL.md) |
-| Financial screening with component-level reasoning | [Buffett rules](my-skills/buffett-value-investing/references/scoring_rules.md), [all originals](README.md#原创技能) |
+| Financial screening with component-level reasoning | [Buffett rules](my-skills/buffett-value-investing/references/scoring_rules.md), [all originals](README.zh-CN.md#原创技能) |
 | Percentile-based consensus with strict code, score, name and pool validation | [ensemble.py](my-skills/master-ensemble/scripts/ensemble.py) |
 | Input SHA-256, parameters and timestamps alongside consensus results | [synthetic inputs](examples/ensemble), [behavior tests](tests/test_ensemble.py) |
 | Exploratory monthly backtests with stated data limitations | [backtest methodology](my-skills/framework-backtest/references/backtest_methodology.md) |
@@ -130,7 +132,7 @@ Example: “Use quant-research-workflow to screen these companies for financial 
 
 ## Browse the collection
 
-- [Full original-skill table](README.md#原创技能): value, growth, defensive, themes, allocation, consensus and backtesting.
+- [Full original-skill table](README.zh-CN.md#原创技能): value, growth, defensive, themes, allocation, consensus and backtesting.
 - [Third-party sources](README.md#第三方收录), each with its own license and SOURCE.md.
 - [External resource index](docs/resource-index.md): legacy star counts are explicitly dated, not live rankings.
 - [Historical demo records](docs/historical-demos.md): prior maintainer observations, not revalidated market data or investment performance.

@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🌱 Philip Fisher Growth Stocks｜A 6-Dimension Screener Feeding "Scuttlebutt" Research on A-Shares
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 Author: Serennity007 | License: MIT | Data: akshare (East Money / Sina public APIs)
 

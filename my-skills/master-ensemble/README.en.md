@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🤝 Master-Consensus Screener｜Cross-Framework Intersection Merger
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 Author: Serennity007 | License: MIT | Dependency: pandas only (pure local CSV merging, no network calls)
 

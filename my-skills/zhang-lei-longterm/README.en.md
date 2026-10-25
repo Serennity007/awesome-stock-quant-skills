@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🚀 Zhang Lei / Hillhouse Long-Term Structural Value Investing｜A 4-D Radar for A-Share "Friends of Time"
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 Author: Serennity007 | License: MIT | Data: akshare (East Money / Sina public APIs)
 

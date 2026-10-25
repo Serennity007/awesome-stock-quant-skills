@@ -1,67 +1,68 @@
-# 🏭 段永平「商业模式第一」投资法｜六维打分筛选 A 股好生意
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
+# 🏭 Duan Yongping "Business Model First" Investing｜A 6-Dimension Screener for A-Share Great Businesses
 
-作者：Serennity007 | License：MIT | 数据：akshare（东方财富 / 新浪 / 腾讯公开接口）
 
-> **"买股票就是买公司，买公司就是买它的未来现金流折现。"**
+Author: Serennity007 | License: MIT | Data: akshare (East Money / Sina / Tencent public APIs)
 
-本技能把段永平的投资思想搬到 A 股市场：不预测股价、不追题材，只用 6 把财务尺子连续衡量"这是不是一门好生意"——生意模式、资本回报、盈利含金量、低负债、盈利稳定、行业龙头（敢为天下后，后中争先）。输出结构化 CSV，再交给定性分析（本分、能力圈、企业文化）做最终判断。
+> **"Buying a stock is buying the company; buying the company is buying the present value of its future cash flows. Period."**
 
-## 文件清单
+This skill brings Duan Yongping's investing philosophy to the A-share market: no price prediction, no theme chasing—just six financial yardsticks applied consistently to answer "is this a great business?" Business-model quality, return on capital, cash conversion, low leverage, earnings stability, and industry leadership ("dare to be the follower, then win as a fast follower"). The output is a structured CSV ready for your qualitative follow-up on integrity, circle of competence, and corporate culture.
 
-- `SKILL.md` — 技能定义、六维打分逻辑与使用说明
-- `scripts/screen.py` — A 股商业模式初筛脚本（CSV + 终端表格）
-- `references/duan_methods.md` — 段永平核心思想：买股票就是买公司、商业模式第一、敢为天下后、能力圈、企业文化与 Stop Doing List
-- `duan_test_result.csv` — 小样实测输出（2026-09-26，茅台/五粮液/招商银行）
+## Contents
 
-## 快速开始
+- `SKILL.md` — Skill definition, 6-dimension scoring logic, and usage
+- `scripts/screen.py` — A-share business-model screener (CSV + terminal table)
+- `references/duan_methods.md` — Duan Yongping's core ideas: buy the company not the ticker, business model first, dare to be the follower, circle of competence, culture & Stop Doing List
+- `duan_test_result.csv` — Small-sample test output (2026-09-26, Moutai / Wuliangye / CMB)
+
+## Quick Start
 
 ```bash
 pip install akshare pandas
 
-# 默认沪深300成分股作为股票池，输出前 20 名
+# Default pool: CSI 300 constituents, top 20 output
 python scripts/screen.py --pool hs300 --top 20 --out result.csv
 
-# 自定义小股票池验证
+# Custom small pool for testing
 python scripts/screen.py --codes 600519,000858,600036 --out result.csv
 ```
 
-## 参数说明
+## Parameters
 
-- `--pool`: 股票池，目前支持 `hs300`。
-- `--codes`: 逗号分隔的自定义代码，优先级高于 `--pool`。
-- `--top`: 终端展示前 N 名（默认 20）。
-- `--out`: CSV 输出路径（默认 `duan_screen_result.csv`）。
-- `--sleep`: 每只股票间隔秒数（默认 0.3，防接口限流）。
+- `--pool`: Stock universe; currently supports `hs300`.
+- `--codes`: Comma-separated custom codes; takes precedence over `--pool`.
+- `--top`: Number of top results to display (default 20).
+- `--out`: CSV output path (default `duan_screen_result.csv`).
+- `--sleep`: Seconds between per-stock calls (default 0.3, rate-limit friendly).
 
-## 六维商业模式雷达
+## 6-Dimension Business-Model Radar
 
-| 维度 | 指标 | 说明 |
+| Dimension | Metric | Notes |
 |---|---|---|
-| 生意模式 | 近 5 年毛利率均值 + 波动幅度 | 高且稳 = 有定价权（满分 25） |
-| 资本回报 | 连续年度 ROE | ROIC 风格代理（满分 20） |
-| 盈利含金量 | 经营现金流净额/净利润 | 利润是否变成真金白银（满分 20） |
-| 低负债 | 最新资产负债率 | 远离财务风险（满分 15） |
-| 盈利稳定 | 净利润/营收增速变异系数 | 长期业绩可预期（满分 10） |
-| 行业龙头 | 申万行业内总市值排名 | 敢为天下后，后中争先（满分 10） |
+| Business model | 5-year average gross margin + stability | High and stable = pricing power (max 25) |
+| Return on capital | Consecutive annual ROE | ROIC-style proxy (max 20) |
+| Cash conversion | Operating cash flow / net profit | Are profits real cash? (max 20) |
+| Low leverage | Latest debt-to-asset ratio | Stay away from financial risk (max 15) |
+| Earnings stability | CV of profit/revenue growth | Predictable long-term results (max 10) |
+| Industry leader | Market-cap rank within SW industry | Dare to be the follower (max 10) |
 
-判定线：**≥75 商业模式优秀**；**55–74 有亮点也有短板**；**<55 不符合框架**。
+Verdict lines: **≥75 excellent business model**; **55–74 mixed strengths and weaknesses**; **<55 outside the framework**.
 
-## 输出字段
+## Output Fields
 
-- `code` / `name` / `industry`：代码 / 简称 / 行业
-- `total`：综合得分（满分 100）
-- `business_score` / `roe_score` / `cash_score` / `debt_score` / `stability_score` / `leader_score`：各维度得分
-- `gross_mean` / `gross_annual` / `roe_mean` / `roe_annual`：毛利率与 ROE 的均值及逐年序列
-- `ocf_to_profit_mean` / `debt_latest`：现金流净利润比均值 / 最新资产负债率
-- `ind_rank` / `ind_total` / `leader_ratio` / `total_mv_yi`：行业内排名 / 行业股票数 / 市值占龙头比 / 总市值（亿元）
-- `data_years` / `source` / `note`：数据年数 / 来源 / 降级说明
+- `code` / `name` / `industry`: Stock code / name / industry
+- `total`: Composite score (max 100)
+- `business_score` / `roe_score` / `cash_score` / `debt_score` / `stability_score` / `leader_score`: Dimension scores
+- `gross_mean` / `gross_annual` / `roe_mean` / `roe_annual`: Gross-margin & ROE averages and yearly series
+- `ocf_to_profit_mean` / `debt_latest`: Average OCF-to-profit ratio / latest debt ratio
+- `ind_rank` / `ind_total` / `leader_ratio` / `total_mv_yi`: In-industry rank / industry size / cap share of leader / total cap (¥100M)
+- `data_years` / `source` / `note`: Valid years / data source / fallback notes
 
-## 实测参考（2026-09-26，沪深300 全池 300 只）
+## Sample Results (2026-09-26, full CSI 300, 300 stocks)
 
-山西汾酒 86 分、迈瑞医疗 83 分、贵州茅台 82 分、五粮液 81 分、中国海油 81 分、爱美客 80 分、同花顺 80 分、分众传媒 79 分——高毛利率 + 高 ROE + 现金牛特征的企业普遍靠前，符合"好生意"直觉。
+Shanxi Fenjiu 86, Mindray Medical 83, Kweichow Moutai 82, Wuliangye 81, CNOOC 81, Aimeike 80, Hithink RoyalFlush 80, Focus Media 79—high-margin, high-ROE cash cows cluster at the top, matching the "great business" intuition.
 
-## 免责声明
+## Disclaimer
 
-仅供学习研究，不构成投资建议。历史财务指标不代表未来表现；任何筛选结果都必须经过你对生意的理解（能力圈）二次确认。
+For learning and research only; not investment advice. Historical financial metrics do not guarantee future performance. Always validate screening results through your own understanding of the business (circle of competence).

@@ -1,67 +1,68 @@
-# 🎯 A股利弗莫尔趋势投机｜用5条纪律守住关键突破与止损
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
+# 🎯 Livermore Trend Speculation in A-Shares | 5 Disciplines for Key Breakouts and Stop-Losses
 
-作者：Serennity007 | License：MIT | 数据：akshare（东方财富/新浪财经公开接口）
 
-“大钱靠坐得住，不是靠乱动。”本技能把杰西·利弗莫尔的趋势投机纪律机械化：识别**N日新高关键点突破、放量确认、缩量回踩二次入场**，并提醒**单日反转/放量滞涨**两类危险信号；同时输出一套**金字塔加仓仓位试探框架**，让“试探仓→确认加仓→止损”有数字可依。
+Author: Serennity007 | License: MIT | Data: akshare (East Money / Sina public APIs)
 
-## 快速开始
+"The big money is made by sitting — not thinking." This skill turns Jesse Livermore's trend-speculation discipline into a mechanical scanner: it identifies **N-day new-high pivotal-point breakouts, volume-confirmed thrusts, low-volume pullbacks for secondary entries**, and warns of **one-day reversal / volume-stagnation** danger signals. It also outputs a **pyramid position-probe framework** so that "probe → confirm → add" becomes a set of numbers rather than a feeling.
+
+## Quick start
 
 ```bash
 pip install akshare pandas
 
-# 默认：3只示例股，近250个交易日，60日突破窗口
+# Default: 3 sample stocks, last 250 trading days, 60-day breakout window
 python scripts/pivotal_points.py --codes 600519,000858,600036 --out signals.csv
 
-# 缩短窗口，看更近期的关键突破
+# Shorter window for more recent breakouts
 python scripts/pivotal_points.py --codes 600519,000858 --days 120 --window 30 --out signals.csv
 ```
 
-## 参数说明
+## Parameters
 
-- `--codes`：逗号分隔的6位A股代码（必填）
-- `--days`：取近N个交易日（默认250）
-- `--window`：N日新高突破窗口（默认60）
-- `--out`：CSV输出路径（默认 `livermore_signals.csv`）
-- `--no-proxy`：禁用系统代理（脚本默认已自动绕过系统代理，保留兼容参数）
+- `--codes`: Comma-separated 6-digit A-share codes (required)
+- `--days`: Number of recent trading days to load (default 250)
+- `--window`: N-day new-high breakout window (default 60)
+- `--out`: CSV output path (default `livermore_signals.csv`)
+- `--no-proxy`: Disable system proxy (the script already bypasses system proxies by default; kept for backward compatibility)
 
-> 代理说明：脚本启动时自动清除 `HTTP_PROXY` / `HTTPS_PROXY` 等环境变量，避免本地代理（如 `127.0.0.1:7890`）阻断东方财富/新浪接口。优先尝试东方财富日线接口，失败自动降级新浪日线接口。
+> Proxy note: on startup the script clears `HTTP_PROXY` / `HTTPS_PROXY` environment variables to avoid local proxies (e.g. `127.0.0.1:7890`) blocking East Money / Sina APIs. It tries the East Money daily-history API first and falls back to Sina daily data if unavailable.
 
-## 输出字段
+## Output fields
 
-| 字段 | 说明 |
+| Field | Description |
 |---|---|
-| `code` | 6位股票代码 |
-| `name` | 股票简称 |
-| `date` | 信号日期 |
-| `close` | 最新收盘价 |
-| `close_chg_pct` | 当日涨跌幅（%） |
-| `volume_ratio` | 当日成交量 / 20日均量 |
-| `ma20` | 20日均线 |
-| `ma60` | 60日均线 |
-| `window_high` | 突破窗口内最高收盘价 |
-| `dist_to_high_pct` | 现价距窗口高点幅度（%） |
-| `signals` | 命中的信号，逗号分隔 |
-| `position_plan` | 基于信号的金字塔仓位建议 |
+| `code` | 6-digit stock code |
+| `name` | Stock name |
+| `date` | Signal date |
+| `close` | Latest closing price |
+| `close_chg_pct` | Daily change (%) |
+| `volume_ratio` | Volume / 20-day average volume |
+| `ma20` | 20-day moving average |
+| `ma60` | 60-day moving average |
+| `window_high` | Highest close within the breakout window |
+| `dist_to_high_pct` | Distance from current price to the window high (%) |
+| `signals` | Triggered signals, comma-separated |
+| `position_plan` | Pyramid position-sizing suggestion based on the signal |
 
-## 信号含义
+## Signal meanings
 
-| 信号 | 含义 |
+| Signal | Meaning |
 |---|---|
-| `KEY_BREAKOUT` | 放量突破N日新高，最小阻力方向向上 |
-| `WEAK_BREAKOUT` | 突破N日新高但成交量未达标，需警惕假突破 |
-| `PULLBACK_ENTRY` | 多头趋势中缩量回踩MA20，二次入场候选 |
-| `ONE_DAY_REVERSAL` | 单日反转：冲高回落，收盘接近低点 |
-| `VOLUME_STAGNATION` | 放量滞涨：成交量放大但价格几乎没涨 |
-| `NO_SIGNAL` | 未命中明确信号 |
+| `KEY_BREAKOUT` | Volume-confirmed breakout to an N-day new high |
+| `WEAK_BREAKOUT` | New high without sufficient volume; watch for false breakout |
+| `PULLBACK_ENTRY` | Low-volume pullback to MA20 within an uptrend |
+| `ONE_DAY_REVERSAL` | One-day reversal: sharp intraday rally reversed, close near the low |
+| `VOLUME_STAGNATION` | Volume surge with little price progress and an upper shadow |
+| `NO_SIGNAL` | No clear signal |
 
-## 配套文件
+## Files
 
-- `SKILL.md` — 技能定义与使用说明
-- `scripts/pivotal_points.py` — 趋势投机信号识别脚本
-- `references/livermore_rules.md` — 利弗莫尔投机原则学习整理
+- `SKILL.md` — Skill definition and usage
+- `scripts/pivotal_points.py` — Trend-speculation signal scanner
+- `references/livermore_rules.md` — Summary of Livermore's principles
 
-## 免责声明
+## Disclaimer
 
-仅供学习研究，不构成投资建议。历史价格行为不代表未来走势；机械信号必须结合市场环境、基本面与风险管理综合判断。任何交易决策均由使用者自行承担风险。
+For study and research only — not investment advice. Historical price action does not predict future performance. Mechanical signals must be combined with market context, fundamentals, and risk management. Any trading decision is the user's own responsibility.

@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🦎 Macro Chameleon | Druckenmiller-Style Flex Dashboard
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 Author: Serennity007 | License: MIT | Data: akshare (BOC / Sina / East Money / 10jqka public APIs)
 

@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🏦 ジョン・ネフ低PER投資法｜総リターン比率≥2で「嫌われ者の堅実企業」を発見
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007 | ライセンス：MIT | データ：akshare（東方財富・巨潮・騰訊公開API）
 

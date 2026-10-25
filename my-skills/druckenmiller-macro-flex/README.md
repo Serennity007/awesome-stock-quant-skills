@@ -1,66 +1,67 @@
-# 🦎 宏观变色龙｜德鲁肯米勒式灵活仪表盘
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
+# 🦎 Macro Chameleon | Druckenmiller-Style Flex Dashboard
 
-作者：Serennity007 | License：MIT | 数据：akshare（中行/新浪/东财/同花顺公开接口）
 
-每天开盘前先看一眼全球资金的"风向"。本技能以斯坦利·德鲁肯米勒（Stanley Druckenmiller）的宏观交易哲学为框架，用 akshare 把 **7 大类资产** 的趋势与动量压缩成一张表：美元/人民币汇率、中美 10 年期国债收益率、黄金、原油、铜、A 股主要指数，以及可选个股。输出不是交易信号，而是一张**趋势跟随视角的多空倾向快照**。
+Author: Serennity007 | License: MIT | Data: akshare (BOC / Sina / East Money / 10jqka public APIs)
 
-## 快速开始
+Check the global capital wind direction before the market opens. This skill frames a Stanley Druckenmiller-style macro view into a single trend-following snapshot covering **7 asset classes**: USD/CNY, China/US 10-year Treasury yields, gold, crude oil, copper, major A-share indices, and optional individual stocks. The output is not a trading signal — it is a long/short bias snapshot from a trend-follower's perspective.
+
+## Quick start
 
 ```bash
 pip install akshare pandas
 
-# 默认 20 日窗口，输出 macro_dashboard.csv
+# Default 20-day window, output macro_dashboard.csv
 python scripts/macro_dashboard.py
 
-# 自定义窗口 + 输出
+# Custom window + output
 python scripts/macro_dashboard.py --days 20 --out macro_dashboard.csv
 
-# 加入自选个股同步扫描
+# Add optional stock codes
 python scripts/macro_dashboard.py --days 20 --codes 600519,000858,600036 --out my_dashboard.csv
 ```
 
-## 参数说明
+## Parameters
 
-- `--days`: 趋势/动量计算窗口（默认 20）
-- `--codes`: 逗号分隔的 A 股个股代码（可选）
-- `--out`: CSV 输出路径（默认 `macro_dashboard.csv`）
-- `--no-proxy`: 禁用系统代理（脚本已默认禁用，保留兼容参数）
+- `--days`: Trend/momentum window in trading days (default 20)
+- `--codes`: Comma-separated A-share stock codes (optional)
+- `--out`: CSV output path (default `macro_dashboard.csv`)
+- `--no-proxy`: Disable system proxy (the script already bypasses proxies by default; kept for backward compatibility)
 
-> 代理说明：脚本启动时自动清除 `HTTP_PROXY` / `HTTPS_PROXY` 等环境变量，避免本地代理（如 `127.0.0.1:7890`）阻断数据源。优先尝试东方财富/首选接口，失败自动降级到新浪/中行/同花顺。
+> Proxy note: on startup the script clears `HTTP_PROXY` / `HTTPS_PROXY` environment variables to avoid local proxies (e.g. `127.0.0.1:7890`) blocking data sources. It tries East Money / primary APIs first and falls back to Sina / BOC / 10jqka if unavailable.
 
-## 输出字段
+## Output fields
 
-| 字段 | 说明 |
+| Field | Description |
 |---|---|
-| `asset` | 资产名称 |
-| `category` | 资产类别（fx/bond_cn/bond_us/commodity/equity/stock） |
-| `current` | 最新收盘价/收益率/汇率 |
-| `ma_n` | N 日移动平均 |
-| `roc_n` | N 日涨跌幅% |
-| `roc_5` | 近 5 日涨跌幅% |
-| `trend` | 趋势描述（上升/下降/震荡/拐点） |
-| `signal` | 趋势信号（BULLISH/BEARISH/NEUTRAL） |
-| `bias` | 多空倾向描述（如"美元偏空"、"中债偏多"） |
-| `source` | 实际使用的数据来源 |
+| `asset` | Asset name |
+| `category` | Asset category (fx / bond_cn / bond_us / commodity / equity / stock) |
+| `current` | Latest close / yield / rate |
+| `ma_n` | N-day moving average |
+| `roc_n` | N-day return % |
+| `roc_5` | Latest 5-day return % |
+| `trend` | Trend description (rising / falling / choppy / turning) |
+| `signal` | Trend signal (BULLISH / BEARISH / NEUTRAL) |
+| `bias` | Long/short bias description (e.g. "USD bearish", "China bonds bullish") |
+| `source` | Actual data source used |
 
-## 判定逻辑
+## Logic
 
 ```
-BULLISH = 收盘价 > N 日均线 且 N 日涨跌幅 > 0
-BEARISH = 收盘价 < N 日均线 且 N 日涨跌幅 < 0
-NEUTRAL = 其他情况
+BULLISH = close > N-day MA  and  N-day return > 0
+BEARISH = close < N-day MA  and  N-day return < 0
+NEUTRAL = otherwise
 ```
 
-国债收益率的趋势方向与债券价格相反：收益率上行 = 债券偏空。脚本最后会汇总综合宏观得分与整体立场提示。
+Bond-yield direction is opposite to bond-price direction: rising yield = bearish for bonds. The script ends with an aggregate macro score and an overall stance hint.
 
-## 配套文件
+## Files
 
-- `SKILL.md` — 技能定义与完整说明
-- `scripts/macro_dashboard.py` — 宏观仪表盘脚本
-- `references/druckenmiller_style.md` — 德鲁肯米勒投资思想要点整理
+- `SKILL.md` — Skill definition and full usage notes
+- `scripts/macro_dashboard.py` — Macro dashboard script
+- `references/druckenmiller_style.md` — Summary of Druckenmiller's investment principles
 
-## 免责声明
+## Disclaimer
 
-仅供学习研究，不构成投资建议。宏观趋势与动量均由历史价格统计而来，不代表未来走势；任何输出都必须经过自己对宏观环境、流动性与风险偏好的理解二次确认。
+For study and research only — not investment advice. Macro trends and momentum are derived from historical price statistics, not future performance; always verify results against your own understanding of the macro environment, liquidity, and risk appetite.

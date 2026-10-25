@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🚀 張磊・高瓴の長期構造価値投資｜A株“時間の友”を4次元レーダーで発見
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007 | ライセンス：MIT | データ：akshare（東方財富・新浪公開API）
 

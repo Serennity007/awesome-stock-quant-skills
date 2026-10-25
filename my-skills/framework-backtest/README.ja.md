@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 📊 マスター框架バックテスト検証器｜月次リバランスによる実証
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007 | ライセンス：MIT | データ：akshare（東方财富/新浪公開API）+ ローカルキャッシュ
 

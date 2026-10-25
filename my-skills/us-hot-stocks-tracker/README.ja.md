@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🚀 米国人気AI株トラッカー｜8銘柄モメンタムを一画面で把握
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007（オリジナル）| License：MIT | データ：akshare（新浪財経の米国株日足）
 

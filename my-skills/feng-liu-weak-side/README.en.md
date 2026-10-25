@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🥊 Feng Liu Weak-Side Investing｜Buy When Nobody Wants It: A 4-Dimension Contrarian Screener for A-Shares
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 Author: Serennity007 | License: MIT | Data: akshare (East Money / 10jqka / Sina public APIs)
 

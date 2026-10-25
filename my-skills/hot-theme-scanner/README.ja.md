@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🔥 A株ホットテーマスキャナー｜今日の最強テーマを秒速で把握
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007 | License：MIT | データ：akshare（東方財富/同花順公開API）
 

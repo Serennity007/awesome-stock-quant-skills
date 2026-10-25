@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🦎 マクロ・カメレオン｜ドラッケンミラー式フレックス・ダッシュボード
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007 | License：MIT | データ：akshare（中国銀行/新浪/東方財富/同花順公開API）
 

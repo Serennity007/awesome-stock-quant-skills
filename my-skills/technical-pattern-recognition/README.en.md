@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # technical-pattern-recognition
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 A-share technical pattern recognition Skill (Claude Code / Agent Skills format): based on akshare Sina daily bars, it mechanically detects MA bullish/bearish alignment, MACD golden/death cross, volume-confirmed breakout to an N-day high, and low-volume pullback to the MA, outputting a structured signal table for AI interpretation.
 

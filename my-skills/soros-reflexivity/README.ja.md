@@ -1,3 +1,5 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🌀 ソロス反身性スキャナー（A株）
 
 > 価格は現実を映す鏡ではなく、現実そのものの一部だ。

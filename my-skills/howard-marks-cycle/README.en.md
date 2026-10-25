@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🌡️ A-Share Cycle Gauge | Howard Marks Pendulum Positioning
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 Author: Serennity007 | License: MIT | Data: akshare (legulegu / CSIndex / East Money public APIs)
 

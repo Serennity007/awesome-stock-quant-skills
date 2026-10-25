@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🌙 月を数え星を数えるな｜邱国禄「三好」A株龙头スコアリング
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007 | License：MIT | データ：akshare（東方財富/同花順/騰訊/新浪公開API）
 

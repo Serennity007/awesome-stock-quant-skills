@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🛡️ A株グラハム防御型7つの基準スクリーナー｜元本を守る7つの門
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007 | License：MIT | データ：akshare（東方財富／Sina Finance 公開API）
 

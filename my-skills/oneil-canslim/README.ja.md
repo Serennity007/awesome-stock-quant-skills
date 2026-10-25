@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🚀 ウィリアム・オニール CANSLIM｜7要素チェックリスト・スクリーナー（A株）
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007 | ライセンス：MIT | データ：akshare（新浪/東方财富公開API）
 

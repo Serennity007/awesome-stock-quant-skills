@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🍶 林園式独占+依存性消費投資法｜「口元の必需品モート」だけに投資
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007 | ライセンス：MIT | データ：akshare（東方財富・巨潮・騰訊公開API）
 

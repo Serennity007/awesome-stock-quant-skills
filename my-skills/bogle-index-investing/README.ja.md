@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🎯 ジョン・ボーグル・インデックス投資法｜A株指数バリュエーション温度計 + 積立バックテスト
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007 | ライセンス：MIT | データ：akshare（楽咕楽股/新浪/テンセント公開API）
 

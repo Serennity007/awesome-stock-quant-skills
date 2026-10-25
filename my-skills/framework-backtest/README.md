@@ -1,45 +1,46 @@
-# 📊 大师框架回测验证器｜月度调仓检验框架真金白银的表现
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
+# 📊 Master-Framework Backtest Validator｜Monthly-Rebalanced Evidence for the Master Frameworks
 
-作者：Serennity007 | 许可证：MIT | 数据源：akshare（东财/新浪公开接口）+ 本地缓存
 
-> **"回测是策略的照妖镜——所有讲不出来的收益都是故事。"**
+Author: Serennity007 | License: MIT | Data: akshare (East Money / Sina public APIs) + local cache
 
-本技能把仓库里的大师框架变成**可证伪的策略**：每月末全池打分 → 等权买入前 N 名 → 持有到下月末 → 累计净值对照沪深300。财务切片按报告期末 +120 天近似可得日，并使用当期估值；未核对实际披露日与修订版本，不能保证严格 point-in-time。v1 支持 danbin（但斌六维）/ lilu（李录六维）/ mom12_1（12-1 月动量基准）。
+> **"A backtest is the demon-revealing mirror of a strategy — returns you can't show are just stories."**
 
-## 目录结构
+This skill turns the repo's master frameworks into **falsifiable strategies**: score the whole pool at each month-end → equal-weight the top N → hold to next month-end → compare cumulative NAV against CSI 300. Financial availability is approximated as reporting-period end +120 days, alongside contemporaneous valuations. Actual disclosure dates and historical revisions are not verified, so strict point-in-time correctness is not established. v1 supports danbin (6-dim), lilu (6-dim), and mom12_1 (12-1 month momentum benchmark).
 
-- `SKILL.md` — 技能定义、回测口径与使用方法
-- `scripts/fetch_history.py` — 个股历史数据缓存器（估值/年度指标/利润表，可断点续传、分块）
-- `scripts/backtest.py` — 月度调仓回测引擎
-- `references/backtest_methodology.md` — 方法论：point-in-time 原则、幸存者偏差、相对比较的正确用法
-- `results/` — 回测输出（汇总/月度净值/逐年表）
-- `cache/` — 数据缓存（.gitignore 排除）
+## Contents
 
-## 快速开始
+- `SKILL.md` — Skill definition, backtest conventions, and usage
+- `scripts/fetch_history.py` — Per-stock history cacher (valuation / annual indicators / income statement; resumable, chunkable)
+- `scripts/backtest.py` — Monthly-rebalance backtest engine
+- `references/backtest_methodology.md` — Methodology: point-in-time principle, survivorship bias, why relative comparison is the honest read
+- `results/` — Backtest outputs (summary / monthly NAV / yearly table)
+- `cache/` — Data cache (.gitignored)
+
+## Quick Start
 
 ```bash
 pip install akshare pandas numpy
 
-# 第一步：拉取全池历史数据（约 25 分钟，断点续传）
+# Step 1: fetch pool history (~25 min, resumable)
 python scripts/fetch_history.py --pool hs300
 
-# 第二步：回测三框架
+# Step 2: backtest all three frameworks
 python scripts/backtest.py
 ```
 
-## 已知局限（读结果前必读）
+## Known Limitations (read before reading results)
 
-1. **幸存者偏差**：股票池固定为当前沪深300，绝对收益被系统性高估——**仅作探索，相对排名也可能受偏差影响**。
-2. 成交额成本可配置（默认 10 bps/单位成交额），仍未建模冲击、停牌与涨跌停成交。
-3. PE/PB 历史约自 2018 年起。
-4. 年报滞后按 120 天近似。
+1. **Survivorship bias**: the universe is fixed to today's CSI 300 — absolute returns are systematically flattered; **exploratory use only; relative rankings may also be biased**.
+2. Configurable traded-notional costs (default 10 bps per unit); impact, suspensions and limit-price execution remain unmodeled.
+3. PE/PB history starts ~2018.
+4. Annual-report publication lag approximated at 120 days.
 
-## 免责声明
+## Disclaimer
 
-仅供学习研究，不构成投资建议。回测收益不代表未来。
+For learning and research only; not investment advice. Backtested returns do not represent future results.
 
-## 已实现的回测审计（2026-10-24）
+## Implemented audit behavior (2026-10-24)
 
-选股不根据未来退出价是否存在预筛，已选持仓缺价则终止；策略与基准按相同实际交易日计算，首月亏损计入回撤。新增 `--cost-bps`、`--cache-dir` 与 `--results-dir`，输出毛净收益、换手、持仓明细与输入哈希。期末不强制清仓，价格仍未复权。完整契约和合成运行示例见 [SKILL.md](SKILL.md)。
+Ranking never filters on future exit-price availability; a selected holding with missing exit data stops the run. Strategy and benchmark intervals use the same trading dates, and initial losses count toward drawdown. New `--cost-bps`, `--cache-dir` and `--results-dir` options expose gross/net returns, drift-aware turnover, holding details and input hashes. No forced final liquidation; unadjusted prices remain a limitation. See [SKILL.md](SKILL.md) for the full contract and synthetic CLI example.

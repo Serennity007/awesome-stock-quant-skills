@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🥊 馮柳「弱者体系」｜誰も欲しがらない時に買う：A株逆張り4次元スクリーナー
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007 | License：MIT | データ：akshare（東方財富/同花順/新浪公開API）
 

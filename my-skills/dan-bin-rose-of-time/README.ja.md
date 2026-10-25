@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🌹 但斌「時間の薔薇」｜偉大な企業 7 次元スクリーナー（A株）
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007 | ライセンス：MIT | データ：akshare（東方财富/CNINFO/テンセント公開API）
 

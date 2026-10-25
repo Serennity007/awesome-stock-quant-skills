@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🏭 段永平「ビジネスモデル第一」投資法｜6次元スコアリングでA株の良いビジネスを発見
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007 | ライセンス：MIT | データ：akshare（東方財富・新浪・騰訊公開API）
 

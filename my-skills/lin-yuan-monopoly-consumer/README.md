@@ -1,65 +1,66 @@
-# 🍶 林园垄断+成瘾性消费投资法｜只投“嘴巴上的刚需龙头”
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
+# 🍶 Lin Yuan-Style Monopoly + Addictive Consumer Investing｜Only "Mouth-Related Necessity Moats"
 
-作者：Serennity007 | License：MIT | 数据：akshare（东方财富/巨潮/腾讯公开接口）
 
-> **“我只投与嘴巴相关的、成瘾的、垄断的、毛利率唯一不骗人的公司。”**
+Author: Serennity007 | License: MIT | Data: akshare (East Money / CNINFO / Tencent public APIs)
 
-本技能把林园公开访谈/演讲中反复提及的投资框架搬到 A 股市场：不追热点、不猜 K 线，只用 4 把财务尺子连续扫描——**嘴巴相关刚需、毛利率 >50%、ROE 持续高位、分红率高**——找出具备“垄断+成瘾”特征的候选标的，再交给定性分析（护城河、估值、能力圈）做最终判断。
+> **"I only invest in mouth-related, addictive, monopolistic companies whose gross margin is the only metric that never lies."**
 
-## 文件清单
+This skill brings Lin Yuan's publicly stated investment framework to the A-share market. No hot-theme chasing, no chart guessing—just four financial yardsticks applied consistently: **mouth-related necessities, gross margin >50%, persistently high ROE, and high dividend yield**. The screener identifies candidates with "monopoly + addiction" characteristics, which you then validate with qualitative analysis (moat, valuation, circle of competence).
 
-- `SKILL.md` — 技能定义、4 大铁律打分逻辑与使用说明
-- `scripts/screen.py` — A 股林园式初筛脚本（CSV + 终端表格）
-- `references/lin_yuan_rules.md` — 林园投资思想整理：垄断、嘴巴相关、毛利率、买了就不卖、纪律
+## Contents
 
-## 快速开始
+- `SKILL.md` — Skill definition, 4-rule scoring logic, and usage
+- `scripts/screen.py` — A-share Lin Yuan-style screener (CSV + terminal table)
+- `references/lin_yuan_rules.md` — Lin Yuan investment principles: monopoly, mouth-related, gross margin, buy-and-hold, discipline
+
+## Quick Start
 
 ```bash
 pip install akshare pandas
 
-# 默认沪深300成分股作为股票池，输出前 20 名
+# Default pool: CSI 300 constituents, top 20 output
 python scripts/screen.py --pool hs300 --top 20 --out result.csv
 
-# 自定义小股票池验证
+# Custom small pool for testing
 python scripts/screen.py --codes 600519,000858,600036 --out result.csv
 ```
 
-## 参数说明
+## Parameters
 
-- `--pool`: 股票池，目前支持 `hs300`。
-- `--codes`: 逗号分隔的自定义代码，优先级高于 `--pool`。
-- `--top`: 终端展示前 N 名（默认 20）。
-- `--out`: CSV 输出路径（默认 `lin_yuan_screen_result.csv`）。
-- `--min-gross`: 毛利率硬门槛（默认 50%）。
-- `--min-roe`: ROE 硬门槛（默认 15%）。
-- `--min-div`: 近 12 个月股息率硬门槛（默认 1.0%）。
-- `--sleep`: 每只股票请求间隔（默认 0.3 秒，防接口限流）。
+- `--pool`: Stock universe; currently supports `hs300`.
+- `--codes`: Comma-separated custom codes; takes precedence over `--pool`.
+- `--top`: Number of top results to display (default 20).
+- `--out`: CSV output path (default `lin_yuan_screen_result.csv`).
+- `--min-gross`: Gross-margin hard threshold (default 50%).
+- `--min-roe`: ROE hard threshold (default 15%).
+- `--min-div`: Trailing 12-month dividend yield threshold (default 1.0%).
+- `--sleep`: Request interval per stock (default 0.3 s, for rate-limiting).
 
-## 4 大筛选铁律
+## 4 Screening Rules
 
-| 维度 | 代理指标 | 权重 |
+| Dimension | Proxy Metric | Weight |
 |---|---|---|
-| 垄断定价权 | 近 5 年毛利率均值 >50%、波动小 | 30 |
-| ROE 持续高位 | 连续 5 年 ROE ≥15% 的年数与均值 | 25 |
-| 股东回报 | 近 12 个月股息率 + 近 5 年分红持续性 | 20 |
-| 成瘾/刚需行业 | 白酒/中药/调味品/乳品/啤酒等白名单 | 15 |
-| 财务稳健 | 最新资产负债率 | 10 |
+| Monopoly / pricing power | 5-year gross margin mean >50% and low volatility | 30 |
+| Persistent high ROE | Years with ROE ≥15% over 5 years and mean ROE | 25 |
+| Shareholder returns | Trailing 12-month dividend yield + 5-year payout consistency | 20 |
+| Addictive / necessity industry | White-list match: baijiu, TCM, condiments, dairy, beer, etc. | 15 |
+| Financial soundness | Latest debt-to-asset ratio | 10 |
 
-## 输出字段
+## Output Fields
 
-- `code` / `name`：股票代码 / 简称
-- `score`：综合得分（满分 100）
-- `linyuan_pass`：是否通过硬门槛
-- `sw_industry` / `sw_sector`：申万行业分类
-- `gross_mean` / `gross_annual`：毛利率均值 / 序列
-- `roe_mean` / `roe_annual`：ROE 均值 / 序列
-- `dividend_yield` / `payout_recent`：股息率 / 最近一年派息
-- `debt_latest`：最新资产负债率
-- `addictive_tag`：成瘾/刚需行业标签
-- `data_years` / `source` / `note`：数据年度、来源、降级说明
+- `code` / `name`: Stock code / short name
+- `score`: Composite score (max 100)
+- `linyuan_pass`: Passes hard thresholds
+- `sw_industry` / `sw_sector`: Shenwan industry classification
+- `gross_mean` / `gross_annual`: Gross margin mean / 5-year series
+- `roe_mean` / `roe_annual`: ROE mean / 5-year series
+- `dividend_yield` / `payout_recent`: Dividend yield / latest annual payout
+- `debt_latest`: Latest debt-to-asset ratio
+- `addictive_tag`: Addictive / necessity industry tag
+- `data_years` / `source` / `note`: Valid years, data source, fallback notes
 
-## 免责声明
+## Disclaimer
 
-仅供学习研究，不构成投资建议。历史财务指标不代表未来表现；任何筛选结果都必须经过你对生意的理解（能力圈）二次确认。林园本人观点以公开访谈、演讲、著作为准，本整理可能存在理解偏差。
+For learning and research only; not investment advice. Historical financial metrics do not guarantee future performance. Always validate screening results through your own understanding of the business (circle of competence). Lin Yuan's views are based on public interviews, speeches, and writings; this summary may contain interpretation bias.

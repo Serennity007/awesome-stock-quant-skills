@@ -1,59 +1,60 @@
-# 🚀 张磊高瓴长期结构性价值投资｜4 维雷达锁定 A 股“时间的朋友”
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
+# 🚀 Zhang Lei / Hillhouse Long-Term Structural Value Investing｜A 4-D Radar for A-Share "Friends of Time"
 
-作者：Serennity007 | License：MIT | 数据：akshare（东方财富 / 新浪公开接口）
 
-> **“我们是创业者，只不过恰好是投资人。”**
+Author: Serennity007 | License: MIT | Data: akshare (East Money / Sina public APIs)
 
-本技能把张磊在《价值》中提出的**长期结构性价值投资**框架搬到 A 股市场：不看 K 线、不追热点，只用 4 把财务尺子连续扫描企业成长质量——连续双增、长期投入、行业空间、ROE 趋势——找出具备“时间的朋友”特征的候选标的，再交给定性分析（人、护城河、能力圈）做最终判断。
+> **"We are entrepreneurs, except that we happen to be investors."**
 
-## 文件清单
+This skill brings Zhang Lei's long-term structural value investing framework (from his book *Value*) to the A-share market. No chart guessing, no hot-theme chasing—just four financial yardsticks applied consistently to identify companies with the characteristics of "friends of time": sustained double growth, long-term reinvestment, industry headroom, and an improving ROE trend. The output is a structured CSV ready for your qualitative follow-up on people, moat, and circle of competence.
 
-- `SKILL.md` — 技能定义、4 维打分逻辑与使用说明
-- `scripts/screen.py` — A 股长期结构性价值初筛脚本（CSV + 终端表格）
-- `references/zhang_lei_principles.md` — 张磊《价值》核心原则：长期主义、动态护城河、选人风控、重仓中国/科技创新、哑铃策略
+## Contents
 
-## 快速开始
+- `SKILL.md` — Skill definition, 4-dimensional scoring logic, and usage
+- `scripts/screen.py` — A-share long-term structural value screener (CSV + terminal table)
+- `references/zhang_lei_principles.md` — Zhang Lei's core principles: long-termism, dynamic moat, people as the ultimate risk control, heavy China / tech innovation, barbell strategy
+
+## Quick Start
 
 ```bash
 pip install akshare pandas
 
-# 默认沪深300成分股作为股票池，输出前 20 名
+# Default pool: CSI 300 constituents, top 20 output
 python scripts/screen.py --pool hs300 --top 20 --out result.csv
 
-# 自定义小股票池验证
+# Custom small pool for testing
 python scripts/screen.py --codes 600519,000858,600036 --out result.csv
 ```
 
-## 参数说明
+## Parameters
 
-- `--pool`: 股票池，目前支持 `hs300`。
-- `--codes`: 逗号分隔的自定义代码，优先级高于 `--pool`。
-- `--top`: 终端展示前 N 名（默认 20）。
-- `--out`: CSV 输出路径（默认 `zhang_lei_screen_result.csv`）。
+- `--pool`: Stock universe; currently supports `hs300`.
+- `--codes`: Comma-separated custom codes; takes precedence over `--pool`.
+- `--top`: Number of top results to display (default 20).
+- `--out`: CSV output path (default `zhang_lei_screen_result.csv`).
 
-## 4 维打分雷达
+## 4-Dimensional Growth-Quality Radar
 
-| 维度 | 指标 | 说明 |
+| Dimension | Metric | Notes |
 |---|---|---|
-| 连续双增 | 近 5 年营收/净利润均正增长年数 | 4–5 年双增为最佳 |
-| 长期投入 | 研发费用率 或 资本开支/营收 | 占比高且趋势向上说明企业为未来下注 |
-| 行业空间 | 最新年度营收增速 vs 行业平均 | 跑赢行业说明企业在获取结构性份额 |
-| ROE 趋势 | 近 5 年 ROE 走势 | 最新 ROE 高于均值且趋势向上为优 |
+| Sustained double growth | Years in last 5 with both revenue and net-profit growth > 0 | 4–5 years is best |
+| Long-term reinvestment | R&D ratio or capex-to-revenue ratio | High and trending up means the company is betting on the future |
+| Industry headroom | Latest annual revenue growth vs industry average | Outpacing the industry suggests structural share gain |
+| ROE trend | 5-year ROE trajectory | Latest ROE above the 5-year mean and trending up is best |
 
-## 输出字段
+## Output Fields
 
-- `code` / `name` / `industry`：代码 / 简称 / 行业
-- `score_total`：综合得分（满分 100）
-- `score_growth` / `score_investment` / `score_industry` / `score_roe_trend`：各维度得分
-- `double_growth_years`：营收/利润双增年数
-- `avg_rev_growth` / `avg_profit_growth`：近 5 年均值增速
-- `rd_ratio_avg` / `capex_to_rev_avg`：研发费用率 / 资本开支占比均值
-- `industry_avg_rev_growth` / `market_median_rev_growth`：行业平均 / 全市场中位增速
-- `roe_latest` / `roe_5y`：最新 ROE / 5 年序列
-- `data_years` / `source` / `note`：数据年数 / 来源 / 降级说明
+- `code` / `name` / `industry`: Stock code / name / industry
+- `score_total`: Composite score (max 100)
+- `score_growth` / `score_investment` / `score_industry` / `score_roe_trend`: Dimension scores
+- `double_growth_years`: Years with both revenue and profit growth > 0
+- `avg_rev_growth` / `avg_profit_growth`: 5-year average growth rates
+- `rd_ratio_avg` / `capex_to_rev_avg`: Average R&D ratio / capex-to-revenue ratio
+- `industry_avg_rev_growth` / `market_median_rev_growth`: Industry average / market median revenue growth
+- `roe_latest` / `roe_5y`: Latest ROE / 5-year ROE series
+- `data_years` / `source` / `note`: Valid years / data source / fallback notes
 
-## 免责声明
+## Disclaimer
 
-仅供学习研究，不构成投资建议。历史财务指标不代表未来表现；任何筛选结果都必须经过你对生意的理解（能力圈）二次确认。
+For learning and research only; not investment advice. Historical financial metrics do not guarantee future performance. Always validate screening results through your own understanding of the business (circle of competence).

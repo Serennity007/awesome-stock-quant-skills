@@ -1,60 +1,61 @@
-# 🌙 数月亮不数星星｜邱国鹭「三好」A 股龙头打分器
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
+# 🌙 Count Moons, Not Stars｜Qiu Guolu "Three-Good" A-Share Leader Screener
 
-作者：Serennity007 | License：MIT | 数据：akshare（东方财富/同花顺/腾讯/新浪公开接口）
 
-> **行业格局大于个股 α，便宜是硬道理，胜而后求战。**
+Author: Serennity007 | License: MIT | Data: akshare (East Money / 10jqka / Tencent / Sina public APIs)
 
-本技能把邱国鹭《投资中最简单的事》里的“好行业、好公司、好价格”三好标准，做成 A 股机械化初筛器：直接从沪深300或自定义股票池中，按行业市值龙头、ROE 稳定性、营收增速、PE/PB 历史低分位打分，只输出各行业“月亮”（龙头），不追逐二三线“星星”。
+> **Industry structure matters more than individual alpha. Cheapness is the hard truth. Fight only after you have already won.**
 
-## 文件清单
+This skill turns Qiu Guolu's *The Simplest Things in Investing* into a mechanical A-share screener. It screens CSI 300 or a custom stock list through three lenses — good industry, good company, good price — and scores only the top 3 market-cap leaders in each industry (the "moons"), ignoring the second- and third-tier "stars."
 
-- `SKILL.md` — 技能定义、3 维打分逻辑与使用说明
-- `scripts/screen.py` — A 股三好龙头打分脚本（CSV + 终端表格）
-- `references/qiu_principles.md` — 邱国鹭核心投资原则整理
+## Contents
 
-## 快速开始
+- `SKILL.md` — Skill definition, 3-dimensional scoring logic, and usage
+- `scripts/screen.py` — A-share "three-good" leader screener (CSV + terminal table)
+- `references/qiu_principles.md` — Summary of Qiu Guolu's core investment principles
+
+## Quick Start
 
 ```bash
 pip install akshare pandas
 
-# 默认沪深300成分股作为股票池，输出前 20 名
+# Default pool: CSI 300 constituents, top 20 output
 python scripts/screen.py --pool hs300 --top 20 --out qiu_result.csv
 
-# 自定义小股票池验证
+# Custom small pool for testing
 python scripts/screen.py --codes 600519,000858,600036 --out qiu_result.csv
 ```
 
-## 参数说明
+## Parameters
 
-- `--pool`: 股票池，目前支持 `hs300`。
-- `--codes`: 逗号分隔的自定义代码，优先级高于 `--pool`。
-- `--top`: 终端展示前 N 名（默认 20）。
-- `--out`: CSV 输出路径（默认 `qiu_result.csv`）。
-- `--sleep`: 每只股票请求间隔（默认 0.3 秒，防限流）。
+- `--pool`: Stock universe; currently supports `hs300`.
+- `--codes`: Comma-separated custom codes; takes precedence over `--pool`.
+- `--top`: Number of top results to display (default 20).
+- `--out`: CSV output path (default `qiu_result.csv`).
+- `--sleep`: Interval between per-stock requests (default 0.3s, for rate limiting).
 
-## 3 维打分雷达
+## 3-Dimensional Scoring Radar
 
-| 维度 | 指标 | 说明 |
+| Dimension | Metric | Notes |
 |---|---|---|
-| 好行业 | 行业内市值排名 | 前 3 名得 25/20/15 分；非龙头 0 分，落实“数月亮不数星星” |
-| 好公司 | 近 5 年 ROE + 营收增速 | ROE 均值 ≥15% 且稳定得分高；营收增速为正且稳定近似市占率/竞争优势 |
-| 好价格 | PE/PB 历史估值分位 | 分位越低得分越高；无历史分位时按绝对 PE/PB 降级评分 |
+| Good Industry | Market-cap rank within industry | Top 3 get 25/20/15 points; non-leaders get 0 — "count moons, not stars" |
+| Good Company | 5-year ROE + revenue growth | High and stable ROE scores best; positive and stable revenue growth proxies market-share/competitive edge |
+| Good Price | PE/PB historical percentile | Lower percentile scores higher; absolute PE/PB fallback when historical percentile is unavailable |
 
-## 输出字段
+## Output Fields
 
-- `code` / `name` / `industry`：股票代码 / 简称 / 行业
-- `total_score`：综合得分（满分 100）
-- `industry_rank` / `industry_score`：行业内市值排名 / 行业得分
-- `roe_score` / `growth_score`：ROE 维度得分 / 营收增速维度得分
-- `price_score` / `pe_score` / `pb_score`：价格维度总分 / PE 分位得分 / PB 分位得分
-- `pe_ttm` / `pb` / `pe_percentile` / `pb_percentile`：当前估值与历史分位
-- `roe_avg` / `roe_std` / `revenue_growth_avg`：ROE 均值 / 标准差 / 营收增速均值
-- `total_mv_yi`：总市值（亿元）
-- `data_years`：有效年度数
-- `val_source` / `fin_source` / `note`：数据来源与降级说明
+- `code` / `name` / `industry`: Stock code / short name / industry
+- `total_score`: Composite score (max 100)
+- `industry_rank` / `industry_score`: Market-cap rank within industry / industry score
+- `roe_score` / `growth_score`: ROE dimension score / revenue-growth dimension score
+- `price_score` / `pe_score` / `pb_score`: Total price score / PE percentile score / PB percentile score
+- `pe_ttm` / `pb` / `pe_percentile` / `pb_percentile`: Current valuation and historical percentile
+- `roe_avg` / `roe_std` / `revenue_growth_avg`: Mean ROE / ROE standard deviation / mean revenue growth
+- `total_mv_yi`: Total market cap (100M CNY)
+- `data_years`: Number of years with valid data
+- `val_source` / `fin_source` / `note`: Data source and fallback notes
 
-## 免责声明
+## Disclaimer
 
-仅供学习研究，不构成投资建议。历史财务指标与估值分位不代表未来表现；任何筛选结果都必须经过你对行业格局与生意模式的独立研究二次确认。
+For learning and research only; not investment advice. Historical financial metrics and valuation percentiles do not guarantee future performance. Always validate screening results through your own understanding of industry structure and business models.

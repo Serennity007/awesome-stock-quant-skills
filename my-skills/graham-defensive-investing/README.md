@@ -1,52 +1,53 @@
-# 🛡️ A股格雷厄姆防御型七准则筛股器｜7道铁门护本金
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
+# 🛡️ A-Share Graham Defensive Screener | 7 Gates to Protect Your Capital
 
-作者：Serennity007 | License：MIT | 数据：akshare（东方财富 / 新浪财经公开接口）
 
-把本杰明·格雷厄姆的防御型选股框架搬到 A 股：用 7 道量化铁门（规模、流动比率、连续盈利、连续分红、盈利增长、PE<15、PB<1.5 或 PE×PB<22.5）批量初筛股票，自动标注数据窗口是 10 年还是降级为 5 年，一眼看清哪些标的符合"先求不亏"的保守标准。
+Author: Serennity007 | License: MIT | Data: akshare (East Money / Sina Finance public APIs)
 
-## 快速开始
+Bring Benjamin Graham's defensive stock-selection framework to the A-share market. This tool applies seven quantitative gates — size, current ratio, earnings stability, dividend record, earnings growth, PE < 15, and PB < 1.5 or PE × PB < 22.5 — to screen stocks mechanically. It automatically labels whether the data window is 10 years or downgraded to 5 years, so you can quickly see which names meet Graham's "first, do no harm" standard.
+
+## Quick start
 
 ```bash
 pip install akshare pandas
 
-# 沪深300成分股中筛选
+# Screen CSI 300 constituents
 python scripts/screen.py --pool hs300 --top 20 --out graham_result.csv
 
-# 小样本实测
+# Small-sample test
 python scripts/screen.py --codes 600519,000858,600036 --out graham_result.csv
 ```
 
-## 参数说明
+## Parameters
 
-- `--pool`: 股票池，目前支持 `hs300`
-- `--codes`: 逗号分隔的自定义股票代码，优先于 `--pool`
-- `--top`: 终端展示前 N 名（默认 20）
-- `--out`: CSV 输出路径（默认 `graham_result.csv`）
-- `--min-cap`: 最小总市值门槛，单位亿元（默认 200）
-- `--sleep`: 每只股票间隔秒数（默认 0.5，防限流）
+- `--pool`: Stock universe; currently supports `hs300`
+- `--codes`: Comma-separated custom stock codes; overrides `--pool`
+- `--top`: Number of top results to display (default 20)
+- `--out`: CSV output path (default `graham_result.csv`)
+- `--min-cap`: Minimum total market cap in CNY 100 million (default 200)
+- `--sleep`: Delay between stocks in seconds (default 0.5, for rate-limiting)
 
-## 7 道关卡
+## The 7 defensive gates
 
-| 关卡 | 标准 |
+| Gate | Criterion |
 |---|---|
-| 规模足够 | 总市值 ≥ 200 亿元（可调） |
-| 流动比率 | 最新年度 > 2 |
-| 连续盈利 | 窗口期内每年扣非每股收益 > 0 |
-| 连续分红 | 窗口期内每年都有现金分红 |
-| 盈利增长 | 窗口期末 EPS / 期初 EPS > 4/3 |
-| 低 PE | PE(静) < 15 |
-| 低 PB | PB < 1.5 或 PE × PB < 22.5 |
+| Adequate size | Total market cap ≥ CNY 20 billion (adjustable) |
+| Current ratio | Latest annual current ratio > 2 |
+| Earnings stability | Positive ex-nonrecurring EPS every year in the window |
+| Dividend record | Cash dividend paid every year in the window |
+| Earnings growth | End-of-window EPS / start-of-window EPS > 4/3 |
+| Low PE | PE (static) < 15 |
+| Low PB | PB < 1.5 or PE × PB < 22.5 |
 
-> 数据不足 10 年时自动降级为 5 年窗口并标注；不足 5 年则标记 `NA`。
+> If 10 years of data are unavailable, the script downgrades to a 5-year window and labels it; fewer than 5 years is marked `NA`.
 
-## 文件说明
+## Files
 
-- `SKILL.md` — 技能定义与详细使用说明
-- `scripts/screen.py` — 防御型七准则筛股脚本
-- `references/graham_principles.md` — 格雷厄姆核心原则：安全边际、市场先生、防御型 vs 进取型、烟蒂股风险
+- `SKILL.md` — Skill definition and detailed usage
+- `scripts/screen.py` — Graham defensive screener script
+- `references/graham_principles.md` — Graham core principles: margin of safety, Mr. Market, defensive vs. enterprising investing, cigar-butt risk
 
-## 免责声明
+## Disclaimer
 
-仅供学习研究，不构成投资建议。历史财务指标不代表未来表现，任何筛选结果都必须经过自己对生意与估值的理解二次确认。
+For learning and research only; not investment advice. Historical financial metrics do not guarantee future performance. Always verify screening results with your own understanding of the business and its valuation.

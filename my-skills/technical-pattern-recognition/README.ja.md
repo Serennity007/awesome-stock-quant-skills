@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # technical-pattern-recognition
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 A株テクニカルパターン認識 Skill（Claude Code / Agent Skills 形式）：akshare 新浪日足をもとに、移動平均線のパーフェクトオーダー/逆オーダー、MACD ゴールデン/デッドクロス、出来高を伴う N 日高値ブレイク、出来高減少の押し目を機械的に認識し、構造化されたシグナル表を出力して AI の解釈に供します。
 

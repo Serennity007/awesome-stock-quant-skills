@@ -1,50 +1,51 @@
-# 🔥 A股热点题材扫描器｜5秒锁定今日最强主线
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
+# 🔥 A-Share Hot Theme Scanner | Spot the Strongest Market Narrative in Seconds
 
-作者：Serennity007 | License：MIT | 数据：akshare（东方财富/同花顺公开接口）
 
-每天开盘先看这张表。内置存储/光模块/PCB/MLCC/商业航天/可控核聚变/固态电池/创新药/军工重组等当前10大热点词典，自动扫描题材涨幅、主力资金流向与领涨股，输出「题材 × 阶段涨幅 × 主力净流入 × 领涨股」结构化热度表，一眼看清A股资金正在往哪跑。
+Author: Serennity007 | License: MIT | Data: akshare (East Money / 10jqka public APIs)
 
-## 快速开始
+Start your trading day with this heatmap. Built around 10 current hot-theme dictionaries — storage, optical modules, PCB, MLCC, commercial aerospace, controlled nuclear fusion, solid-state batteries, innovative drugs, and military restructuring — it scans board gains, main-force capital flow, and leading stocks, then outputs a structured table of theme × gain × capital flow × leader, so you can see where A-share money is flowing at a glance.
+
+## Quick start
 
 ```bash
 pip install akshare pandas
 
-# 默认：近 5 日窗口，前 20 名，输出 CSV
+# Default: 5-day window, top 20, output CSV
 python scripts/hot_themes.py --days 5 --top 20 --out hot_themes.csv
 
-# 只看当日即时排行
+# Intraday ranking only
 python scripts/hot_themes.py --days 1 --top 15
 ```
 
-## 参数说明
+## Parameters
 
-- `--days`: 统计窗口，支持 1/3/5/10（默认 5），不足时取最接近的可用窗口
-- `--top`: 进入排行前 N 名才视为热门（默认 20）
-- `--out`: CSV 输出路径（默认 `hot_themes.csv`）
-- `--no-proxy`: 禁用系统代理（脚本默认已自动绕过系统代理，保留此参数用于兼容旧调用）
+- `--days`: Window length, supports 1/3/5/10 (default 5); falls back to the nearest available window
+- `--top`: Rank threshold to be considered hot (default 20)
+- `--out`: CSV output path (default `hot_themes.csv`)
+- `--no-proxy`: Disable system proxy (the script already bypasses system proxies by default; kept for backward compatibility)
 
-> 代理说明：脚本启动时会自动清除 `HTTP_PROXY` / `HTTPS_PROXY` 等环境变量，避免本地代理（如 `127.0.0.1:7890`）阻断东方财富/同花顺接口。优先尝试东方财富接口，失败自动降级同花顺。
+> Proxy note: on startup the script clears `HTTP_PROXY` / `HTTPS_PROXY` environment variables to avoid local proxies (e.g. `127.0.0.1:7890`) blocking East Money / 10jqka APIs. It tries East Money first and falls back to 10jqka if unavailable.
 
-## 输出字段
+## Output fields
 
-| 字段 | 说明 |
+| Field | Description |
 |---|---|
-| `题材` | 内置热点题材名 |
-| `匹配板块` | akshare 实际匹配到的概念板块名 |
-| `阶段涨幅%` | 所选时间窗口的板块涨跌幅 |
-| `主力净流入（亿元）` | 所选时间窗口的主力净流入 |
-| `领涨股` | 该题材在对应窗口的领涨股 |
-| `领涨股涨幅%` | 领涨股涨跌幅 |
-| `连续上榜天数` | 在 1/3/5/10 日排行中连续进入前 N 名的估算天数 |
+| `题材` | Built-in hot theme name |
+| `匹配板块` | Matched akshare concept board name |
+| `阶段涨幅%` | Theme change over the selected window |
+| `主力净流入（亿元）` | Main-force net inflow over the selected window |
+| `领涨股` | Leading stock in the window |
+| `领涨股涨幅%` | Leading-stock change |
+| `连续上榜天数` | Estimated consecutive days in the top N of 1/3/5/10-day rankings |
 
-## 配套文件
+## Files
 
-- `SKILL.md` — 技能定义与使用说明
-- `scripts/hot_themes.py` — 热点题材扫描脚本
-- `references/theme_glossary.md` — 当前热点题材词典（需定期更新时效性内容）
+- `SKILL.md` — Skill definition and usage
+- `scripts/hot_themes.py` — Hot-theme scanner script
+- `references/theme_glossary.md` — Current hot-theme glossary (time-sensitive, update regularly)
 
-## 免责声明
+## Disclaimer
 
-仅供学习研究，不构成投资建议。题材热度基于历史资金与价格统计，不代表未来走势；任何扫描结果都必须经过自己对生意与风险的理解二次确认。
+For study and research only — not investment advice. Theme heat is derived from historical capital-flow and price statistics, not future performance; always verify results against your own understanding of the business and risk appetite.

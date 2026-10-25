@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🌡️ A株サイクル温度計｜ハワード・マークス ペンデュラム定位
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007 | License：MIT | データ：akshare（乐咕乐股 / 中证指数 / 東方財富 公開API）
 

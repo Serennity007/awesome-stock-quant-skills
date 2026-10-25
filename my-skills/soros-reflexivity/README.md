@@ -1,37 +1,39 @@
-# 🌀 索罗斯反身性扫描器（A股）
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-> 价格不是现实的镜子，而是现实的一部分。
+# 🌀 Soros Reflexivity Scanner (A-Shares)
 
-本技能把乔治·索罗斯的**反身性理论**改造成 A 股量化扫描器：自动对比**价格动量**与**基本面增速**的背离、计算**成交拥挤度**、识别**趋势拐点信号**，并把每只股票打上反身性阶段标签。
+> Price is not a mirror of reality — it is part of reality itself.
 
-它不是“明天会涨吗”的预测器，而是帮你回答：**“现在市场正在自我强化，还是正在自我瓦解？”**
+This skill turns George Soros’s **theory of reflexivity** into a quant scanner for China A-shares. It compares **price momentum** against **fundamental growth**, measures **volume crowding**, and detects **trend inflection signals**, then labels each stock with its reflexivity stage.
 
-## 核心能力
+It does **not** predict tomorrow’s move. It helps you ask: *Is the market currently reinforcing itself, or is it beginning to self-destruct?*
 
-| 能力 | 说明 |
+## Core capabilities
+
+| Capability | Description |
 |---|---|
-| 价格-基本面背离扫描 | 涨幅大但盈利下滑 → 标注“脆弱泡沫候选”；跌幅大但盈利改善 → 标注“预期差候选” |
-| 成交拥挤度 | 当日换手率 / 20 日均换手率，>2 时提示拥挤 |
-| 趋势拐点信号 | MACD 金叉/死叉、RSI 超买/超卖、均线多头排列/空头排列 |
-| 反身性阶段标签 | 正反馈强化期、正反馈脆弱期、负反馈深化期、负反馈过度、均衡观察区 |
+| Price–fundamental divergence scan | Strong price + weakening earnings → “fragile bubble candidate”; weak price + improving earnings → “expectation-gap candidate” |
+| Volume crowding gauge | Current turnover divided by 20-day average turnover; warns when > 2 |
+| Inflection signals | MACD golden/dead cross, RSI overbought/oversold, bullish/bearish MA alignment |
+| Reflexivity stage labels | Reinforcing positive feedback, fragile positive feedback, deepening negative feedback, oversold negative feedback, equilibrium/watch zone |
 
-## 快速开始
+## Quick start
 
 ```bash
 pip install akshare pandas
 
-# 实测小样本
+# Small-sample test
 python scripts/reflexivity_scan.py --codes 600519,000858,600036 --out scan.csv
 
-# 沪深 300 全池扫描
+# Scan the CSI 300 universe
 python scripts/reflexivity_scan.py --pool hs300 --top 30 --out scan.csv
 ```
 
-## 配套文档
+## Companion docs
 
-- `references/soros_framework.md`：索罗斯反身性理论、繁荣-萧条序列、人类不确定性原则、认错纪律、宏观对冲思路。
-- `SKILL.md`：完整字段说明与使用流程。
+- `references/soros_framework.md`: Soros’s reflexivity framework, boom-bust sequence, human uncertainty principle, the discipline of admitting mistakes, and macro-hedge thinking.
+- `SKILL.md`: Full field reference and workflow.
 
-## 免责声明
+## Disclaimer
 
-本工具仅供学习研究，不构成投资建议。市场有风险，扫描结果仅为历史数据与机械规则的整理，不构成对未来走势的判断。
+This tool is for educational and research purposes only, not investment advice. Markets carry risk; the scanner is a mechanical summary of historical data and rules, not a forecast of future prices.

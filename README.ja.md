@@ -1,4 +1,4 @@
-[中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
 ![Stock Quant Skills](.github/quant-research.svg)
 
@@ -58,7 +58,7 @@ python scripts/run_demo.py
 | 機能 | 確認先 |
 |---|---|
 | 目的に応じて skill を選び、データ時点を確認 | [研究ワークフロー](my-skills/quant-research-workflow/SKILL.md) |
-| 財務項目別のスコアリング | [Buffett ルール](my-skills/buffett-value-investing/references/scoring_rules.md)、[全オリジナル一覧](README.md#原创技能) |
+| 財務項目別のスコアリング | [Buffett ルール](my-skills/buffett-value-investing/references/scoring_rules.md)、[全オリジナル一覧](README.zh-CN.md#原创技能) |
 | パーセンタイルによる合成と入力検証 | [ensemble.py](my-skills/master-ensemble/scripts/ensemble.py) |
 | 入力 SHA-256・パラメータ・実行時刻の保存 | [合成データ](examples/ensemble)、[動作テスト](tests/test_ensemble.py) |
 | 制約を明示した月次バックテスト | [回測方法論](my-skills/framework-backtest/references/backtest_methodology.md) |
@@ -121,7 +121,7 @@ Claude Code では `~/.claude/skills/` を使えます。第三者の複数 skil
 
 ## 一覧と証拠
 
-- [全オリジナル skill](README.md#原创技能)：価値、成長、防御、テーマ、配分、合成、回測。
+- [全オリジナル skill](README.zh-CN.md#原创技能)：価値、成長、防御、テーマ、配分、合成、回測。
 - [第三者ソース一覧](README.md#第三方收录)と[権利表記](docs/NOTICE.md)。
 - [外部リソース索引](docs/resource-index.md)：star 数は記載日の古い集計です。
 - [過去の実行記録](docs/historical-demos.md)：今回再検証した行情や運用成績ではありません。

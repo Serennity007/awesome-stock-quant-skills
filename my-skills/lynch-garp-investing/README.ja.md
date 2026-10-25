@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🚀 ピーター・リンチ GARP / テンバガー A株選別器｜リンチ流にスーパーで銘柄を選ぶ
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007 | License：MIT | データ：akshare（東方財富/同花順/騰訊公開API）
 

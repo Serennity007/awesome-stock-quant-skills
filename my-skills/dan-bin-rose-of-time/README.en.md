@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🌹 Dan Bin "Rose of Time"｜A 7-Dimension Great-Enterprise Screener for A-Shares
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 Author: Serennity007 | License: MIT | Data: akshare (East Money / CNINFO / Tencent public APIs)
 

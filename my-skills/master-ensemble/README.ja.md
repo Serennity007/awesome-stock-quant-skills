@@ -1,6 +1,7 @@
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+
 # 🤝 マスター合意スクリーナー｜クロスフレームワーク交差合成器
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
 
 作者：Serennity007 | ライセンス：MIT | 依存：pandas のみ（純ローカルCSV合成、ネットワーク呼び出しなし）
 

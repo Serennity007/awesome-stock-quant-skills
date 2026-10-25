@@ -1,58 +1,59 @@
-# 🥊 冯柳弱者体系｜跌出来的赔率：4 个指标逆向打捞 A 股“没人要”的标的
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
+# 🥊 Feng Liu Weak-Side Investing｜Buy When Nobody Wants It: A 4-Dimension Contrarian Screener for A-Shares
 
-作者：Serennity007 | License：MIT | 数据：akshare（东方财富/同花顺/新浪公开接口）
 
-> **假设自己是市场上最弱的信息接收者，赔率优先、逆向买入、集中但认错快。**
+Author: Serennity007 | License: MIT | Data: akshare (East Money / 10jqka / Sina public APIs)
 
-本技能把高毅资产冯柳的“弱者体系”搬到 A 股市场：不追热点、不拼消息，只看“跌透了但还没死”的标的。核心脚本 `scripts/screen.py` 按“跌幅、估值、基本面、关注度”四维打分，输出带“赔率 / 概率”标签的逆向观察清单。
+> **Assume you are the weakest information receiver in the market: odds first, buy against the crowd, concentrate—but admit mistakes fast.**
 
-## 文件清单
+This skill brings Feng Liu's "weak-side" contrarian framework to the A-share market. No chasing hot themes, no racing for faster information—just a systematic hunt for stocks that have fallen hard but are not dead. The core script `scripts/screen.py` scores candidates across four dimensions—drawdown, valuation, fundamentals, and attention—and labels each with an **odds / probability** framework.
 
-- `SKILL.md` — 技能定义、4 维打分逻辑与使用说明
-- `scripts/screen.py` — A 股弱者体系初筛脚本（CSV + 终端表格）
-- `references/feng_liu_framework.md` — 弱者体系核心思想：弱者假设、赔率优先、逆向买入、集中持仓、认错要快、价值陷阱辨析
+## Contents
 
-## 快速开始
+- `SKILL.md` — Skill definition, 4-dimension scoring logic, and usage
+- `scripts/screen.py` — A-share weak-side contrarian screener (CSV + terminal table)
+- `references/feng_liu_framework.md` — Core ideas of the weak-side system: weak-player assumption, odds-first thinking, contrarian buying, concentrated positions, fast mistake admission, and value-trap recognition
+
+## Quick Start
 
 ```bash
 pip install akshare pandas
 
-# 默认沪深300成分股作为股票池，输出前 20 名
+# Default pool: CSI 300 constituents, top 20 output
 python scripts/screen.py --pool hs300 --top 20 --out weak_side_result.csv
 
-# 自定义小股票池验证
+# Custom small pool for testing
 python scripts/screen.py --codes 600519,000858,600036 --out weak_side_result.csv
 ```
 
-## 参数说明
+## Parameters
 
-- `--pool`: 股票池，目前支持 `hs300`。
-- `--codes`: 逗号分隔的自定义代码，优先级高于 `--pool`。
-- `--top`: 终端展示前 N 名（默认 20）。
-- `--out`: CSV 输出路径（默认 `weak_side_result.csv`）。
+- `--pool`: Stock universe; currently supports `hs300`.
+- `--codes`: Comma-separated custom codes; takes precedence over `--pool`.
+- `--top`: Number of top results to display (default 20).
+- `--out`: CSV output path (default `weak_side_result.csv`).
 
-## 4 维逆向雷达
+## 4-Dimension Contrarian Radar
 
-| 维度 | 指标 | 说明 |
+| Dimension | Metric | Notes |
 |---|---|---|
-| 赔率（跌幅） | 距 52 周高点回撤 | 回撤 > 40% 视为高赔率起点 |
-| 赔率（估值） | PE/PB 近 3 年百分位 | 百分位 < 20% 视为历史低位 |
-| 概率（基本面） | 盈利为正、营收/利润未崩、ROE/负债可控 | 排除基本面永久恶化的价值陷阱 |
-| 低关注度 | 换手率 | 越低越说明市场已遗忘或厌恶 |
+| Odds (drawdown) | Drawdown from 52-week high | > 40% drawdown is treated as a high-odds starting point |
+| Odds (valuation) | PE/PB 3-year percentile | < 20% percentile is treated as historically cheap |
+| Probability (fundamentals) | Positive profit, revenue/profit not collapsing, ROE/debt under control | Excludes permanent-fundamental-deterioration value traps |
+| Low attention | Turnover (%) | Lower turnover means the market has forgotten or hates it |
 
-## 输出字段
+## Output Fields
 
-- `code` / `name` / `industry`：代码 / 简称 / 行业
-- `close` / `high_52w` / `drawdown_pct`：现价 / 52 周高点 / 回撤幅度
-- `pe_ttm` / `pb` / `pe_percentile_3y` / `pb_percentile_3y`：估值与近 3 年百分位
-- `turnover_pct`：换手率（%）
-- `latest_revenue` / `latest_profit` / `revenue_yoy` / `profit_yoy`：最新报告期营收/利润（亿元）及同比增速
-- `weak_score` / `odds_label` / `probability_label`：综合得分 / 赔率标签 / 概率标签
-- `framework_note`：赔率/概率来源说明
-- `weak_pass`：是否通过硬门槛
+- `code` / `name` / `industry`: Code / name / industry
+- `close` / `high_52w` / `drawdown_pct`: Current price / 52-week high / drawdown
+- `pe_ttm` / `pb` / `pe_percentile_3y` / `pb_percentile_3y`: Valuation and 3-year percentile
+- `turnover_pct`: Latest turnover (%)
+- `latest_revenue` / `latest_profit` / `revenue_yoy` / `profit_yoy`: Latest report revenue/profit (100M CNY) and YoY growth
+- `weak_score` / `odds_label` / `probability_label`: Composite score / odds label / probability label
+- `framework_note`: Explanation of odds and probability sources
+- `weak_pass`: Whether the hard threshold is met
 
-## 免责声明
+## Disclaimer
 
-仅供学习研究，不构成投资建议。历史财务指标不代表未来表现；任何筛选结果都必须经过你对生意的理解（能力圈）二次确认。逆向投资面临价值陷阱、流动性、行业长期衰退等风险，请独立判断。
+For learning and research only; not investment advice. Historical financial metrics do not guarantee future performance. Always validate screening results through your own understanding of the business (circle of competence). Contrarian investing carries risks such as value traps, liquidity traps, and long-term industry decline; please exercise independent judgment.

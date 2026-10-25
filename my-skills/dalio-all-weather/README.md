@@ -1,62 +1,64 @@
-# 🌧️ 全天候资产配置：A 股版达利欧参考策略
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-> 经济只有 4 种天气：增长↑/↓ × 通胀↑/↓。本脚本用 A 股常见资产代理四类经济环境，自动输出风险平价风格的参考权重与回测摘要。
+# 🌧️ All-Weather Allocator: A Dalio-Style Reference for A-Shares
+
+> The economy has only four weathers: growth ↑/↓ × inflation ↑/↓. This script uses common A-share proxies for the four quadrants and outputs risk-parity-style reference weights plus a backtest summary.
 
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue)](https://www.python.org/)
 [![akshare](https://img.shields.io/badge/akshare-1.18.96-green)](https://www.akshare.xyz/)
 
 ---
 
-## 快速开始
+## Quick Start
 
 ```bash
 pip install akshare==1.18.96 pandas
 
-# 默认：全天候四类资产（股票/债券/黄金/商品）
+# Default: all-weather four-asset pool (stocks / bonds / gold / commodities)
 python scripts/allocation.py --lookback 252 --out allocation.csv
 
-# 小样本测试：只跑几只股票
+# Small sample test with a few stocks
 python scripts/allocation.py --codes 600519,000858,600036 --lookback 60 --out test_alloc.csv
 ```
 
 ---
 
-## 默认资产池
+## Default Asset Pool
 
-| 资产类别 | 代理标的 | 说明 |
+| Asset Class | Proxy | Notes |
 |---|---|---|
-| 股票 | 沪深300 `000300`、中证500 `000905` | A 股宽基指数 |
-| 债券 | 国债ETF `511010` | 利率下行环境受益 |
-| 黄金 | 黄金ETF `518880` | 通胀与避险 |
-| 商品 | 中证商品期货指数 | 通胀环境受益 |
+| Stocks | CSI 300 `000300`, CSI 500 `000905` | Broad A-share indices |
+| Bonds | Treasury ETF `511010` | Benefits from falling growth / inflation |
+| Gold | Gold ETF `518880` | Inflation hedge & safe haven |
+| Commodities | CSI Commodity Futures Index | Inflation beneficiary |
 
 ---
 
-## 输出示例
+## Sample Output
 
-脚本会在终端打印：
+The script prints to the terminal:
 
-- 各资产近 1 年年化收益、年化波动、夏普
-- 资产间相关性矩阵
-- 风险平价风格权重（资产权重 + 大类权重：股票/债券/黄金/商品）
-- 组合回测摘要：年化收益、最大回撤、夏普
+- 1-year annualized return, volatility, and Sharpe for each asset
+- Asset correlation matrix
+- Risk-parity-style weights (per-asset weights + aggregated stock/bond/gold/commodity weights)
+- Portfolio backtest summary: CAGR, max drawdown, Sharpe ratio
 
-同时写入 `allocation.csv`（默认）或指定路径，编码为 `utf-8-sig`，方便 Excel 直接打开。
-
----
-
-## 核心逻辑
-
-1. 取各资产日线收盘价，对齐交易日。
-2. 计算日收益率与年化波动率。
-3. 按**逆波动率**原则分配权重：波动越低，权重越高。
-4. 同类别资产权重相加，得到股票/债券/黄金/商品四大类权重。
-5. 用权重合成组合净值，计算年化收益、最大回撤、夏普。
+It also writes the result to `allocation.csv` (or your `--out` path) in `utf-8-sig` encoding for easy Excel opening.
 
 ---
 
-## 风险提示
+## Core Logic
 
-- 本脚本是**简化示意**，不是达利欧或桥水基金官方策略。
-- 未考虑交易成本、滑点、费率、税务、分红再投资、杠杆与汇率等因素。
-- 历史表现不代表未来收益，所有结果仅供学习研究，**不构成投资建议**。
+1. Fetch daily close prices for each asset and align trading dates.
+2. Compute daily returns and annualized volatility.
+3. Allocate weights using **inverse volatility**: lower volatility gets higher weight.
+4. Sum weights within each asset class to get stock / bond / gold / commodity class weights.
+5. Build a weighted portfolio, then compute CAGR, max drawdown, and Sharpe ratio.
+
+---
+
+## Risk Notice
+
+- This script is a **simplified illustration**, not Ray Dalio's or Bridgewater's live strategy.
+- It does **not** account for transaction costs, slippage, fees, taxes, dividend reinvestment, leverage, or FX rates.
+- Past performance does not guarantee future results. All outputs are for educational and research purposes only and **do not constitute investment advice**.

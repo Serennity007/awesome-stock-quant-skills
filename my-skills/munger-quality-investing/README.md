@@ -1,60 +1,61 @@
-# 🧠 芒格优质企业投资法｜5 维雷达锁定 A 股“伟大公司”
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
+# 🧠 Munger-Style Quality Investing｜A 5-Dimensional Radar for Great A-Share Companies
 
-作者：Serennity007 | License：MIT | 数据：akshare（东方财富/新浪公开接口）
 
-> **以公允价格买伟大公司，胜过以便宜价格买普通公司。**
+Author: Serennity007 | License: MIT | Data: akshare (East Money / Sina public APIs)
 
-本技能把查理·芒格的质量投资框架搬到 A 股市场：不追热点、不猜K线，只用 5 把财务尺子连续扫描企业质量，找出具备“伟大公司”特征的候选标的，再交给定性分析（护城河、管理层、能力圈）做最终判断。
+> **It is better to buy a great company at a fair price than a fair company at a great price.**
 
-## 文件清单
+This skill brings Charlie Munger's quality-investing framework to the A-share market. No hot-theme chasing, no chart guessing—just five financial yardsticks applied consistently to identify companies with the characteristics of "great businesses," which you then validate with qualitative analysis (moat, management, circle of competence).
 
-- `SKILL.md` — 技能定义、5 维打分逻辑与使用说明
-- `scripts/screen.py` — A 股质量初筛脚本（CSV + 终端表格）
-- `references/munger_checklist.md` — 芒格多元思维模型、反向思考、能力圈、人类误判心理学 25 倾向、投资检查清单
+## Contents
 
-## 快速开始
+- `SKILL.md` — Skill definition, 5-dimensional scoring logic, and usage
+- `scripts/screen.py` — A-share quality screener (CSV + terminal table)
+- `references/munger_checklist.md` — Munger's latticework of mental models, inversion, circle of competence, 25 cognitive biases, and investment checklist
+
+## Quick Start
 
 ```bash
 pip install akshare pandas
 
-# 默认沪深300成分股作为股票池，输出前 20 名
+# Default pool: CSI 300 constituents, top 20 output
 python scripts/screen.py --pool hs300 --top 20 --out result.csv
 
-# 自定义小股票池验证
+# Custom small pool for testing
 python scripts/screen.py --codes 600519,000858,600036 --out result.csv
 ```
 
-## 参数说明
+## Parameters
 
-- `--pool`: 股票池，目前支持 `hs300`。
-- `--codes`: 逗号分隔的自定义代码，优先级高于 `--pool`。
-- `--top`: 终端展示前 N 名（默认 20）。
-- `--out`: CSV 输出路径（默认 `munger_screen_result.csv`）。
+- `--pool`: Stock universe; currently supports `hs300`.
+- `--codes`: Comma-separated custom codes; takes precedence over `--pool`.
+- `--top`: Number of top results to display (default 20).
+- `--out`: CSV output path (default `munger_screen_result.csv`).
 
-## 5 维打分雷达
+## 5-Dimensional Quality Radar
 
-| 维度 | 指标 | 说明 |
+| Dimension | Metric | Notes |
 |---|---|---|
-| 资本回报 | 连续 5 年 ROIC 风格指标 | 以 ROE 代理（akshare 公开接口未直接提供 ROIC） |
-| 毛利率 | 5 年均值与稳定性 | 均值 >40%、波动 <3pp 为最佳 |
-| 低负债 | 最新资产负债率 | <30% 得满分；金融企业需单独判断 |
-| 盈利质量 | 经营现金流 / 净利润比 | 均值 >1.0 说明利润有现金支撑 |
-| 少股本稀释 | 近 5 年总股本增长 | <5% 得满分；警惕频繁定增摊薄 |
+| Capital returns | 5-year ROIC-style indicator | Proxied by ROE because akshare does not expose ROIC directly |
+| Gross margin | 5-year mean and stability | Best: mean >40% and swing <3 percentage points |
+| Low leverage | Latest debt-to-asset ratio | Full points if <30%; financials need separate judgment |
+| Earnings quality | Operating cash flow / net profit ratio | Mean >1.0 means profits are backed by cash |
+| Low dilution | 5-year total share growth | Full points if <5%; beware frequent equity raises |
 
-## 输出字段
+## Output Fields
 
-- `code`：股票代码
-- `total`：综合得分（满分 100）
-- `roic_score / roic_annual`：资本回报得分 / 近 5 年 ROE 序列
-- `gross_score / gross_mean / gross_annual`：毛利率得分 / 均值 / 序列
-- `debt_score / debt_latest`：负债得分 / 最新负债率
-- `quality_score / quality_mean`：盈利质量得分 / 现金流净利比均值
-- `dilution_score / shares_growth_pct`：股本稀释得分 / 股本增长率
-- `data_years`：有效年度数
-- `source / note`：数据来源与降级说明
+- `code`: Stock code
+- `total`: Composite score (max 100)
+- `roic_score / roic_annual`: Capital-return score / 5-year ROE series
+- `gross_score / gross_mean / gross_annual`: Gross-margin score / mean / series
+- `debt_score / debt_latest`: Leverage score / latest debt ratio
+- `quality_score / quality_mean`: Earnings-quality score / mean OCF-to-profit ratio
+- `dilution_score / shares_growth_pct`: Dilution score / share-count growth
+- `data_years`: Number of years with valid data
+- `source / note`: Data source and fallback notes
 
-## 免责声明
+## Disclaimer
 
-仅供学习研究，不构成投资建议。历史财务指标不代表未来表现；任何筛选结果都必须经过你对生意的理解（能力圈）二次确认。
+For learning and research only; not investment advice. Historical financial metrics do not guarantee future performance. Always validate screening results through your own understanding of the business (circle of competence).

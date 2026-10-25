@@ -1,31 +1,32 @@
-# 🤝 大师共识筛选器｜跨框架交集合成器
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-**[中文](README.md) | [English](README.en.md) | [日本語](README.ja.md)**
+# 🤝 Master-Consensus Screener｜Cross-Framework Intersection Merger
 
-作者：Serennity007 | 许可证：MIT | 依赖：仅 pandas（纯本地 CSV 合成，无网络调用）
 
-> **"多条互相独立的思路同时指向同一标的，才是给概率加权。"**
+Author: Serennity007 | License: MIT | Dependency: pandas only (pure local CSV merging, no network calls)
 
-本技能把仓库内任意多个大师 skill 的打分结果 CSV（各 `screen.py` 输出，含 `code`/`total` 列）合成为跨框架共识名单：框架内百分位归一 → 共识分（各框架百分位均值）+ 顶级命中数 + 覆盖框架数，输出交集标的。
+> **"When several methodologies point at the same stock at the same time, you are weighting probability."**
 
-## 目录结构
+This skill merges scoring-result CSVs from any of the repo's master skills (each `screen.py` output with `code`/`total` columns) into a cross-framework consensus list: percentile-normalize within each framework → consensus score (mean percentile) + top-hit count + framework coverage, then output the intersection.
 
-- `SKILL.md` — 技能定义、共识逻辑与使用方法
-- `scripts/ensemble.py` — 共识合成器（秒级完成，无网络调用）
-- `references/ensemble_methodology.md` — 方法论：百分位归一的理由、框架冲突的解读、共识的局限
-- `consensus_hs300_demo.csv` — 但斌+李录+欧奈尔三框架全量沪深300共识 demo
+## Contents
 
-## 快速开始
+- `SKILL.md` — Skill definition, consensus logic, and usage
+- `scripts/ensemble.py` — The consensus merger (finishes in seconds, no network calls)
+- `references/ensemble_methodology.md` — Methodology: why percentile normalization, how to read framework conflicts, limits of consensus
+- `consensus_hs300_demo.csv` — Demo: 3-framework (Dan Bin + Li Lu + O'Neil) full CSI-300 consensus
+
+## Quick Start
 
 ```bash
 pip install pandas
 
-# 第一步：各大师框架全量跑测（同一股票池，如 --pool hs300）
+# Step 1: run full-pool screens for each master framework (same universe, e.g. --pool hs300)
 python ../dan-bin-rose-of-time/scripts/screen.py --pool hs300 --out ../dan-bin-rose-of-time/danbin_hs300_result.csv
 python ../li-lu-value-compounding/scripts/screen.py --pool hs300 --out ../li-lu-value-compounding/lilu_hs300_result.csv
 python ../oneil-canslim/scripts/screen.py --pool hs300 --out ../oneil-canslim/canslim_hs300_result.csv
 
-# 第二步：合成共识
+# Step 2: merge into a consensus list
 python scripts/ensemble.py \
     --csvs ../dan-bin-rose-of-time/danbin_hs300_result.csv \
            ../li-lu-value-compounding/lilu_hs300_result.csv \
@@ -33,27 +34,27 @@ python scripts/ensemble.py \
     --min-frameworks 2 --out consensus.csv
 ```
 
-## 参数说明
+## Parameters
 
-- `--csvs`: 至少 2 个大师结果 CSV，文件名去掉 `_result` 等后缀即框架名。
-- `--top-pct`: 单框架"顶级命中"分位线（默认前 10%）。
-- `--min-frameworks`: 至少被几个框架覆盖才输出（默认 2）。
-- `--out`: 共识 CSV 输出路径（默认 `consensus.csv`）。
+- `--csvs`: At least 2 result CSVs; the filename (minus `_result`-style suffixes) becomes the framework name.
+- `--top-pct`: "Top hit" percentile line within each framework (default top 10%).
+- `--min-frameworks`: Minimum frameworks covering a stock for it to be output (default 2).
+- `--out`: Consensus CSV output path (default `consensus.csv`).
 
-## 输出字段
+## Output Fields
 
-- `code` / `name` / `industry`：代码 / 简称 / 行业（元信息取自首个含该列的框架）
-- `consensus_score`：共识分（各框架百分位均值，0-100）
-- `top_hits`：处于各框架前 10% 分位的框架数
-- `frameworks`：覆盖框架数
-- `<框架>_pct` / `<框架>_raw`：各框架内百分位与原始分
+- `code` / `name` / `industry`: Code / name / industry (meta from the first CSV containing the column)
+- `consensus_score`: Mean percentile across covering frameworks (0-100)
+- `top_hits`: Number of frameworks where the stock sits in the top 10%
+- `frameworks`: Number of covering frameworks
+- `<framework>_pct` / `<framework>_raw`: Within-framework percentile and raw score
 
-## 免责声明
+## Disclaimer
 
-仅供学习研究，不构成投资建议。共识分不校验"共同的数据错误"，框架间也非完全独立，历史一致不代表未来一致。
+For learning and research only; not investment advice. A consensus score does not check for shared data errors, frameworks are not fully independent, and historical agreement does not imply future agreement.
 
-## 输入校验与追溯（2026-10-24）
+## Validation and provenance (2026-10-24)
 
-默认拒绝股票池不一致；缺列、无效代码或分数、重复代码、框架重名均报错。需要比较不同池时显式添加 `--allow-partial-pools`。输出伴随 `.meta.json`，记录输入 SHA-256 与参数；`--as-of` 为用户声明日期，未提供则留空。详细定义以 [SKILL.md](SKILL.md) 为准。
+Inputs must have matching stock pools by default. Missing columns, invalid codes/scores, duplicate codes and colliding framework names are errors. Use `--allow-partial-pools` explicitly for different universes. A `.meta.json` sidecar records input SHA-256 hashes and parameters. `--as-of` is user-declared, unverified and null when omitted. See [SKILL.md](SKILL.md) for the current contract.
 
-输入带 `score_status` 列时，仅接受全部为 `complete` 的评分；不完整财务数据先补数，不能作为完整共识票。
+When inputs include `score_status`, all rows must be `complete`; partial financial scores are rejected instead of treated as complete consensus votes.
