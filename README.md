@@ -31,9 +31,24 @@ python scripts/run_demo.py
 
 打开终端提示的 `output/demo/run-…/REPORT.md`。每次运行创建新目录，不覆盖已有产物；缺依赖会给出安装命令，计算失败会写入失败状态并非零退出。**示例使用合成数据，只核对程序行为。** [完整上手说明](docs/quickstart.md)。
 
-## 我的黄金跨资产研究方法
+## 黄金、原油、欧线与大 A 股指：独立 Skill
 
-新增 **[gold-cross-asset-research](my-skills/gold-cross-asset-research/SKILL.md)**：用时间窗口、H4 主结构、H1/M30 触发、MA/MACD 与关键位收回组织黄金研究，并分别验证白银、原油和集运欧线 EC 的传导。
+跨市场研究已拆成四个可单独使用的仓库，每个自带方法、数据规范、离线脚本、模拟示例和测试。
+
+**[统一导航：market-research-skills](https://github.com/Serennity007/market-research-skills)**
+
+| 研究对象 | 独立仓库 | 重点 |
+|---|---|---|
+| 黄金 | [gold-research-skill](https://github.com/Serennity007/gold-research-skill) | 利率美元、多周期结构、关键位确认与失效 |
+| 原油 | [crude-oil-research-skill](https://github.com/Serennity007/crude-oil-research-skill) | 供需与运输冲击、跨月曲线、价差与时效 |
+| 欧线 EC | [ec-shipping-research-skill](https://github.com/Serennity007/ec-shipping-research-skill) | 有效运力、运价传导、按公布时点过滤的 SCFIS 对比 |
+| 大 A 股指 | [a-share-index-research-skill](https://github.com/Serennity007/a-share-index-research-skill) | 指数结构、市场宽度、大小盘风格与成交集中度 |
+
+新研究优先使用对应独立仓库；各项目无需安装本合集，示例均标注为模拟数据。本合集仍以个股选股与量化研究为主要入口。
+
+## 合集内的黄金研究版本
+
+本仓库保留 **[gold-cross-asset-research](my-skills/gold-cross-asset-research/SKILL.md)**：用时间窗口、H4 主结构、H1/M30 触发、MA/MACD 与关键位收回组织黄金研究，并分别验证白银、原油和集运欧线 EC 的传导。原有链接和计算示例继续可用。
 
 - 分开记录个人观点、数据事实和可执行触发，允许金油方向未知，不用既有偏空观点覆盖反证。
 - 保存“近期偏空金银/偏多原油”与“2026 年 3 月重点看多 EC、金油方向不确定”的分时段个人回顾，未补成已验证的收益战绩。

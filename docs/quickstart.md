@@ -1,8 +1,10 @@
 # 第一次使用 / First run
 
-默认分支包含 30 个原创 Skill。先运行两个内置合成场景，检查安装和计算链路，再按目标安装 Skill 或接入市场数据。
+默认分支包含 31 个原创 Skill。先运行两个内置合成场景，检查安装和计算链路，再按目标安装 Skill 或接入市场数据。
 
-The default branch includes all 30 original Skills. Start with the bundled synthetic examples, then select the Skills and market-data dependencies needed for your own research.
+The default branch includes all 31 original Skills. Start with the bundled synthetic examples, then select the Skills and market-data dependencies needed for your own research.
+
+研究黄金、原油、欧线 EC 或大 A 股指时，可直接使用 **[四个独立 Skill 的导航](https://github.com/Serennity007/market-research-skills)**。每个项目自带数据约定、离线计算和模拟研究记录，不依赖本合集的安装环境；本页以下演示面向个股共识与回测核算。
 
 ## 1. 准备环境 / Setup
 
