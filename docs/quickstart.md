@@ -4,7 +4,7 @@
 
 The default branch includes all 31 original Skills. Start with the bundled synthetic examples, then select the Skills and market-data dependencies needed for your own research.
 
-研究黄金、原油、欧线 EC 或大 A 股指时，可以看 **[涛涛的期货研究](https://github.com/Serennity007/taotao-futures-research)**。里面按品种列了输入文件、运行命令和结果解读，可独立运行。本页以下演示面向个股共识与回测核算。
+研究期货时，可以看 **[涛涛的期货研究](https://github.com/Serennity007/taotao-futures-research)**。总 Skill 按11个板块比较固定合约，提供产业数据和多周期报告，附模拟输入、命令与手算过程，可独立运行。本页以下演示面向个股共识与回测核算。
 
 ## 1. 准备环境 / Setup
 
