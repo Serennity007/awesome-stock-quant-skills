@@ -35,7 +35,7 @@ python scripts/run_demo.py
 
 跨市场研究已拆成四个可单独使用的仓库，每个自带方法、数据规范、离线脚本、模拟示例和测试。
 
-**[统一导航：market-research-skills](https://github.com/Serennity007/market-research-skills)**
+**[涛涛的期货研究：四个仓库的实操与导航](https://github.com/Serennity007/taotao-futures-research)**
 
 | 研究对象 | 独立仓库 | 重点 |
 |---|---|---|
