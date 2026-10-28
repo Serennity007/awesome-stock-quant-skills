@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "model": "equal-budget-round-lot-buy-and-hold-v1",
+  "created_at_utc": "2026-10-28T06:40:01.744226+00:00",
+  "engine_sha256": "fde71c7b8924d97f45fa966d20fef9139b84f788ece5cc068d8855071c7ac5cc",
+  "signal_date": "2026-10-28",
+  "data_kind": "market_snapshot",
+  "timing": "created_on_signal_date",
+  "state": "watchlist_pending_execution",
+  "initial_cash": 1000000.0,
+  "cost_bps": 10.0,
+  "lot_size": 100,
+  "selection_rule": "score_status=complete AND decision=review_moat AND total>=70; score descending, code ascending",
+  "top": 3,
+  "universe_count": 20,
+  "complete_count": 14,
+  "partial_count": 6,
+  "eligible_count": 7,
+  "candidates": [
+    {
+      "code": "600519",
+      "total": 100.0,
+      "roe_score": "30",
+      "roe_annual": "27.7,31.8,34.6,37.0,33.6",
+      "gross_score": "20",
+      "gross_mean": "91.7",
+      "debt_score": "15",
+      "debt_latest": "16.4",
+      "cashflow_score": "20",
+      "cashflow_pos_years": "5",
+      "valuation_score": "15",
+      "pe_pct": "0.26",
+      "pb_pct": "0.11",
+      "data_years": "5",
+      "gross_years": "5",
+      "cashflow_data_years": "5",
+      "score_status": "complete",
+      "decision": "review_moat",
+      "data_issues": "",
+      "financial_periods": "2021-12-31,2022-12-31,2023-12-31,2024-12-31,2025-12-31",
+      "valuation_date": "2026-10-27",
+      "valuation_history_start": "2021-10-28",
+      "valuation_observations": "1211"
+    },
+    {
+      "code": "002415",
+      "total": 93.0,
+      "roe_score": "27",
+      "roe_annual": "26.5,18.8,18.5,14.8,17.0",
+      "gross_score": "20",
+      "gross_mean": "44.1",
+      "debt_score": "15",
+      "debt_latest": "33.9",
+      "cashflow_score": "20",
+      "cashflow_pos_years": "5",
+      "valuation_score": "11",
+      "pe_pct": "0.05",
+      "pb_pct": "0.38",
+      "data_years": "5",
+      "gross_years": "5",
+      "cashflow_data_years": "5",
+      "score_status": "complete",
+      "decision": "review_moat",
+      "data_issues": "",
+      "financial_periods": "2021-12-31,2022-12-31,2023-12-31,2024-12-31,2025-12-31",
+      "valuation_date": "2026-10-27",
+      "valuation_history_start": "2021-10-28",
+      "valuation_observations": "1211"
+    },
+    {
+      "code": "603288",
+      "total": 91.0,
+      "roe_score": "30",
+      "roe_annual": "28.5,23.5,19.7,20.5,17.0",
+      "gross_score": "11",
+      "gross_mean": "37.3",
+      "debt_score": "15",
+      "debt_latest": "19.8",
+      "cashflow_score": "20",
+      "cashflow_pos_years": "5",
+      "valuation_score": "15",
+      "pe_pct": "0.05",
+      "pb_pct": "0.08",
+      "data_years": "5",
+      "gross_years": "5",
+      "cashflow_data_years": "5",
+      "score_status": "complete",
+      "decision": "review_moat",
+      "data_issues": "",
+      "financial_periods": "2021-12-31,2022-12-31,2023-12-31,2024-12-31,2025-12-31",
+      "valuation_date": "2026-10-27",
+      "valuation_history_start": "2021-10-28",
+      "valuation_observations": "1211"
+    }
+  ],
+  "excluded": [
+    {
+      "code": "601888",
+      "score_status": "complete",
+      "decision": "review_weakness",
+      "data_issues": ""
+    },
+    {
+      "code": "600900",
+      "score_status": "complete",
+      "decision": "review_weakness",
+      "data_issues": ""
+    },
+    {
+      "code": "000651",
+      "score_status": "complete",
+      "decision": "review_weakness",
+      "data_issues": ""
+    },
+    {
+      "code": "000333",
+      "score_status": "complete",
+      "decision": "review_weakness",
+      "data_issues": ""
+    },
+    {
+      "code": "601899",
+      "score_status": "complete",
+      "decision": "review_weakness",
+      "data_issues": ""
+    },
+    {
+      "code": "002594",
+      "score_status": "complete",
+      "decision": "review_weakness",
+      "data_issues": ""
+    },
+    {
+      "code": "600585",
+      "score_status": "complete",
+      "decision": "below_threshold",
+      "data_issues": ""
+    },
+    {
+      "code": "601012",
+      "score_status": "partial",
+      "decision": "needs_data",
+      "data_issues": "valuation_incomplete"
+    },
+    {
+      "code": "601318",
+      "score_status": "partial",
+      "decision": "needs_data",
+      "data_issues": "roe_history_incomplete_or_nonconsecutive;gross_history_incomplete_or_not_applicable"
+    },
+    {
+      "code": "600036",
+      "score_status": "partial",
+      "decision": "needs_data",
+      "data_issues": "roe_history_incomplete_or_nonconsecutive;gross_history_incomplete_or_not_applicable"
+    },
+    {
+      "code": "600030",
+      "score_status": "partial",
+      "decision": "needs_data",
+      "data_issues": "gross_history_incomplete_or_not_applicable"
+    },
+    {
+      "code": "000001",
+      "score_status": "partial",
+      "decision": "needs_data",
+      "data_issues": "roe_history_incomplete_or_nonconsecutive;gross_history_incomplete_or_not_applicable"
+    },
+    {
+      "code": "601166",
+      "score_status": "partial",
+      "decision": "needs_data",
+      "data_issues": "roe_history_incomplete_or_nonconsecutive;gross_history_incomplete_or_not_applicable"
+    }
+  ],
+  "source_file": "2026-10-28.csv",
+  "source_sha256": "275b21ce6516cc343d2e9f540a5f748a12a025495db58ed8d0fe643c020358eb",
+  "execution_assumption": "Buy at the first common imported closing-price observation strictly AFTER signal_date; fixed equal budgets, round lots, no rebalancing or forced final sale",
+  "benchmark": "BENCHMARK rows in imported prices; untraded normalized price reference",
+  "limitations": [
+    "paper account, not broker trades or personal invested capital",
+    "imported data not independently verified; local timestamps/hashes are not notarized",
+    "closing-price execution assumption; no suspension, limit-price, spread or market-impact model",
+    "no dividend/corporate-action adjustment; provide consistently defined prices",
+    "review-observation drawdown is not a full daily drawdown"
+  ]
+}
