@@ -6,6 +6,8 @@
 
 `awesome-stock-quant-skills`
 
+[All projects by task](https://github.com/Serennity007/repo-catalog) · [Independent futures Skills](https://github.com/Serennity007/repo-catalog/blob/main/docs/catalog.md#markets)
+
 [![GitHub Stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square&color=00d4ff)](https://github.com/Serennity007/awesome-stock-quant-skills/stargazers) [![GitHub Forks](https://img.shields.io/github/forks/Serennity007/awesome-stock-quant-skills?style=flat-square&color=8b5cf6)](https://github.com/Serennity007/awesome-stock-quant-skills/forks) [![Original code: MIT](https://img.shields.io/badge/original_code-MIT-22c55e?style=flat-square)](LICENSE)
 
 Investment research implemented as Agent Skills and Python scripts: financial screening, factor ranking, multi-framework consensus and backtesting with transaction costs. Covers A-share research and US hot-stock tracking.
@@ -133,7 +135,7 @@ Example: “Use quant-research-workflow to screen these companies for financial 
 ## Browse the collection
 
 - [Full original-skill table](README.zh-CN.md#原创技能): value, growth, defensive, themes, allocation, consensus and backtesting.
-- [Third-party sources](README.md#第三方收录), each with its own license and SOURCE.md.
+- [Third-party sources](README.zh-CN.md#第三方收录), each with its own license and SOURCE.md.
 - [External resource index](docs/resource-index.md): legacy star counts are explicitly dated, not live rankings.
 - [Historical demo records](docs/historical-demos.md): prior maintainer observations, not revalidated market data or investment performance.
 

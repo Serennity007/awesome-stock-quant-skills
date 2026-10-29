@@ -6,6 +6,8 @@
 
 `awesome-stock-quant-skills`
 
+[按用途浏览全部项目](https://github.com/Serennity007/repo-catalog/blob/main/README.zh-CN.md) · [独立期货研究 Skills](https://github.com/Serennity007/repo-catalog/blob/main/docs/catalog.md#markets)
+
 [![GitHub Stars](https://img.shields.io/github/stars/Serennity007/awesome-stock-quant-skills?style=flat-square&color=00d4ff)](https://github.com/Serennity007/awesome-stock-quant-skills/stargazers) [![GitHub Forks](https://img.shields.io/github/forks/Serennity007/awesome-stock-quant-skills?style=flat-square&color=8b5cf6)](https://github.com/Serennity007/awesome-stock-quant-skills/forks) [![Original code: MIT](https://img.shields.io/badge/original_code-MIT-22c55e?style=flat-square)](LICENSE)
 
 将价值、成长、动量、宏观周期与资产配置方法实现为 Agent Skills 和 Python 脚本，支持财务筛选、因子打分、多框架共识与含交易成本的回测。面向 A 股研究，并提供美股热门股追踪。
