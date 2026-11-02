@@ -1,4 +1,4 @@
-# 每日财务筛选报告 / Daily screen · 2026-11-01
+# 每日财务筛选报告 / Daily screen · 2026-11-02
 
 数据源：AKShare（新浪财务、东财估值）。规则分用于研究和人工复核，不是收益预测或买入指令。
 
@@ -41,6 +41,6 @@
 可用 `scripts/paper_journal.py start` 冻结本次输入和规则，后续导入信号日之后的价格追加模拟复盘。
 筛选成功不等于模拟成交；没有后续价格时不生成收益。
 
-[原始 CSV](2026-11-01.csv) · [数据元信息](2026-11-01.csv.meta.json) · [模拟记录说明](../docs/paper-journal.md)
+[原始 CSV](2026-11-02.csv) · [数据元信息](2026-11-02.csv.meta.json) · [模拟记录说明](../docs/paper-journal.md)
 
-[本日首次冻结的模拟观察清单](paper/2026-11-01/INITIAL_REVIEW.md)（待建仓，不含虚构收益）。
+[本日首次冻结的模拟观察清单](paper/2026-11-02/INITIAL_REVIEW.md)（待建仓，不含虚构收益）。
