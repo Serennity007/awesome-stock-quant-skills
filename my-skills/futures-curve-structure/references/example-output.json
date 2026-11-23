@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "product": "CU_DEMO",
+  "as_of_date": "2026-10-15",
+  "source_sha256": "113ff995d2dd8a1e4a38bcf41081d008e6069db4b4cb932a76771b97fe5d31d5",
+  "excluded_expired": 0,
+  "curve": [
+    {
+      "contract": "CU2611",
+      "expiry": "2026-11-16",
+      "days_to_expiry": 32,
+      "last": 71000.0,
+      "volume": 12000.0,
+      "open_interest": 34000.0
+    },
+    {
+      "contract": "CU2612",
+      "expiry": "2026-12-16",
+      "days_to_expiry": 62,
+      "last": 71450.0,
+      "volume": 9000.0,
+      "open_interest": 41000.0
+    },
+    {
+      "contract": "CU2701",
+      "expiry": "2027-01-15",
+      "days_to_expiry": 92,
+      "last": 71200.0,
+      "volume": 6000.0,
+      "open_interest": 28000.0
+    },
+    {
+      "contract": "CU2703",
+      "expiry": "2027-03-15",
+      "days_to_expiry": 151,
+      "last": 72350.0,
+      "volume": 3000.0,
+      "open_interest": 19000.0
+    },
+    {
+      "contract": "CU2706",
+      "expiry": "2027-06-15",
+      "days_to_expiry": 243,
+      "last": 73800.0,
+      "volume": null,
+      "open_interest": 9500.0
+    }
+  ],
+  "adjacent_spreads": [
+    {
+      "near_contract": "CU2611",
+      "far_contract": "CU2612",
+      "spread": 450.0,
+      "spread_pct_of_near": 0.6338028169014085,
+      "days_between": 30,
+      "annualized_slope_pct": 7.711267605633804
+    },
+    {
+      "near_contract": "CU2612",
+      "far_contract": "CU2701",
+      "spread": -250.0,
+      "spread_pct_of_near": -0.34989503149055284,
+      "days_between": 30,
+      "annualized_slope_pct": -4.257056216468393
+    },
+    {
+      "near_contract": "CU2701",
+      "far_contract": "CU2703",
+      "spread": 1150.0,
+      "spread_pct_of_near": 1.6151685393258428,
+      "days_between": 59,
+      "annualized_slope_pct": 9.992144353456485
+    },
+    {
+      "near_contract": "CU2703",
+      "far_contract": "CU2706",
+      "spread": 1450.0,
+      "spread_pct_of_near": 2.0041465100207327,
+      "days_between": 92,
+      "annualized_slope_pct": 7.951233436495297
+    }
+  ],
+  "structure": {
+    "classification": "mixed",
+    "total_annualized_change_pct": 6.821974501034644,
+    "note": "Classification compares the signs of adjacent calendar spreads only; total_annualized_change_pct uses the first and last contract and is descriptive, not a forecast or a trade signal."
+  },
+  "basis": {
+    "spot": 70950.0,
+    "nearest_contract": "CU2611",
+    "nearest_expiry": "2026-11-16",
+    "nearest_days_to_expiry": 32,
+    "basis": -50.0,
+    "basis_pct_of_futures": -0.07042253521126761,
+    "annualized_basis_pct": -0.8032570422535211
+  },
+  "scope": "Offline descriptive curve snapshot for one product from a user-supplied CSV; no live quotes, price forecast, roll execution or trade instruction.",
+  "limitations": [
+    "The last price may be a settlement, close or last-trade value; the CSV does not declare which and no provider verification is performed",
+    "Annualization uses a fixed 365-day calendar basis and ignores exchange trading calendars, holidays and settlement conventions",
+    "No contract multiplier, currency, price unit, tick size, margin or explicit roll-cost modeling is applied",
+    "Volume and open-interest units, aggregation scope and vendor definitions are unverified",
+    "Curve shape is a descriptive snapshot, not a price forecast or a trade signal, and roll yield is not realized return"
+  ],
+  "source_file": "example-curve.csv",
+  "generated_at_utc": "2026-11-23T17:36:53.088035+00:00"
+}

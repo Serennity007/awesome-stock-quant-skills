@@ -1,0 +1,4 @@
+interface:
+  display_name: "期货曲线结构研究"
+  short_description: "从本地合约 CSV 计算到期天数、相邻价差、年化斜率与基差，判断 contango/backwardation 并标注数据限制"
+  default_prompt: "使用 $futures-curve-structure 分析这份期货合约曲线：核对数据截止时间与合约到期，计算相邻价差和年化斜率，说明曲线形态及其数据缺口。"
