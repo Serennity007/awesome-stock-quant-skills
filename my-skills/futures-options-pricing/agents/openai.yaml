@@ -1,0 +1,4 @@
+interface:
+  display_name: "期货期权定价"
+  short_description: "用 Black-76 复算同一期货合约的欧式期权理论价、隐含波动率、希腊字母与看跌看涨平价残差"
+  default_prompt: "使用 $futures-options-pricing 对本地期权 CSV 做 Black-76 定价与隐含波动率反推，核对无套利边界、希腊字母与平价残差，并说明欧式近似与数据限制。"

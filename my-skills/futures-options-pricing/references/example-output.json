@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "futures_price": 100.0,
+  "as_of_date": "2026-11-24",
+  "expiry": "2027-06-30",
+  "days_to_expiry": 218,
+  "time_to_expiry_years": 0.5972602739726027,
+  "rate": 0.03,
+  "day_count_basis": "calendar_365",
+  "source_sha256": "e7ccc4f911a07e98465261c846a6caf5a902f293000b198f5816c70f9cb53e58",
+  "options": [
+    {
+      "option_id": "C100",
+      "option_type": "call",
+      "strike": 100.0,
+      "moneyness_ln_F_over_K": 0.0,
+      "days_to_expiry": 218,
+      "time_to_expiry_years": 0.5972602739726027,
+      "market_price": 8.46,
+      "pricing_volatility": 0.2799021057435245,
+      "model_price": 8.460000000000457,
+      "price_difference_vs_market": 4.565237077258644e-13,
+      "implied_volatility": 0.2799021057435245,
+      "implied_volatility_status": "solved",
+      "greeks": {
+        "delta": 0.5334208806200943,
+        "gamma": 0.0180094423911663,
+        "vega_per_unit_vol": 30.10717876670693,
+        "vega_per_vol_point": 0.3010717876670693,
+        "theta_per_year": -6.8009658215625315,
+        "theta_per_day": -0.018632783072774058,
+        "rho_per_1_rate": -5.052821917808492
+      }
+    },
+    {
+      "option_id": "P100",
+      "option_type": "put",
+      "strike": 100.0,
+      "moneyness_ln_F_over_K": 0.0,
+      "days_to_expiry": 218,
+      "time_to_expiry_years": 0.5972602739726027,
+      "market_price": 7.86,
+      "pricing_volatility": 0.2599814019132589,
+      "model_price": 7.859999999999507,
+      "price_difference_vs_market": -4.929390229335695e-13,
+      "implied_volatility": 0.2599814019132589,
+      "implied_volatility_status": "solved",
+      "greeks": {
+        "delta": -0.4518208806200945,
+        "gamma": 0.019404964808025487,
+        "vega_per_unit_vol": 30.131362470170032,
+        "vega_per_vol_point": 0.3013136247017003,
+        "theta_per_year": -6.322139811103793,
+        "theta_per_day": -0.01732093098932546,
+        "rho_per_1_rate": -4.694465753424363
+      }
+    },
+    {
+      "option_id": "C95",
+      "option_type": "call",
+      "strike": 95.0,
+      "moneyness_ln_F_over_K": 0.051293294387551036,
+      "days_to_expiry": 218,
+      "time_to_expiry_years": 0.5972602739726027,
+      "market_price": null,
+      "pricing_volatility": 0.2,
+      "model_price": 8.676242099805636,
+      "price_difference_vs_market": null,
+      "implied_volatility": null,
+      "implied_volatility_status": "not_requested",
+      "greeks": {
+        "delta": 0.647081994360351,
+        "gamma": 0.023316724306044964,
+        "vega_per_unit_vol": 27.85230629434412,
+        "vega_per_vol_point": 0.2785230629434412,
+        "theta_per_year": -4.403057598214824,
+        "theta_per_day": -0.012063171501958422,
+        "rho_per_1_rate": -5.181974733582544
+      }
+    },
+    {
+      "option_id": "P95",
+      "option_type": "put",
+      "strike": 95.0,
+      "moneyness_ln_F_over_K": 0.051293294387551036,
+      "days_to_expiry": 218,
+      "time_to_expiry_years": 0.5972602739726027,
+      "market_price": null,
+      "pricing_volatility": 0.2,
+      "model_price": 3.7650332936047235,
+      "price_difference_vs_market": null,
+      "implied_volatility": null,
+      "implied_volatility_status": "not_requested",
+      "greeks": {
+        "delta": -0.33515976687983307,
+        "gamma": 0.023316724306044964,
+        "vega_per_unit_vol": 27.85230629434412,
+        "vega_per_vol_point": 0.2785230629434412,
+        "theta_per_year": -4.550393862400852,
+        "theta_per_day": -0.012466832499728362,
+        "rho_per_1_rate": -2.248704816454328
+      }
+    },
+    {
+      "option_id": "C110",
+      "option_type": "call",
+      "strike": 110.0,
+      "moneyness_ln_F_over_K": -0.09531017980432477,
+      "days_to_expiry": 218,
+      "time_to_expiry_years": 0.5972602739726027,
+      "market_price": 2.61,
+      "pricing_volatility": 0.2000136400786226,
+      "model_price": 2.6099999999992676,
+      "price_difference_vs_market": -7.323031070427533e-13,
+      "implied_volatility": 0.2000136400786226,
+      "implied_volatility_status": "solved",
+      "greeks": {
+        "delta": 0.2896027148704564,
+        "gamma": 0.02191946746370255,
+        "vega_per_unit_vol": 26.185039993644317,
+        "vega_per_vol_point": 0.26185039993644316,
+        "theta_per_year": -4.306191479650449,
+        "theta_per_day": -0.011797784875754655,
+        "rho_per_1_rate": -1.5588493150680556
+      }
+    },
+    {
+      "option_id": "P105",
+      "option_type": "put",
+      "strike": 105.0,
+      "moneyness_ln_F_over_K": -0.04879016416943127,
+      "days_to_expiry": 218,
+      "time_to_expiry_years": 0.5972602739726027,
+      "market_price": null,
+      "pricing_volatility": 0.22,
+      "model_price": 9.554572074505435,
+      "price_difference_vs_market": null,
+      "implied_volatility": null,
+      "implied_volatility_status": "not_requested",
+      "greeks": {
+        "delta": -0.5697232145655067,
+        "gamma": 0.022582269181068076,
+        "vega_per_unit_vol": 29.672483011617114,
+        "vega_per_vol_point": 0.2967248301161711,
+        "theta_per_year": -5.178271979583311,
+        "theta_per_day": -0.014187046519406332,
+        "rho_per_1_rate": -5.706566334910096
+      }
+    }
+  ],
+  "parity_checks": [
+    {
+      "strike": 95.0,
+      "call_option_id": "C95",
+      "put_option_id": "P95",
+      "call_minus_put": 4.9112088062009125,
+      "discounted_forward_intrinsic": 4.9112088062009205,
+      "residual": -7.993605777301127e-15
+    },
+    {
+      "strike": 100.0,
+      "call_option_id": "C100",
+      "put_option_id": "P100",
+      "call_minus_put": 0.60000000000095,
+      "discounted_forward_intrinsic": 0.0,
+      "residual": 0.60000000000095
+    }
+  ],
+  "scope": "Local Black-76 theoretical pricing for one futures contract and one expiry; no live quotes, no executable price, no trade instruction and no return claim.",
+  "limitations": [
+    "European exercise approximation only; exchange-traded American-style options can differ because early exercise is not modeled",
+    "One constant pricing volatility per row; no volatility smile, term structure, stochastic volatility or jumps",
+    "Calendar-365 year count; no business-day, session, holiday or exchange calendar adjustment",
+    "No dividends, lease rates, storage costs, transaction costs, fees or bid-ask spread",
+    "The theoretical price is not an executable quote, settlement value or mark that can be traded",
+    "One implied-volatility root inside a bounded search range is not proof of uniqueness or of a correct market volatility"
+  ],
+  "source_file": "example-options.csv",
+  "generated_at_utc": "2026-11-23T17:38:32.756557+00:00"
+}
