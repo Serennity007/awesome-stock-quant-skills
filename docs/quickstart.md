@@ -1,10 +1,10 @@
 # 第一次使用 / First run
 
-默认分支包含 31 个原创 Skill。先运行两个内置合成场景，检查安装和计算链路，再按目标安装 Skill 或接入市场数据。
+默认分支包含 34 个原创 Skill。先运行两个内置合成场景，检查安装和计算链路，再按目标安装 Skill 或接入市场数据。
 
-The default branch includes all 31 original Skills. Start with the bundled synthetic examples, then select the Skills and market-data dependencies needed for your own research.
+The default branch includes all 34 original Skills. Start with the bundled synthetic examples, then select the Skills and market-data dependencies needed for your own research.
 
-研究期货时，可以看 **[涛涛的期货研究](https://github.com/Serennity007/taotao-futures-research)**。总 Skill 按11个板块比较固定合约，提供产业数据和多周期报告，附模拟输入、命令与手算过程，可独立运行。本页以下演示面向个股共识与回测核算。
+研究期货时，可以看 **[涛涛的期货研究](https://github.com/Serennity007/taotao-futures-research)**。总 Skill 按11个板块比较固定合约，提供产业数据和多周期报告，附模拟输入、命令与手算过程，可独立运行。本仓库同时提供三个只读本地 CSV 的期货/期权计算工具，见文末「期货与期权计算工具」。本页以下演示面向个股共识与回测核算。
 
 ## 1. 准备环境 / Setup
 
@@ -77,7 +77,7 @@ python scripts/validate_repository.py
 python -m unittest discover -s tests -v
 ```
 
-2026-10-25 本地验证为 60 项本地测试通过，环境与范围见 [验证记录](validation.md)。
+2026-11-24 本地验证为 112 项本地测试通过（含新增 3 个期货/期权 Skill 的 52 项），环境与范围见 [验证记录](validation.md)。
 
 ## 继续做模拟记录与复盘
 
@@ -86,3 +86,15 @@ python -m unittest discover -s tests -v
 ## 黄金、白银、原油与欧线研究
 
 使用 [黄金跨资产研究 Skill](../my-skills/gold-cross-asset-research/SKILL.md)。它面向价格结构与事件传导，提供独立的本地 OHLC 描述器；不能把 A 股样本或股票模拟账户直接当成期货账户。个人观点与当前数据分别验证。
+
+## 期货与期权计算工具
+
+三个原创 Skill 都只依赖 Python 标准库，读取本地 CSV、写出新 JSON，且不覆盖已有输出。从仓库根目录执行：
+
+```bash
+python my-skills/futures-curve-structure/scripts/futures_curve.py --csv my-skills/futures-curve-structure/references/example-curve.csv --product CU_DEMO --as-of 2026-10-15 --spot 70950 --out output/curve.json
+python my-skills/futures-options-pricing/scripts/futures_options_pricing.py --csv my-skills/futures-options-pricing/references/example-options.csv --futures-price 100 --expiry 2027-06-30 --as-of 2026-11-24 --rate 0.03 --out output/pricing.json
+python my-skills/options-strategy-payoff/scripts/options_strategy_payoff.py --csv my-skills/options-strategy-payoff/references/example-legs.csv --strategy covered-call-demo --prices 80 90 97 100 110 120 --out output/payoff.json
+```
+
+示例输入均为合成数据，只验证计算与报错行为。工具不拉取行情、不模拟美式提前行权、保证金、费用或盘中路径，也不输出交易指令。字段与限制见各 Skill 的 `references/data-contract.md`。

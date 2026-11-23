@@ -12,17 +12,17 @@
 
 将价值、成长、动量、宏观周期与资产配置方法实现为 Agent Skills 和 Python 脚本，支持财务筛选、因子打分、多框架共识与含交易成本的回测。面向 A 股研究，并提供美股热门股追踪。
 
-**31 个原创 Skill · 23 套投资方法参考框架 · 33 个 Python 脚本 · 60 项本地测试通过。**
+**34 个原创 Skill · 23 套投资方法参考框架 · 36 个 Python 脚本 · 112 项本地测试通过。**
 
-GitHub 已获 **41 Stars / 8 Forks**（截至 2026-10-24）。原创实现、第三方来源快照与外部资源索引分别维护；16 个第三方来源目录收录 225 份 `SKILL.md`。
+GitHub 已获 **51 Stars / 8 Forks**（截至 2026-11-24）。原创实现、第三方来源快照与外部资源索引分别维护；16 个第三方来源目录收录 225 份 `SKILL.md`。
 
-<!-- inventory: originals=31 mirrors=16 vendored=225 -->
+<!-- inventory: originals=34 mirrors=16 vendored=225 -->
 
 **[一条命令离线演示](docs/quickstart.md) · [验证范围](docs/validation.md) · [真实取数记录](examples/verification/2026-10-24/buffett-check.json)**
 
 ## 第一次使用：先跑两个离线示例
 
-默认分支已包含 31 个原创 Skill、数据校验与回测功能，无需切分支。安装演示依赖后，一条命令运行共识排序和回测核算两个独立的合成场景，生成可阅读报告、CSV、输入哈希和运行日志。
+默认分支已包含 34 个原创 Skill、数据校验与回测功能，无需切分支。安装演示依赖后，一条命令运行共识排序和回测核算两个独立的合成场景，生成可阅读报告、CSV、输入哈希和运行日志。
 
 ```bash
 git clone https://github.com/Serennity007/awesome-stock-quant-skills.git
@@ -60,6 +60,22 @@ python scripts/run_demo.py
 
 [结构方法](my-skills/gold-cross-asset-research/references/structure-method.md) · [跨资产传导与官方来源](my-skills/gold-cross-asset-research/references/cross-asset-map.md) · [历史观点的证据口径](my-skills/gold-cross-asset-research/references/evidence-and-cases.md) · [合成输出](my-skills/gold-cross-asset-research/references/example-output.json)
 
+## 期货与期权分析工具
+
+新增三个只依赖 Python 标准库的离线计算工具，只读取本地 CSV，输出新 JSON 文件且不覆盖已有结果：
+
+| Skill | 计算内容 | 输入 |
+|---|---|---|
+| [futures-curve-structure](my-skills/futures-curve-structure/SKILL.md) | 到期天数、相邻价差、按日历日年化的斜率、contango/backwardation/混合形态与可选现货基差 | 同一品种的合约曲线 CSV（`contract,expiry,last`） |
+| [futures-options-pricing](my-skills/futures-options-pricing/SKILL.md) | Black-76 理论价、隐含波动率、Delta/Gamma/Vega/Theta/Rho 与看跌看涨平价残差 | 期权报价 CSV + 期货价、到期日、数据截止日与利率 |
+| [options-strategy-payoff](my-skills/options-strategy-payoff/SKILL.md) | 净权利金、到期盈亏表、精确盈亏平衡点、有限或无限的最大盈利与亏损 | 多腿组合 CSV |
+
+```bash
+python my-skills/options-strategy-payoff/scripts/options_strategy_payoff.py --csv my-skills/options-strategy-payoff/references/example-legs.csv --strategy covered-call-demo --prices 80 90 97 100 110 120 --out output/covered-call.json
+```
+
+示例均为合成数据。工具不拉取行情，不模拟美式提前行权、保证金与费用，也不生成交易指令。已验证与未验证的范围见 [验证记录](docs/validation.md)。
+
 ## 模拟记录与复盘
 
 已写入两套可直接阅读的记录：
@@ -87,7 +103,7 @@ python scripts/run_demo.py
 
 ## 个人实测与验证
 
-2026-10-24 使用 **AKShare 1.19.3**，完成 **600519 单股真实财务取数与筛选计算**，取得 **2021–2025 五个年报期间**，估值交易日为 **2026-10-23**。35 项行为测试覆盖财务缺失、估值日期、共识校验、换手和成本等行为。
+2026-10-24 使用 **AKShare 1.19.3**，完成 **600519 单股真实财务取数与筛选计算**，取得 **2021–2025 五个年报期间**，估值交易日为 **2026-10-23**。112 项行为测试（2026-11-24）覆盖财务缺失、估值日期、共识校验、换手、成本与新增的期货/期权离线计算器。
 
 原始 JSON、筛选 CSV、验证范围和本地复现命令均已公开。实测说明取数与计算链路已验证；收益与策略有效性需要另行检验。
 
@@ -104,9 +120,9 @@ python scripts/run_demo.py
 | 毛收益、成本、净收益可逐期核对 | 价格漂移后计算调仓额，首期建仓和换股买卖分别计成本；输出持仓、进出价格、换手与缓存哈希 | [可重跑的合成场景](examples/backtest/SCENARIO.md) |
 | 研究流程按任务选择 | 按需调用相关 skill，并核对筛选、共识、回测产物是否满足解释条件 | [研究工作流](my-skills/quant-research-workflow/SKILL.md)、[产物契约](my-skills/quant-research-workflow/references/data-contracts.md) |
 
-**2026-10-25 本地验证：60 项本地测试通过。** 此前在 2026-10-24 使用 AKShare 1.19.3 跑通单股实时筛选，取得 2021–2025 五个年报期间，估值交易日为 2026-10-23。[原始实跑记录](examples/verification/2026-10-24/buffett-check.json)与 [CSV](examples/verification/2026-10-24/buffett-screen.csv)可直接查看。它证明这条取数与计算链路跑通，不代表所有接口可用或策略盈利。
+**2026-11-24 本地验证：112 项本地测试通过**（含新增 3 个期货/期权 Skill 的 52 项）。此前在 2026-10-24 使用 AKShare 1.19.3 跑通单股实时筛选，取得 2021–2025 五个年报期间，估值交易日为 2026-10-23。[原始实跑记录](examples/verification/2026-10-24/buffett-check.json)与 [CSV](examples/verification/2026-10-24/buffett-screen.csv)可直接查看。它证明这条取数与计算链路跑通，不代表所有接口可用或策略盈利。
 
-“31 / 16 / 225”是可由脚本复核的目录统计，分别指原创 skill、第三方来源目录和第三方 `SKILL.md` 文件。完整范围见 [验证记录](docs/validation.md)。上游更新检查以 [巡检模板](docs/workflows/upstream-watch.yml)提供，启用条件见 [维护说明](docs/maintenance.md)。
+“34 / 16 / 225”是可由脚本复核的目录统计，分别指原创 skill、第三方来源目录和第三方 `SKILL.md` 文件。完整范围见 [验证记录](docs/validation.md)。上游更新检查以 [巡检模板](docs/workflows/upstream-watch.yml)提供，启用条件见 [维护说明](docs/maintenance.md)。
 
 ## 快速开始
 
@@ -191,6 +207,7 @@ Claude Code 可改用 `~/.claude/skills/`。第三方多技能合集要复制内
 | A 股题材与美股热门股 | [hot-theme](my-skills/hot-theme-scanner)、[concept-mapper](my-skills/concept-stock-mapper)、[us-tracker](my-skills/us-hot-stocks-tracker) |
 | 指数估值、资产配置与周期 | [bogle](my-skills/bogle-index-investing)、[dalio](my-skills/dalio-all-weather)、[marks](my-skills/howard-marks-cycle) |
 | 多框架交集与历史检验 | [master-ensemble](my-skills/master-ensemble)、[framework-backtest](my-skills/framework-backtest) |
+| 期货曲线、期权定价与组合损益 | [futures-curve-structure](my-skills/futures-curve-structure)、[futures-options-pricing](my-skills/futures-options-pricing)、[options-strategy-payoff](my-skills/options-strategy-payoff) |
 
 ## 原创技能
 
@@ -251,6 +268,14 @@ Claude Code 可改用 `~/.claude/skills/`。第三方多技能合集要复制内
 | [master-ensemble](my-skills/master-ensemble) | 大师共识筛选器：把任意多个大师 skill 的打分结果 CSV 按框架内百分位归一化，合成共识分与顶级命中数，输出"多个框架同时覆盖"的跨框架交集标的（纯本地合成，秒级） | MIT |
 | [framework-backtest](my-skills/framework-backtest) | 大师框架回测验证器：月度调仓回测各大师 skill 的打分框架在 A 股的历史真实表现（等权持有前 N 名 vs 沪深300），固定 120 天财报滞后近似（尚非严格 point-in-time），输出毛净收益、成交额成本、持仓审计、年化/超额/最大回撤/夏普与逐年对照表 | MIT |
 
+### 期货与期权工具
+
+| 目录 | 简介 | License |
+|---|---|---|
+| [futures-curve-structure](my-skills/futures-curve-structure) | 期货期限结构离线描述器：到期天数、相邻价差、按日历日年化的斜率、contango/backwardation/混合形态与可选现货基差；只读本地 CSV | MIT |
+| [futures-options-pricing](my-skills/futures-options-pricing) | 期货期权 Black-76 定价器：理论价、有界二分反推隐含波动率、Delta/Gamma/Vega/Theta/Rho、看跌看涨平价残差；只读本地 CSV | MIT |
+| [options-strategy-payoff](my-skills/options-strategy-payoff) | 期权组合到期损益器：净权利金、逐点盈亏、精确盈亏平衡点、有限/无界最大盈亏，支持期货腿与多腿组合；只读本地 CSV | MIT |
+
 ### 原有
 
 | 目录 | 简介 | License |
@@ -292,7 +317,7 @@ python scripts/check_upstreams.py
 
 前三条构成离线验证；最后一条需要联网。质量与巡检工作流以 [待启用模板](docs/workflows) 交付，质量模板覆盖 Python 3.11 / 3.13。当前 GitHub 授权缺少 `workflow` 权限，尚未部署新工作流；获得相应权限后将模板放入 `.github/workflows/` 并推送到默认分支即可启用，详见 [维护说明](docs/maintenance.md)。
 
-本次升级日期：**2026-10-24**。第三方代码仍为历史快照；旧来源未记录提交号时，巡检如实标记，不能宣称已经同步最新版。[本次验证](docs/validation.md)与[历史运行记录](docs/historical-demos.md)分别查看。
+本次升级日期：**2026-11-24**。第三方代码仍为历史快照；旧来源未记录提交号时，巡检如实标记，不能宣称已经同步最新版。[本次验证](docs/validation.md)与[历史运行记录](docs/historical-demos.md)分别查看。
 
 欢迎提交可复现的问题：目标 skill、命令、包版本、数据日期、预期与实际输出。贡献新 skill 时说明适用任务、依赖、输入输出与验证方式；更新转载内容时保留许可证、署名并记录上游提交。
 

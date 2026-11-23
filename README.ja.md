@@ -10,17 +10,17 @@
 
 投資手法を Agent Skills と Python スクリプトで実装。財務スクリーニング、ファクター評価、複数手法の比較、取引費用を含むバックテストに対応し、A 株研究と米国注目銘柄の追跡を扱います。
 
-**オリジナル Skill 31 件 · 投資手法の参考フレームワーク 23 件 · Python スクリプト 33 本 · ローカルテスト 60 件合格。**
+**オリジナル Skill 34 件 · 投資手法の参考フレームワーク 23 件 · Python スクリプト 36 本 · ローカルテスト 112 件合格。**
 
-GitHub は **41 Stars / 8 Forks**（2026-10-24 時点）。オリジナル実装と第三者ソースを区分し、16 のソースディレクトリに 225 の `SKILL.md` を収録しています。
+GitHub は **51 Stars / 8 Forks**（2026-11-24 時点）。オリジナル実装と第三者ソースを区分し、16 のソースディレクトリに 225 の `SKILL.md` を収録しています。
 
-<!-- inventory: originals=31 mirrors=16 vendored=225 -->
+<!-- inventory: originals=34 mirrors=16 vendored=225 -->
 
 **[オフラインデモ](docs/quickstart.md) · [検証範囲](docs/validation.md) · [実データ記録](examples/verification/2026-10-24/buffett-check.json)**
 
 ## 初回実行：2 つのオフライン例
 
-デフォルトブランチにオリジナル Skill 31 件とデータ・回測の検証を収録しました。依存を入れた後、1 コマンドで合意順位と回測計算の独立した合成例を実行し、レポート・CSV・入力ハッシュ・ログを生成します。
+デフォルトブランチにオリジナル Skill 34 件とデータ・回測の検証を収録しました。依存を入れた後、1 コマンドで合意順位と回測計算の独立した合成例を実行し、レポート・CSV・入力ハッシュ・ログを生成します。
 
 ```bash
 git clone https://github.com/Serennity007/awesome-stock-quant-skills.git
@@ -37,6 +37,22 @@ python scripts/run_demo.py
 
 ローカル OHLC スクリプトと [合成出力例](my-skills/gold-cross-asset-research/references/example-output.json)を収録。時点以降の足を除き、参照足数と検証期限を確認します。行情取得や取引指示は行いません。
 
+## 先物・オプション分析ツール
+
+標準ライブラリのみで動く 3 つのオフライン計算ツールを追加しました。ローカル CSV のみを読み、新しい JSON を書き出し、既存出力は上書きしません。
+
+| Skill | 計算内容 | 入力 |
+|---|---|---|
+| [futures-curve-structure](my-skills/futures-curve-structure/SKILL.md) | 限月までの日数、隣接スプレッド、暦日ベースの年率スロープ、contango/backwardation/混合の分類、任意のスポット基差 | 同一銘柄の限月曲線 CSV（`contract,expiry,last`） |
+| [futures-options-pricing](my-skills/futures-options-pricing/SKILL.md) | Black-76 理論価格、インプライド・ボラティリティ、Delta/Gamma/Vega/Theta/Rho、プットコール・パリティ残差 | オプション CSV + 先物価格、満期日、基準日、金利 |
+| [options-strategy-payoff](my-skills/options-strategy-payoff/SKILL.md) | 純プレミアム、満期損益表、正確な損益分岐点、有限または無限の最大損益 | 複数レッグの戦略 CSV |
+
+```bash
+python my-skills/options-strategy-payoff/scripts/options_strategy_payoff.py --csv my-skills/options-strategy-payoff/references/example-legs.csv --strategy covered-call-demo --prices 80 90 97 100 110 120 --out output/covered-call.json
+```
+
+例はすべて合成データです。相場取得、アメリカン・オプションの早期行使、証拠金、手数料の計算、売買指示の生成は行いません。
+
 ## 模擬記録とレビュー
 
 `paper_journal.py start / review` で入力を固定し、観測価格・費用・残金・保有明細を記録できます。[2026-10-25 の実データ入力記録](reports/paper/2026-10-25/INITIAL_REVIEW.md)は未約定の観察リストです。20 件中 14 件が完全、6 件が不完全で、将来価格や収益は生成していません。別途、[合成データによる損失を含むレビュー例](examples/paper/journal/reviews/2026-09-30.md)を用意しました。過去の日付は試験ラベルで、実運用実績ではありません。
@@ -51,7 +67,7 @@ python scripts/run_demo.py
 
 ## 実データと動作の検証
 
-2026-10-24、**AKShare 1.19.3** で **600519** の取得・スクリーニングを実行。**2021–2025 年報**と **2026-10-23** の評価観測を確認し、**35 件の動作テスト**に合格しました。JSON・CSV・再現手順を公開しています。これは取得と計算の検証であり、投資収益には別の根拠が必要です。
+2026-10-24、**AKShare 1.19.3** で **600519** の取得・スクリーニングを実行。**2021–2025 年報**と **2026-10-23** の評価観測を確認し、**112 件の動作テスト**（2026-11-24）に合格しました。JSON・CSV・再現手順を公開しています。これは取得と計算の検証であり、投資収益には別の根拠が必要です。
 
 ## 実装を確認できる強み
 
@@ -72,7 +88,7 @@ python scripts/run_demo.py
 
 回測は調整時点の情報で銘柄を選び、保有後の収益を計算します。退出価格・基準データの不足は停止。実取引日を揃え、初月損失もドローダウンに含め、価格変動後のウェイトで売買額を計算します。毛収益・費用・純収益と保有明細を追跡できます。
 
-**動作テスト35件に合格。2026-10-24 に AKShare 1.19.3 で単一銘柄の取得・評価にも成功しました。** 年報期は2021–2025、評価取引日は2026-10-23です。[記録](examples/verification/2026-10-24/buffett-check.json)と [CSV](examples/verification/2026-10-24/buffett-screen.csv)を確認できます。利益や全 API の保証ではありません。
+**動作テスト112件に合格（2026-11-24）。2026-10-24 に AKShare 1.19.3 で単一銘柄の取得・評価にも成功しました。** 年報期は2021–2025、評価取引日は2026-10-23です。[記録](examples/verification/2026-10-24/buffett-check.json)と [CSV](examples/verification/2026-10-24/buffett-screen.csv)を確認できます。利益や全 API の保証ではありません。
 
 ## まずオフラインで実行
 
@@ -122,7 +138,7 @@ Claude Code では `~/.claude/skills/` を使えます。第三者の複数 skil
 ## 一覧と証拠
 
 - [全オリジナル skill](README.zh-CN.md#原创技能)：価値、成長、防御、テーマ、配分、合成、回測。
-- [第三者ソース一覧](README.md#第三方收录)と[権利表記](docs/NOTICE.md)。
+- [第三者ソース一覧](README.zh-CN.md#第三方收录)と[権利表記](docs/NOTICE.md)。
 - [外部リソース索引](docs/resource-index.md)：star 数は記載日の古い集計です。
 - [過去の実行記録](docs/historical-demos.md)：今回再検証した行情や運用成績ではありません。
 
@@ -137,7 +153,7 @@ python scripts/check_upstreams.py
 
 最後のコマンドだけ通信が必要です。[ワークフローテンプレート](docs/workflows) は Python 3.11 / 3.13 の検証と週次巡回に対応します。現在の GitHub 認証には `workflow` 権限がなく、新ワークフローは未配置です。適切な権限で `.github/workflows/` にコピーし、既定ブランチへ反映すると有効になります。第三者コードは自動置換しません。旧ミラーのコミットが不明なら `snapshot-unpinned` と記録し、取得失敗時は非ゼロ終了します。
 
-更新基準日：**2026-10-24**。第三者ファイルは過去のスナップショットです。[保守手順](docs/maintenance.md)と[検証範囲](docs/validation.md)を参照してください。
+更新基準日：**2026-11-24**。第三者ファイルは過去のスナップショットです。[保守手順](docs/maintenance.md)と[検証範囲](docs/validation.md)を参照してください。
 
 ## 利用範囲とライセンス
 

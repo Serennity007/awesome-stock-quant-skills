@@ -12,11 +12,11 @@
 
 Investment research implemented as Agent Skills and Python scripts: financial screening, factor ranking, multi-framework consensus and backtesting with transaction costs. Covers A-share research and US hot-stock tracking.
 
-**31 original Skills · 23 investment-method reference frameworks · 33 Python scripts · 60 passing local tests.**
+**34 original Skills · 23 investment-method reference frameworks · 36 Python scripts · 112 passing local tests.**
 
-**41 Stars / 8 Forks** on GitHub as of 2026-10-24. Original implementations, third-party source snapshots and external links are maintained separately; 16 source directories contain 225 vendored `SKILL.md` files.
+**51 Stars / 8 Forks** on GitHub as of 2026-11-24. Original implementations, third-party source snapshots and external links are maintained separately; 16 source directories contain 225 vendored `SKILL.md` files.
 
-<!-- inventory: originals=31 mirrors=16 vendored=225 -->
+<!-- inventory: originals=34 mirrors=16 vendored=225 -->
 
 **[One-command offline demo](docs/quickstart.md) · [Validation scope](docs/validation.md) · [Live-data record](examples/verification/2026-10-24/buffett-check.json)**
 
@@ -24,7 +24,7 @@ Investment research implemented as Agent Skills and Python scripts: financial sc
 
 ## First run: two offline examples
 
-The default branch now contains all 31 original Skills and the data/backtest checks. After installing demo dependencies, one command runs two independent synthetic scenarios: consensus ranking and backtest arithmetic. It writes a readable report, CSVs, provenance and logs.
+The default branch now contains all 34 original Skills and the data/backtest checks. After installing demo dependencies, one command runs two independent synthetic scenarios: consensus ranking and backtest arithmetic. It writes a readable report, CSVs, provenance and logs.
 
 ```bash
 git clone https://github.com/Serennity007/awesome-stock-quant-skills.git
@@ -40,6 +40,22 @@ Open the printed `output/demo/run-…/REPORT.md` path. Runs use fresh directorie
 **[gold-cross-asset-research](my-skills/gold-cross-asset-research/SKILL.md)** combines explicit time windows, H4 structure, H1/M30 triggers, MA/MACD observations and separate transmission checks for gold, silver, crude and INE EC shipping futures. It preserves the owner's dated recollections as unverified recollections rather than a trading track record.
 
 The included offline OHLC helper checks closing-time cutoffs, manual boundaries and reference-bar expiry. A [synthetic example](my-skills/gold-cross-asset-research/references/example-output.json) is provided; it does not fetch quotes or issue trade instructions. [Method and inputs](my-skills/gold-cross-asset-research/references/data-contract.md).
+
+## Futures and options analytics
+
+Three standard-library calculators extend the futures work. They read local CSV only, write a new JSON report and refuse to overwrite existing output:
+
+| Skill | Computes | Inputs |
+|---|---|---|
+| [futures-curve-structure](my-skills/futures-curve-structure/SKILL.md) | Days to expiry, adjacent spreads, calendar-day annualized slope, contango/backwardation/mixed classification and optional spot basis | One product's contract curve CSV (`contract,expiry,last`) |
+| [futures-options-pricing](my-skills/futures-options-pricing/SKILL.md) | Black-76 theoretical prices, implied volatility, Delta/Gamma/Vega/Theta/Rho and put-call parity residuals | Option quote CSV plus futures price, expiry, as-of date and rate |
+| [options-strategy-payoff](my-skills/options-strategy-payoff/SKILL.md) | Net premium, expiry P&L table, exact breakevens, finite or unbounded maximum profit and loss | Multi-leg strategy CSV |
+
+```bash
+python my-skills/options-strategy-payoff/scripts/options_strategy_payoff.py --csv my-skills/options-strategy-payoff/references/example-legs.csv --strategy covered-call-demo --prices 80 90 97 100 110 120 --out output/covered-call.json
+```
+
+The examples are synthetic fixtures. These tools do not fetch quotes, model American early exercise, margin or fees, or produce trade instructions. [Quick start](docs/quickstart.md) and [validation scope](docs/validation.md) record what was and was not verified.
 
 ## Paper records and reviews
 
@@ -64,7 +80,7 @@ The tools check annual reporting periods, valuation dates, TTM fields, missing f
 
 ## Hands-on validation
 
-On 2026-10-24, **AKShare 1.19.3** retrieved real financial data and completed screening for **600519**, spanning **FY2021–2025**, with a **2026-10-23** valuation observation. **35 behavioral tests** cover missing financials, valuation dates, consensus validation, turnover and costs. Original JSON, CSV, scope and reproduction commands are public. This validates retrieval and calculation; investment performance requires separate evidence.
+On 2026-10-24, **AKShare 1.19.3** retrieved real financial data and completed screening for **600519**, spanning **FY2021–2025**, with a **2026-10-23** valuation observation. **112 behavioral tests** (2026-11-24) cover missing financials, valuation dates, consensus validation, turnover, costs and the offline futures/options calculators. Original JSON, CSV, scope and reproduction commands are public. This validates retrieval and calculation; investment performance requires separate evidence.
 
 ## What makes it useful
 
@@ -85,7 +101,7 @@ The current pass strengthens Buffett screening, single-stock valuation, framewor
 
 Backtests rank using information at rebalance time, then evaluate selected holdings. Missing exit prices and benchmark data stop the run. Trading dates stay aligned, first-month losses count toward drawdown, and drift-aware turnover produces separate gross returns, costs, net returns and holding-level audit records.
 
-**35 behavior tests pass. A single-stock live screen also passed with AKShare 1.19.3 on 2026-10-24**, using 2021–2025 annual periods and a 2026-10-23 valuation observation. See the [record](examples/verification/2026-10-24/buffett-check.json) and [CSV](examples/verification/2026-10-24/buffett-screen.csv). This verifies that path, not strategy profitability or every integration.
+**112 behavior tests pass (2026-11-24). A single-stock live screen also passed with AKShare 1.19.3 on 2026-10-24**, using 2021–2025 annual periods and a 2026-10-23 valuation observation. See the [record](examples/verification/2026-10-24/buffett-check.json) and [CSV](examples/verification/2026-10-24/buffett-screen.csv). This verifies that path, not strategy profitability or every integration.
 
 ## Quick start: no market API required
 
@@ -150,7 +166,7 @@ python scripts/check_upstreams.py
 
 Only the final command needs network access. The [workflow templates](docs/workflows) cover Python 3.11 / 3.13 quality checks and weekly metadata reports. The current GitHub credential lacks `workflow` scope, so these new workflows are not deployed. With appropriate permission, copy them to `.github/workflows/` and push to the default branch to enable them. They publish reports without replacing third-party code. A missing mirror commit is marked `snapshot-unpinned`; fetch failures remain visible and produce a nonzero exit.
 
-Maintenance baseline: **2026-10-24**. Third-party files remain historical snapshots. See [maintenance details](docs/maintenance.md) and [validation scope](docs/validation.md).
+Maintenance baseline: **2026-11-24**. Third-party files remain historical snapshots. See [maintenance details](docs/maintenance.md) and [validation scope](docs/validation.md).
 
 ## Scope and license
 
