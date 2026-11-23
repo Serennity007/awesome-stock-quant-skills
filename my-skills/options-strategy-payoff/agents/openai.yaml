@@ -1,0 +1,4 @@
+interface:
+  display_name: "期权组合到期损益"
+  short_description: "用多腿 CSV 计算净权利金、到期盈亏曲线、精确盈亏平衡点与有限或无限的最大盈亏"
+  default_prompt: "使用 $options-strategy-payoff 读取这份多腿 CSV，核对腿定义与净权利金，计算到期损益、盈亏平衡点和最大盈亏，并说明到期口径与风险边界。"

@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "strategy": "covered-call-demo",
+  "leg_count": 2,
+  "legs": [
+    {
+      "leg_id": "futures_long_100",
+      "instrument": "futures",
+      "side": "buy",
+      "strike": null,
+      "quantity": 1.0,
+      "premium": 100.0,
+      "multiplier": 1.0,
+      "signed_quantity": 1.0,
+      "cash_flow_at_entry": 0.0
+    },
+    {
+      "leg_id": "call_short_110",
+      "instrument": "call",
+      "side": "sell",
+      "strike": 110.0,
+      "quantity": 1.0,
+      "premium": 3.0,
+      "multiplier": 1.0,
+      "signed_quantity": -1.0,
+      "cash_flow_at_entry": 3.0
+    }
+  ],
+  "net_premium": -3.0,
+  "net_premium_note": "Positive net_premium is a net debit paid for option premium; negative is a net credit received. Only option legs enter this sum; a futures leg's premium column is its entry futures price, not a premium, so futures legs carry no premium cash flow and are excluded from net_premium.",
+  "breakevens": [
+    97.0
+  ],
+  "breakeven_basis": "Exact roots of the expiry profit/loss as a function of underlying price over S>0 only; piecewise-linear between option strikes; reported as isolated zero levels plus finite boundaries of identically-zero intervals, sorted and rounded to 6 decimal places.",
+  "max_profit": 13.0,
+  "max_loss": -97.0,
+  "price_grid": [
+    80.0,
+    90.0,
+    97.0,
+    100.0,
+    110.0,
+    120.0
+  ],
+  "payoff_at_prices": [
+    {
+      "underlying_price": 80.0,
+      "profit_loss": -17.0
+    },
+    {
+      "underlying_price": 90.0,
+      "profit_loss": -7.0
+    },
+    {
+      "underlying_price": 97.0,
+      "profit_loss": 0.0
+    },
+    {
+      "underlying_price": 100.0,
+      "profit_loss": 3.0
+    },
+    {
+      "underlying_price": 110.0,
+      "profit_loss": 13.0
+    },
+    {
+      "underlying_price": 120.0,
+      "profit_loss": 13.0
+    }
+  ],
+  "scope": "Expiry-only profit/loss arithmetic from user-supplied legs; no live quotes, path simulation, position sizing, win-rate estimate or trade recommendation.",
+  "limitations": [
+    "Expiry-only payoff: no early exercise, assignment, position close-out or any intermediate path is modeled",
+    "No margin, collateral, borrow, fees, slippage, funding, taxes or currency conversion is modeled",
+    "Premiums, strikes, quantities and multipliers are user inputs, not verified quotes or contract specifications",
+    "The strategy label is user-declared text and is not validated against the leg structure",
+    "The price domain is S>0: the S=0 payoff is a finite boundary limit, so only the rising-price tail can be marked unbounded; negative futures settlement prices (seen in WTI 2020) are not modeled",
+    "Unbounded markers are mathematical asymptotes, not risk limits, capital requirements or probability statements",
+    "No implied volatility, Greeks, time decay before expiry, path dependence or probability-of-profit is estimated",
+    "Not a trade recommendation; the output is not a win-rate, expected-return or performance proof"
+  ],
+  "source_sha256": "8b5a65ba015804f8a136bb3b104a4b6be96fba3ebe813ebaddfaf6e4c05f5839",
+  "source_file": "example-legs.csv",
+  "generated_at_utc": "2026-11-23T17:45:07.619108+00:00"
+}
