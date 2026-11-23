@@ -35,7 +35,7 @@ def main():
         except (ValueError, TypeError, yaml.YAMLError) as exc:
             errors.append(f"{path.relative_to(ROOT)}: {exc}")
 
-    paths = [ROOT / name for name in ("README.md", "README.en.md", "README.ja.md")]
+    paths = [ROOT / name for name in ("README.md", "README.en.md", "README.ja.md", "README.zh-CN.md")]
     paths += list((ROOT / "my-skills/quant-research-workflow").rglob("*.md"))
     paths += [ROOT / name for name in ("docs/validation.md", "docs/maintenance.md", "docs/historical-demos.md",
                                       "docs/quickstart.md", "docs/paper-journal.md", "reports/latest.md")]
@@ -61,7 +61,7 @@ def main():
                 if not (ROOT / "my-skills" / name / "SKILL.md").exists():
                     errors.append(f"missing route: {name}")
     expected = f"<!-- inventory: originals={len(originals)} mirrors={len(mirrors)} vendored={len(vendored)} -->"
-    for path in paths[:3]:
+    for path in paths[:4]:
         if expected not in path.read_text(encoding="utf-8"):
             errors.append(f"{path.name}: inventory marker must be {expected}")
     if errors:

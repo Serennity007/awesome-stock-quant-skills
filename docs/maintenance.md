@@ -1,6 +1,6 @@
 # 持续更新怎样工作
 
-本次维护基准：2026-10-24。第三方文件仍是收录时的快照，不能因本次文档更新就标为最新版本。
+本次维护基准：2026-11-24（上一轮：2026-10-24）。第三方文件仍是收录时的快照，不能因本次文档更新就标为最新版本。2026-11-24 只合入了 Dependabot 对 `skills/cruisekkk__trading-ledger/demo` 依赖声明与锁文件的 5 个补丁更新，Skill 源码、许可证与 `SOURCE.md` 未变，镜像仍未固定上游提交号；新增的期货/期权 Skill 为原创内容，不涉及第三方转载。
 
 ## 每周巡检
 
@@ -17,6 +17,10 @@ python scripts/check_upstreams.py
 首次核对建立远程观察基准。后续本地运行默认比较同目录上次 JSON；Actions 使用缓存保存前次巡检，对失败来源保留最近一次成功观察的 head，缓存不可用时从新基准开始。迁移报告时可用 `--previous path/to/latest.json --out-dir path/to/output`。
 
 许多旧 `SOURCE.md` 没有提交号。报告将其标为 `snapshot-unpinned`，无法反推其精确镜像版本。`head-changed-since-check` 只说明两次观察间 head 不同；新增 star 不作为更新信号；许可证元数据差异只是待复核项。
+
+## 每日报告快照与清理
+
+`reports/` 由 `daily-report` 工作流自动生成并提交，保存 20 只代表股的每日数据质量快照；2026-10-25 起同时写 `.meta.json` 侧车，记录生成时间、AKShare 版本、股票池与成功/失败/不完整条数。这些文件用于对照取数失败、字段缺口与口径变化，不是收益记录。历史快照保持原样、不回溯改写；新增字段先改生成脚本与测试，再让新日期生效。目录用途与 CSV 口径见 [reports/README.md](../reports/README.md)。
 
 ## 发现更新之后
 

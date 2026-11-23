@@ -2,7 +2,7 @@
 
 
 
-以下项目仅提供链接索引，未转载文件（License 不允许转载、体量过大或为完整应用/框架）。Stars 数据为 2026-08-25 查询。
+以下项目仅提供链接索引，未转载文件（License 不允许转载、体量过大或为完整应用/框架）。Stars 数据为 2026-08-25 查询；2026-11-24 新增条目按当日 GitHub 数量标注，旧条目未重新查询。
 
 ### A. 中文 Skill / Agent 项目
 
@@ -27,6 +27,8 @@
 | [guangxiangdebizi/FinanceMCP-DCTHS](https://github.com/guangxiangdebizi/FinanceMCP-DCTHS) | 东财+同花顺 MCP 数据服务 | 39 | Apache-2.0 | 仅索引未转载 |
 | [zhuyifang/tonghuasun-codex](https://github.com/zhuyifang/tonghuasun-codex) | 本机同花顺接入 Codex | 27 | 无License | 仅索引，未转载 |
 | [binance/binance-skills-hub](https://github.com/binance/binance-skills-hub) | 币安官方 skills 市场 | 982 | 未标注 | 仅索引，未转载 |
+| [dustinliang666-blip/lava-mcp](https://github.com/dustinliang666-blip/lava-mcp) | A股个股/概念板块消息面热度监测 MCP（只读） | 61 | MIT | 仅索引，未转载；来源：Issue #4 建议 |
+| [TLSRUF/ai-trader-team](https://github.com/TLSRUF/ai-trader-team) | Claude Code 多智能体投资研究团队框架 | 3 | MIT | 仅索引，未转载；来源：Issue #1 建议 |
 
 ### B. AI Agent / LLM 交易框架
 
@@ -52,6 +54,7 @@
 | [jesse-ai/jesse](https://github.com/jesse-ai/jesse) | 加密货币交易机器人 | 8.4k | MIT | 仅索引 |
 | [ricequant/rqalpha](https://github.com/ricequant/rqalpha) | 米筐A股回测框架 | 6.7k | NOASSERTION | 仅索引，未转载 |
 | [zvtvz/zvt](https://github.com/zvtvz/zvt) | 模块化量化框架 | 4.3k | MIT | 仅索引 |
+| [Lumiwealth/lumibot](https://github.com/Lumiwealth/lumibot) | 回测与实盘同一套代码的 Python 交易框架，支持股票/期权/期货等 12 家券商 | 2.2k | GPL-3.0 | GPL 不转载，仅索引；来源：PR #2 建议 |
 
 ### D. 数据接口
 
@@ -82,3 +85,13 @@
 | [VoltAgent/awesome-claude-skills](https://github.com/VoltAgent/awesome-claude-skills) | 含 Web3/Trading 分区 | — | — | 仅索引 |
 | [shishirui/awesome-claude-skills-zh](https://github.com/shishirui/awesome-claude-skills-zh) | 中文 skills 索引 | 15 | CC0-1.0 | 仅索引 |
 | [yzfly/awesome-skills-zh](https://github.com/yzfly/awesome-skills-zh) | 中文 skills 索引 | 29 | Apache-2.0 | 仅索引 |
+
+### G. 期货 / 期权工具与数据
+
+| 项目 | 简介 | Stars | License | 备注 |
+|---|---|---|---|---|
+| [ranaroussi/yfinance](https://github.com/ranaroussi/yfinance) | Yahoo Finance 行情与期权链下载 | 26k | Apache-2.0 | 仅索引，未转载 |
+| [vollib/vollib](https://github.com/vollib/vollib) | Black-76 / Black-Scholes 定价与隐含波动率参考实现 | 1.0k | MIT | 仅索引，未转载 |
+| [jasonstrimpel/volatility-trading](https://github.com/jasonstrimpel/volatility-trading) | 基于 Euan Sinclair 方法的波动率估计器集合 | 2.0k | GPL-3.0 | GPL 不转载，仅索引 |
+
+国内期货结算价与 ETF 期权链可从上方第 D 节 AKShare 获取；接口名称、字段与可用性随数据源页面变化，使用前查最新官方文档。本仓库的原创期货/期权 Skill 只读取本地 CSV，不代理行情。
