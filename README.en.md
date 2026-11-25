@@ -6,4 +6,4 @@ This compatibility page was merged into the default English entry. The maintaine
 
 本文件保留为旧链接的兼容入口。英文正文只在 [README.md](README.md) 维护，避免两份英文说明长期不同步。
 
-<!-- inventory: originals=34 mirrors=16 vendored=225 -->
+<!-- inventory: originals=35 mirrors=16 vendored=225 -->

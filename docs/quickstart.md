@@ -1,8 +1,8 @@
 # 第一次使用 / First run
 
-默认分支包含 34 个原创 Skill。先运行两个内置合成场景，检查安装和计算链路，再按目标安装 Skill 或接入市场数据。
+默认分支包含 35 个原创 Skill。先运行两个内置合成场景，检查安装和计算链路，再按目标安装 Skill 或接入市场数据。
 
-The default branch includes all 34 original Skills. Start with the bundled synthetic examples, then select the Skills and market-data dependencies needed for your own research.
+The default branch includes all 35 original Skills. Start with the bundled synthetic examples, then select the Skills and market-data dependencies needed for your own research.
 
 研究期货时，可以看 **[涛涛的期货研究](https://github.com/Serennity007/taotao-futures-research)**。总 Skill 按11个板块比较固定合约，提供产业数据和多周期报告，附模拟输入、命令与手算过程，可独立运行。本仓库同时提供三个只读本地 CSV 的期货/期权计算工具，见文末「期货与期权计算工具」。本页以下演示面向个股共识与回测核算。
 
@@ -77,7 +77,7 @@ python scripts/validate_repository.py
 python -m unittest discover -s tests -v
 ```
 
-2026-11-24 本地验证为 112 项本地测试通过（含新增 3 个期货/期权 Skill 的 52 项），环境与范围见 [验证记录](validation.md)。
+2026-11-25 本地验证为 136 项本地测试通过（含 3 个期货/期权 Skill 的 52 项与可转债测算的 24 项），环境与范围见 [验证记录](validation.md)。
 
 ## 继续做模拟记录与复盘
 

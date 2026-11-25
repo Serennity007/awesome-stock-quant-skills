@@ -12,17 +12,17 @@
 
 将价值、成长、动量、宏观周期与资产配置方法实现为 Agent Skills 和 Python 脚本，支持财务筛选、因子打分、多框架共识与含交易成本的回测。面向 A 股研究，并提供美股热门股追踪。
 
-**34 个原创 Skill · 23 套投资方法参考框架 · 36 个 Python 脚本 · 112 项本地测试通过。**
+**35 个原创 Skill · 23 套投资方法参考框架 · 37 个 Python 脚本 · 136 项本地测试通过。**
 
 GitHub 已获 **51 Stars / 8 Forks**（截至 2026-11-24）。原创实现、第三方来源快照与外部资源索引分别维护；16 个第三方来源目录收录 225 份 `SKILL.md`。
 
-<!-- inventory: originals=34 mirrors=16 vendored=225 -->
+<!-- inventory: originals=35 mirrors=16 vendored=225 -->
 
 **[一条命令离线演示](docs/quickstart.md) · [验证范围](docs/validation.md) · [真实取数记录](examples/verification/2026-10-24/buffett-check.json)**
 
 ## 第一次使用：先跑两个离线示例
 
-默认分支已包含 34 个原创 Skill、数据校验与回测功能，无需切分支。安装演示依赖后，一条命令运行共识排序和回测核算两个独立的合成场景，生成可阅读报告、CSV、输入哈希和运行日志。
+默认分支已包含 35 个原创 Skill、数据校验与回测功能，无需切分支。安装演示依赖后，一条命令运行共识排序和回测核算两个独立的合成场景，生成可阅读报告、CSV、输入哈希和运行日志。
 
 ```bash
 git clone https://github.com/Serennity007/awesome-stock-quant-skills.git
@@ -103,7 +103,7 @@ python my-skills/options-strategy-payoff/scripts/options_strategy_payoff.py --cs
 
 ## 个人实测与验证
 
-2026-10-24 使用 **AKShare 1.19.3**，完成 **600519 单股真实财务取数与筛选计算**，取得 **2021–2025 五个年报期间**，估值交易日为 **2026-10-23**。112 项行为测试（2026-11-24）覆盖财务缺失、估值日期、共识校验、换手、成本与新增的期货/期权离线计算器。
+2026-10-24 使用 **AKShare 1.19.3**，完成 **600519 单股真实财务取数与筛选计算**，取得 **2021–2025 五个年报期间**，估值交易日为 **2026-10-23**。136 项行为测试（2026-11-25）覆盖财务缺失、估值日期、共识校验、换手、成本、期货/期权离线计算器与可转债溢价/债底计算器。
 
 原始 JSON、筛选 CSV、验证范围和本地复现命令均已公开。实测说明取数与计算链路已验证；收益与策略有效性需要另行检验。
 
@@ -120,9 +120,9 @@ python my-skills/options-strategy-payoff/scripts/options_strategy_payoff.py --cs
 | 毛收益、成本、净收益可逐期核对 | 价格漂移后计算调仓额，首期建仓和换股买卖分别计成本；输出持仓、进出价格、换手与缓存哈希 | [可重跑的合成场景](examples/backtest/SCENARIO.md) |
 | 研究流程按任务选择 | 按需调用相关 skill，并核对筛选、共识、回测产物是否满足解释条件 | [研究工作流](my-skills/quant-research-workflow/SKILL.md)、[产物契约](my-skills/quant-research-workflow/references/data-contracts.md) |
 
-**2026-11-24 本地验证：112 项本地测试通过**（含新增 3 个期货/期权 Skill 的 52 项）。此前在 2026-10-24 使用 AKShare 1.19.3 跑通单股实时筛选，取得 2021–2025 五个年报期间，估值交易日为 2026-10-23。[原始实跑记录](examples/verification/2026-10-24/buffett-check.json)与 [CSV](examples/verification/2026-10-24/buffett-screen.csv)可直接查看。它证明这条取数与计算链路跑通，不代表所有接口可用或策略盈利。
+**2026-11-25 本地验证：136 项本地测试通过**（含 3 个期货/期权 Skill 的 52 项与可转债测算的 24 项）。此前在 2026-10-24 使用 AKShare 1.19.3 跑通单股实时筛选，取得 2021–2025 五个年报期间，估值交易日为 2026-10-23。[原始实跑记录](examples/verification/2026-10-24/buffett-check.json)与 [CSV](examples/verification/2026-10-24/buffett-screen.csv)可直接查看。它证明这条取数与计算链路跑通，不代表所有接口可用或策略盈利。
 
-“34 / 16 / 225”是可由脚本复核的目录统计，分别指原创 skill、第三方来源目录和第三方 `SKILL.md` 文件。完整范围见 [验证记录](docs/validation.md)。上游更新检查以 [巡检模板](docs/workflows/upstream-watch.yml)提供，启用条件见 [维护说明](docs/maintenance.md)。
+“35 / 16 / 225”是可由脚本复核的目录统计，分别指原创 skill、第三方来源目录和第三方 `SKILL.md` 文件。完整范围见 [验证记录](docs/validation.md)。上游更新检查以 [巡检模板](docs/workflows/upstream-watch.yml)提供，启用条件见 [维护说明](docs/maintenance.md)。
 
 ## 快速开始
 
@@ -296,11 +296,11 @@ Claude Code 可改用 `~/.claude/skills/`。第三方多技能合集要复制内
 | [shouldnotappearcalm__a-share-skill](skills/shouldnotappearcalm__a-share-skill) | A股分析+选股+模拟交易（多个技能子目录） | [shouldnotappearcalm/a-share-skill](https://github.com/shouldnotappearcalm/a-share-skill) | MIT |
 | [StanleyChanH__Tushare-Finance-Skill](skills/StanleyChanH__Tushare-Finance-Skill) | Tushare 数据技能包 | [StanleyChanH/Tushare-Finance-Skill-for-Claude-Code](https://github.com/StanleyChanH/Tushare-Finance-Skill-for-Claude-Code) | MIT |
 | [Geralt-L__Stock-Analysis-3D](skills/Geralt-L__Stock-Analysis-3D) | 3D 评分股票分析 | [Geralt-L/Stock-Analysis-3D](https://github.com/Geralt-L/Stock-Analysis-3D) | MIT |
-| [atorber__qmt-trading-skill](skills/atorber__qmt-trading-skill) | QMT 交易 21 个 skills | [atorber/qmt-trading-skill](https://github.com/atorber/qmt-trading-skill) | MIT |
+| [atorber__qmt-trading-skill](skills/atorber__qmt-trading-skill) | QMT 交易 22 个 skills | [atorber/qmt-trading-skill](https://github.com/atorber/qmt-trading-skill) | MIT |
 | [staruhub__a-share-analyst](skills/staruhub__a-share-analyst) | A股分析师技能（取自 ClaudeSkills） | [staruhub/ClaudeSkills](https://github.com/staruhub/ClaudeSkills) | MIT |
 | [tradermonty__claude-trading-skills](skills/tradermonty__claude-trading-skills) | 美股分析 / CANSLIM 选股等 | [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills) | MIT |
 | [agiprolabs__claude-trading-skills](skills/agiprolabs__claude-trading-skills) | 67 个交易 skills（含加密/期权/风控） | [agiprolabs/claude-trading-skills](https://github.com/agiprolabs/claude-trading-skills) | MIT |
-| [zubair-trabzada__ai-trading-claude](skills/zubair-trabzada__ai-trading-claude) | 16 个 trade-* skills + 5 agents | [zubair-trabzada/ai-trading-claude](https://github.com/zubair-trabzada/ai-trading-claude) | MIT |
+| [zubair-trabzada__ai-trading-claude](skills/zubair-trabzada__ai-trading-claude) | 15 个 trade-* skills + 5 agents | [zubair-trabzada/ai-trading-claude](https://github.com/zubair-trabzada/ai-trading-claude) | MIT |
 | [yennanliu__InvestSkill](skills/yennanliu__InvestSkill) | 美股分析 + stock-screener 等 | [yennanliu/InvestSkill](https://github.com/yennanliu/InvestSkill) | MIT |
 | [tellmefrankie__ai-investment-skills](skills/tellmefrankie__ai-investment-skills) | 期权流/新闻情绪/价格提醒等 5 个投资 skills | [tellmefrankie/ai-investment-skills](https://github.com/tellmefrankie/ai-investment-skills) | MIT |
 | [cruisekkk__trading-ledger](skills/cruisekkk__trading-ledger) | 交易日志 skill | [cruisekkk/trading-ledger](https://github.com/cruisekkk/trading-ledger) | MIT |
