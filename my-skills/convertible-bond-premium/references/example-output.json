@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "source_file": "example-bonds.csv",
+  "source_sha256": "ceac7a4075f6047043ff518f427e0b78f645d52f7803fbc48cc11c56735242a1",
+  "generated_at_utc": "2026-11-25T09:17:04.749342+00:00",
+  "parameters": {
+    "discount_rate_default": 0.035,
+    "discount_csv": null,
+    "trigger_ratio": 1.3,
+    "trigger_window": 30,
+    "trigger_days": 15,
+    "stock_csv": "example-stock.csv",
+    "stock_sha256": "2d70b3f1387bb94b9eb60958aa213e580f311bfeeb46e9388c99a26f9ab7d01d"
+  },
+  "rows": [
+    {
+      "code": "CB001",
+      "name": "合成折价转债A",
+      "price": 128.0,
+      "conv_price": 10.0,
+      "stock_price": 16.0,
+      "face": 100.0,
+      "rating": "AAA",
+      "years_left": 2.0,
+      "redemption_price": 106.0,
+      "coupons": [
+        0.002,
+        0.004
+      ],
+      "conversion_shares": 10.0,
+      "conversion_value": 160.0,
+      "conversion_premium": -0.19999999999999996,
+      "coupon_times": [
+        1.0,
+        2.0
+      ],
+      "coupon_cashflows": [
+        0.2,
+        0.4
+      ],
+      "discount_rate": 0.035,
+      "discount_rate_source": "default",
+      "pure_bond_value": 99.51877523396114,
+      "bond_floor_premium": 0.28618946223043484,
+      "ytm": -0.08748928883747117,
+      "ytm_note": null,
+      "double_low": 108.0,
+      "trigger": {
+        "status": "no-stock-series",
+        "window": 30,
+        "observed_days": null,
+        "count": null,
+        "trigger_days": 15,
+        "ratio": 1.3,
+        "price_threshold": 13.0
+      }
+    },
+    {
+      "code": "CB002",
+      "name": "合成溢价转债B",
+      "price": 101.0,
+      "conv_price": 50.0,
+      "stock_price": 20.0,
+      "face": 100.0,
+      "rating": "",
+      "years_left": 2.0,
+      "redemption_price": 108.0,
+      "coupons": [
+        0.002,
+        0.004
+      ],
+      "conversion_shares": 2.0,
+      "conversion_value": 40.0,
+      "conversion_premium": 1.525,
+      "coupon_times": [
+        1.0,
+        2.0
+      ],
+      "coupon_cashflows": [
+        0.2,
+        0.4
+      ],
+      "discount_rate": 0.035,
+      "discount_rate_source": "default",
+      "pure_bond_value": 101.38579663469395,
+      "bond_floor_premium": -0.0038052335484823896,
+      "ytm": 0.03697673359014127,
+      "ytm_note": null,
+      "double_low": 253.5,
+      "trigger": {
+        "status": "no-stock-series",
+        "window": 30,
+        "observed_days": null,
+        "count": null,
+        "trigger_days": 15,
+        "ratio": 1.3,
+        "price_threshold": 65.0
+      }
+    },
+    {
+      "code": "CB003",
+      "name": "合成零息转债C",
+      "price": 95.0,
+      "conv_price": 20.0,
+      "stock_price": 25.0,
+      "face": 100.0,
+      "rating": "AA",
+      "years_left": 2.0,
+      "redemption_price": 108.0,
+      "coupons": [],
+      "conversion_shares": 5.0,
+      "conversion_value": 125.0,
+      "conversion_premium": -0.24,
+      "coupon_times": [],
+      "coupon_cashflows": [],
+      "discount_rate": 0.035,
+      "discount_rate_source": "default",
+      "pure_bond_value": 100.81915563957153,
+      "bond_floor_premium": -0.05771875000000015,
+      "ytm": 0.06622797996638569,
+      "ytm_note": null,
+      "double_low": 71.0,
+      "trigger": {
+        "status": "no-stock-series",
+        "window": 30,
+        "observed_days": null,
+        "count": null,
+        "trigger_days": 15,
+        "ratio": 1.3,
+        "price_threshold": 26.0
+      }
+    },
+    {
+      "code": "CB004",
+      "name": "合成四期票息转债D",
+      "price": 104.0,
+      "conv_price": 10.0,
+      "stock_price": 12.0,
+      "face": 100.0,
+      "rating": "",
+      "years_left": 4.0,
+      "redemption_price": 108.0,
+      "coupons": [
+        0.002,
+        0.004,
+        0.006,
+        0.0
+      ],
+      "conversion_shares": 10.0,
+      "conversion_value": 120.0,
+      "conversion_premium": -0.1333333333333333,
+      "coupon_times": [
+        1.0,
+        2.0,
+        3.0,
+        4.0
+      ],
+      "coupon_cashflows": [
+        0.2,
+        0.4,
+        0.6,
+        0.0
+      ],
+      "discount_rate": 0.035,
+      "discount_rate_source": "default",
+      "pure_bond_value": 95.22356720996903,
+      "bond_floor_premium": 0.092166603784952,
+      "ytm": 0.012329730342406846,
+      "ytm_note": null,
+      "double_low": 90.66666666666667,
+      "trigger": {
+        "status": "triggered",
+        "window": 30,
+        "observed_days": 30,
+        "count": 16,
+        "trigger_days": 15,
+        "ratio": 1.3,
+        "price_threshold": 13.0
+      }
+    }
+  ],
+  "summary": {
+    "bond_count": 4,
+    "conversion_premium_min": -0.24,
+    "conversion_premium_max": 1.525,
+    "conversion_premium_median": -0.16666666666666663,
+    "pure_bond_value_min": 95.22356720996903,
+    "double_low_best": [
+      {
+        "code": "CB003",
+        "double_low": 71.0
+      },
+      {
+        "code": "CB004",
+        "double_low": 90.66666666666667
+      },
+      {
+        "code": "CB001",
+        "double_low": 108.0
+      },
+      {
+        "code": "CB002",
+        "double_low": 253.5
+      }
+    ],
+    "triggered": [
+      "CB004"
+    ],
+    "insufficient_history": [],
+    "no_stock_series": [
+      "CB001",
+      "CB002",
+      "CB003"
+    ]
+  },
+  "scope": "Offline arithmetic on user-supplied convertible-bond rows: conversion value and premium, straight-bond floor, YTM, double-low and a redemption trigger count; no quote fetching, forecasting, credit analysis or trade advice.",
+  "limitations": [
+    "Prices, conversion prices, stock prices, coupons, redemption prices and ratings are user inputs, not verified quotes, prospectus terms or exchange data",
+    "Coupon times follow the fixed schedule t_k = years_left - (m - k); no day-count convention, accrued interest, ex-coupon adjustment or holiday calendar is modeled",
+    "redemption_price is taken to include the final-period interest, so the script does not detect or correct a double-counted last coupon; the cash-flow convention is the user's responsibility",
+    "The straight-bond floor discounts at one flat rate per bond and models no credit risk, default, rating migration, liquidity premium, tax or transaction cost",
+    "YTM assumes the bond is held to maturity with all coupons and the redemption price paid in full and on time; no put, call, reset or other embedded optionality, reinvestment or fee is modeled",
+    "Trigger counting only compares closes with trigger_ratio * conv_price over the supplied rows and the last trigger_window trading days; no down-reset (下修), clause variation, redemption notice, adjustment or missing-session handling is modeled",
+    "Double-low is the fixed linear score price + 100 * conversion_premium, a screening ordinal rather than a valuation or expected-return measure",
+    "Not a trade recommendation, forecast or performance proof; no market data is fetched and no path is simulated"
+  ]
+}
