@@ -31,6 +31,10 @@ python scripts/check_upstreams.py
 
 新增资源应先确认可复用价值与许可；框架、应用和仅索引项目继续保留链接，不自动拉进 `skills/`。
 
+## 交易模型证伪记录
+
+`falsification/` 每周二、五 21:00（北京时间）由定时任务更新一轮：每轮一条主张，先登记口径再计算，结论与边界分开写，更新 `claims.md` 与 `rounds/<日期>.md`。协议与防作弊规则见 [falsification/README.md](../falsification/README.md)；模型级证伪不等于真实市场结论。
+
 ## 官方参考
 
 - [AKShare 项目概览](https://akshare.akfamily.xyz/introduction.html)：2026-10-24 查阅时文档说明接口会随数据源页面变化而维护，使用方式应查最新文档；版本更新本身不代表所有接口可用。
