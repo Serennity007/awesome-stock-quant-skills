@@ -1,131 +1,133 @@
-# 交易模型证伪记录 / Trading-model falsification journal
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-这个目录只做一件事：把"交易里被当作正确模型的说法"逐条写成可检验的主张，然后用可复现的计算去**尝试推翻它**。推翻不了就如实写"证据不足"，不把没验证过的结论留成默认正确。
+# Trading-model falsification journal
 
-它对应两类东西：
+This directory does one thing: it turns claims that are treated as correct trading models into testable propositions, then tries to refute them with reproducible computations. When a claim survives, the record says "insufficient evidence" instead of leaving unverified statements as default truth.
 
-- 本仓库自己的工具与方法里隐含的模型（定价口径、年化口径、回测假设、共识投票假设等）；
-- 广泛流传但没被检验过的交易经验（"高胜率所以稳赚"、"年化展期收益就是能拿到的收益"、"平价没残差就是无套利"等）。
+It covers two kinds of claims:
 
-> 边界：本目录是研究记录，不是交易信号，不构成投资建议。所有结论只对写明的输入、参数和口径成立。
+- models implicit in this repository's own tools and methods (pricing conventions, annualization conventions, backtest assumptions, consensus-voting assumptions, ...);
+- widely repeated trading rules of thumb that were never tested ("high win rate means steady profit", "annualized roll yield is the return you can collect", "a near-zero put-call parity residual means no arbitrage", ...).
 
-## 现在有什么（截至 2026-11-28）
+> Scope: this is a research record, not a trading signal, and not investment advice. Every conclusion holds only for the stated inputs, parameters and conventions.
 
-9 条主张、5 个轮次文件（第 1/3/4/5/6 轮）：**8 条 `REFUTED`、1 条 `AMBIGUOUS`**，没有 `OPEN`/`BLOCKED`。每条主张的完整定义、计算与边界在轮次文件里，`claims.md` 只做索引。
+## What is here (as of 2026-11-28)
 
-### 轮次索引
+Nine claims across five round files (rounds 1, 3, 4, 5, 6): **8 REFUTED, 1 AMBIGUOUS**, none OPEN or BLOCKED. The full definition, computation and boundary of each claim live in its round file; `claims.md` is only the index.
 
-| 轮次 | 文件 | 主张 | 判定 |
+### Round index
+
+| Round | File | Claim | Verdict |
 |---|---|---|---|
-| 1 | [2026-11-27.md](rounds/2026-11-27.md) | F-001 高胜率卖方 ≠ 正期望 | `REFUTED` |
-| 2（当时缺数据，未单独成文） | — | F-002 波动率风险溢价 | 由第 6 轮完成 |
-| 3 | [2026-11-27-round3.md](rounds/2026-11-27-round3.md) | F-003 年化曲线斜率 ≠ 可实现展期收益 | `REFUTED` |
-| 4 | [2026-11-27-round4.md](rounds/2026-11-27-round4.md) | F-008 RSI<30 后 5 日正收益概率 | `AMBIGUOUS` |
-| 5 | [2026-11-27-round5.md](rounds/2026-11-27-round5.md) | F-009 算术年化 ≠ 复合年化 | `REFUTED` |
-| 6 | [2026-11-27-round6.md](rounds/2026-11-27-round6.md) | F-002 波动率风险溢价（方差互换代理） | `REFUTED` |
+| 1 | [2026-11-27.md](rounds/2026-11-27.md) | F-001 High-win-rate option selling ≠ positive expectancy | `REFUTED` |
+| 2 (blocked for lack of data, no file) | — | F-002 Volatility risk premium | completed in round 6 |
+| 3 | [2026-11-27-round3.md](rounds/2026-11-27-round3.md) | F-003 Annualized curve slope ≠ realisable roll return | `REFUTED` |
+| 4 | [2026-11-27-round4.md](rounds/2026-11-27-round4.md) | F-008 RSI<30 and the 5-day positive-return probability | `AMBIGUOUS` |
+| 5 | [2026-11-27-round5.md](rounds/2026-11-27-round5.md) | F-009 Arithmetic annualization ≠ compound annualization | `REFUTED` |
+| 6 | [2026-11-27-round6.md](rounds/2026-11-27-round6.md) | F-002 Volatility risk premium (variance-swap proxy) | `REFUTED` |
 
-同一天有多轮时，文件名用 `YYYY-MM-DD-roundN.md`；编号按执行顺序，不按主张 ID。第 2 轮是 F-002 第一次尝试，当时缺 IV/RV 数据标为 `BLOCKED`，没有单独成文；接入数据后由第 6 轮完成。
+When several rounds run on the same day, files are named `YYYY-MM-DD-roundN.md`; N follows execution order, not claim IDs. Round 2 was the first attempt at F-002; it was marked `BLOCKED` for missing IV/RV data and produced no file; round 6 completed it after the data was connected.
 
-### 主张总览
+### Claims overview
 
-| ID | 主张（简写） | 状态 | 关键结论 |
+| ID | Claim (short) | Status | Key result |
 |---|---|---|---|
-| F-001 | 卖出深度虚值期权，因胜率高所以长期盈利 | `REFUTED` | 公平 Black-76 下，胜率 21.6%–98.5% 的六档行权价贴现期望都是 0；含 0.10 点成本后都是 −0.10 |
-| F-002 | 实际波动率低于隐含波动率时，卖期权有正期望 | `REFUTED` | 50ETF QVIX + 510050（2015–2026）方差互换代理：ex ante 条件均值 −11.7（95% CI [−85.7, +55.5]），扣 0.5 vol-point 后 −30.9；ex post 版本是代数恒等式（100% 为正） |
-| F-003 | 曲线年化斜率 = 可实现年化展期收益 | `REFUTED` | 同一快照 12.0614% 下，三条斜率路径的做空实现毛收益 6.46%/11.94%/17.46%（极差 11.00 pp），成本再降 0.48–1.19 pp |
-| F-004 | 多框架共识分 = 独立框架投票 | `REFUTED` | 文档级：框架共享因子与数据源，不具统计独立性 |
-| F-005 | 当前股票池 + 120 天滞后回测 = point-in-time | `REFUTED` | 文档级：无真实披露日、历史修订与退市，存在幸存者/前视偏差 |
-| F-006 | 备兑看涨最大亏损一定有限 | `REFUTED` | 文档级：标的允许负结算价（如 2020 WTI）时左尾无界 |
-| F-007 | 平价残差≈0 = 无套利机会 | `REFUTED` | 文档级：只说明同期限同行使价看涨/看跌报价口径一致，未含借券、资金、手续费与价差 |
-| F-008 | RSI<30 后 5 日正收益概率显著高于 50% | `AMBIGUOUS` | 30 只 A 股（2018–2026）：55.62% vs 基准 49.80%（+5.82 pp，块 bootstrap p=0.002）；对 50% 的 p=0.0065，但 9 组 Holm 后 0.0585，扣 15 bp 后 95% 下界 0.4971 |
-| F-009 | 日收益算术平均 × 252 = 可实现复合年化 | `REFUTED` | 反例 +11%/−10%：算术 +126.0%、复合 −11.84%；30 只 A 股 30/30 高估，中位 +4.08 pp |
+| F-001 | Selling deep OTM options is profitable because of the high win rate | `REFUTED` | Under fair Black-76 pricing, the six strikes with 21.6%–98.5% win rates all have zero discounted expectancy; with a 0.10-point cost all are −0.10 |
+| F-002 | Selling options has positive expectancy when realised vol is below implied vol | `REFUTED` | 50ETF QVIX + 510050 (2015–2026), variance-swap proxy: ex-ante conditional mean −11.7 (95% CI [−85.7, +55.5]); −30.9 after a 0.5 vol-point cost. The ex-post version is an algebraic identity (100% positive) |
+| F-003 | Curve slope = realisable annualized roll return | `REFUTED` | At the same 12.0614% snapshot, short roll gross returns on three slope paths are 6.46%/11.94%/17.46% (range 11.00 pp); costs take another 0.48–1.19 pp |
+| F-004 | Consensus score = votes of independent frameworks | `REFUTED` | Documentation-level: frameworks share factors and data sources, so they are not statistically independent |
+| F-005 | Current universe + 120-day lag backtest = point-in-time | `REFUTED` | Documentation-level: no real disclosure dates, restatements or delistings; survivorship/look-ahead bias remains |
+| F-006 | A covered call's maximum loss is always finite | `REFUTED` | Documentation-level: with negative settlement prices (e.g. 2020 WTI) the left tail is unbounded |
+| F-007 | Near-zero parity residual = no arbitrage | `REFUTED` | Documentation-level: it only says call/put quotes at the same expiry and strike are consistent; borrow, funding, fees and spreads are not modelled |
+| F-008 | A 5-day positive return is significantly more likely than 50% after RSI<30 | `AMBIGUOUS` | 30 A-shares (2018–2026): 55.62% vs 49.80% base (+5.82 pp, block-bootstrap p=0.002); vs 50% p=0.0065, but 0.0585 after 9-way Holm, and the 95% lower bound is 0.4971 after 15 bp costs |
+| F-009 | Arithmetic mean × 252 = realisable compound annual return | `REFUTED` | Counterexample +11%/−10%: arithmetic +126.0%, compound −11.84%; 30/30 A-shares overstated, median +4.08 pp |
 
-## 每轮怎么做的
+## How each round is done
 
-### 协议
+### Protocol
 
-1. **先登记，后计算**：在 `rounds/<日期>.md` 顶部写清楚主张、操作化定义、判定规则、输入和参数，再跑计算。禁止先看结果再挑口径。
-2. **可复现**：给出精确命令、输入文件/参数、Python 版本；只用本仓库已有工具或标准库（第 6 轮用到仓库 `.venv` 里的 pandas/AKShare）。结果里的每个数字都能从命令重算。
-3. **交叉验证**：关键数字用第二种方法复核（仓库工具 vs 独立实现、解析解 vs 数值、两种复权口径等）。不一致要记录差异。
-4. **写明边界**：写清"在哪些假设下成立/不成立"，模型级与经验级分开标注。
-5. **一轮一条**：每轮只推进一个主张。
-6. **更新登记表**：轮次结束后更新 `claims.md` 的状态、轮次、证据链接；没有变化也写"本轮未产生新结论"。
-7. **工具缺陷另开 issue**：证伪过程暴露仓库工具的 bug 时，不在本目录改代码，另开 issue（附复现与 file:line）。
+1. **Register first, compute second**: before running anything, write the claim, operational definition, decision rules, inputs and parameters at the top of `rounds/<date>.md`. Choosing the convention after seeing results is forbidden.
+2. **Reproducible**: give the exact command, input files/parameters and Python version; use only standard-library code or tools already in the repository (round 6 uses pandas/AKShare from the repo `.venv`). Every number must be recomputable from the command.
+3. **Cross-check**: verify key numbers with a second method (repository tool vs independent implementation, closed form vs numeric, two adjustment conventions, ...). Record any discrepancy.
+4. **State the boundary**: describe the assumptions under which the claim holds or fails; label model-level and empirical results separately.
+5. **One claim per round.**
+6. **Update the registry**: after each round, update the status, round and evidence link in `claims.md`; if nothing changed, say so.
+7. **Tool defects get an issue**: if refutation exposes a bug in a repository tool, do not fix it here; open an issue with a reproduction and file:line.
 
-### 怎么读一轮记录
+### How to read a round file
 
-| 小节 | 内容 |
+| Section | Content |
 |---|---|
-| 第 1–3 节 | 计算前写好的登记：可操作化定义、判定规则、输入参数、完整脚本 |
-| 第 4 节 | 脚本的完整 stdout（含样本量、成本列、所有尝试过的参数组合） |
-| 第 5 节 | 交叉验证与实现修正记录（包括跑错又改对的经过） |
-| 第 6 节 | 判定 + 预登记判据的逐条对照 + 明确"没有证明什么" |
-| 第 7 节 | 边界与未证明的部分 |
-| 第 8 节 | 后续与下一轮候选 |
+| Sections 1–3 | The pre-computation registration: operational definition, decision rules, inputs, full script |
+| Section 4 | Full stdout of the script (sample sizes, cost columns, every parameter combination tried) |
+| Section 5 | Cross-checks and implementation fixes (including wrong turns that were corrected) |
+| Section 6 | Verdict + the pre-registered criteria checked one by one + an explicit "what this does not prove" |
+| Section 7 | Boundaries and unproven parts |
+| Section 8 | Follow-ups and the next candidate |
 
-### 防作弊规则
+### Anti-cheating rules
 
-- 不使用未来数据；任何回看窗口必须写明起点，不能事后调整。
-- 涉及成本的测试必须建模成本，并单独报告"零成本"与"含成本"两列。
-- 多个参数/窗口/标的被尝试过时，必须报告尝试次数，不能只贴最好的那个。
-- 数据来源与获取日期必须记录；合成数据要明确标注 `synthetic`。
-- 不把"测试通过"写成"策略有效"；`SUPPORTED` 只表示未发现反例。
+- No future data; every lookback window has a stated start and cannot be adjusted afterwards.
+- Any test involving costs must model them and report zero-cost and with-cost columns separately.
+- When several parameters/windows/instruments were tried, report how many; never show only the best one.
+- Record data sources and retrieval dates; label synthetic data explicitly.
+- Never turn "test passed" into "strategy works"; `SUPPORTED` only means no counterexample was found.
 
-## 数据与复现
+## Data and reproduction
 
-| 轮次 | 数据 | 来源 / 抓取日 | 依赖 |
+| Round | Data | Source / retrieval date | Dependencies |
 |---|---|---|---|
-| 1 | 合成（Black-76 公式，无外部数据） | — | 标准库 |
-| 3 | 合成曲线（12 份合约，确定性） | — | 标准库 |
-| 4 | 30 只 A 股后复权日线，2018–2026 | 东财 kline，2026-11-27 | 标准库 |
-| 5 | 30 只 A 股后复权日线，2018–2026 | 东财 kline，2026-11-27 | 标准库 |
-| 6 | 50ETF QVIX + 510050 后复权日线，2015–2026 | AKShare 1.18.94，2026-11-27 | pandas + AKShare |
+| 1 | synthetic (Black-76 formula, no external data) | — | standard library |
+| 3 | synthetic curve (12 contracts, deterministic) | — | standard library |
+| 4 | 30 A-share back-adjusted daily bars, 2018–2026 | Eastmoney kline, 2026-11-27 | standard library |
+| 5 | 30 A-share back-adjusted daily bars, 2018–2026 | Eastmoney kline, 2026-11-27 | standard library |
+| 6 | 50ETF QVIX + 510050 back-adjusted daily bars, 2015–2026 | AKShare 1.18.94, 2026-11-27 | pandas + AKShare |
 
-- 运行环境：Python 3.11.9（第 6 轮用仓库 `.venv`）。
-- **不提交原始行情**：每轮记录数据源、抓取日、口径；第 4/5 轮在输出里给出 panel 的 SHA-256，第 6 轮记录 QVIX/ETF 的期限与复权口径。
-- 复现命令在每轮第 3 节，可直接复制成脚本；纯公式与合成数据段不联网。
-- 仓库级校验：`python scripts/validate_repository.py`。
+- Runtime: Python 3.11.9 (round 6 uses the repository `.venv`).
+- **No raw market data is committed**: each round records source, retrieval date and convention; rounds 4/5 print the panel SHA-256, round 6 records the QVIX/ETF maturity and adjustment conventions.
+- Reproduction commands are in section 3 of each round and can be pasted into a script; formula-only and synthetic parts need no network.
+- Repository check: `python scripts/validate_repository.py`.
 
-## 口径与边界
+## Scope and boundaries
 
-- **模型级 vs 经验级**：F-001（Black-76 反例）、F-003（合成曲线）、F-009（数学反例）是有计算/公式的模型级证伪；F-004–F-007 是文档级证据（仓库文档已写明限制，本轮未重算）；F-002（方差互换代理数据）与 F-008（A 股样本）是经验层面的判断。
-- **成本**：涉及交易的轮次都分别报告零成本与含成本（F-001 0.10 点、F-002 0/0.5/1.0 vol-point、F-003 0/2/5 bp、F-008 0/15/30 bp）。
-- **多重比较**：F-008 试了 3 个阈值 × 3 个持有期，全部报告并做 Holm 校正；不能只贴最好的组合。
-- **代理口径**：F-002 用方差互换代理"卖出波动率"，不是期权链的实际到期损益；真实卖方 P&L 还要扣对冲误差、跳跃与保证金。
-- **合成数据**：F-001/F-003 的输入是公式或 `synthetic` 数据，文中都已标注，不能当行情记录。
-- **不写市场结论**：`REFUTED` 只说明"在写明的口径下主张不成立"，不说明真实市场里没有 edge，也不构成任何买卖建议。
+- **Model-level vs empirical**: F-001 (Black-76 counterexample), F-003 (synthetic curve) and F-009 (mathematical counterexample) are model-level refutations with a computation or formula; F-004–F-007 are documentation-level evidence (the repository docs already state the limits; they were not recomputed); F-002 (variance-swap proxy data) and F-008 (A-share sample) are empirical.
+- **Costs**: every trading round reports zero-cost and with-cost results (F-001 0.10 point, F-002 0/0.5/1.0 vol-point, F-003 0/2/5 bp, F-008 0/15/30 bp).
+- **Multiple comparisons**: F-008 tried 3 thresholds × 3 holding periods, reported all of them and applied a Holm correction; the best combination is never shown alone.
+- **Proxy convention**: F-002 uses a variance swap to proxy "selling volatility"; it is not an option chain's realised expiry P&L, which would also bear hedging error, jumps and margin.
+- **Synthetic data**: F-001/F-003 inputs are formulas or `synthetic` data, labelled as such; they are not market records.
+- **No market conclusions**: `REFUTED` only means "the claim fails under the stated convention"; it does not mean the real market has no edge, and it is not trading advice.
 
-## 状态定义
+## Status definitions
 
-| 状态 | 含义 |
+| Status | Meaning |
 |---|---|
-| `OPEN` | 已登记，尚未测试 |
-| `REFUTED` | 在写明的口径下被反例推翻（"主张不成立"） |
-| `SUPPORTED` | 在写明的口径下测试通过（"未发现反例"，不等于普遍成立） |
-| `AMBIGUOUS` | 测试结果依赖口径/数据，无法给出单一结论，记录分歧点 |
-| `BLOCKED` | 缺少数据或权限，写清缺什么、解除条件 |
+| `OPEN` | registered, not yet tested |
+| `REFUTED` | refuted by a counterexample under the stated convention ("the claim does not hold") |
+| `SUPPORTED` | passed the test under the stated convention ("no counterexample found", not universal truth) |
+| `AMBIGUOUS` | the result depends on convention/data; no single conclusion, disagreements recorded |
+| `BLOCKED` | missing data or permission; state what is missing and how to unblock |
 
-## 目录结构
+## Directory layout
 
 ```
 falsification/
-├── README.md                    # 本文件：介绍、协议、轮次索引、数据与口径
-├── claims.md                    # 主张登记表（唯一索引）
+├── README.md                    # this file: introduction, protocol, round index, data and scope
+├── claims.md                    # claim registry (the only index)
 └── rounds/
-    ├── YYYY-MM-DD.md            # 当天第一条
-    └── YYYY-MM-DD-roundN.md     # 同一天的第 N 条（N 按执行顺序）
+    ├── YYYY-MM-DD.md            # first round of the day
+    └── YYYY-MM-DD-roundN.md     # Nth round of the same day (N follows execution order)
 ```
 
-## 节奏
+## Cadence
 
-由 DSH 定时任务「交易模型证伪轮」在**每周二、周五 21:00（Asia/Shanghai）**执行：每轮登记并测试一条 `OPEN` 主张，写一轮记录并更新登记表。也可以随时手动执行。2026-11-27 当天集中完成了第 1/3/4/5/6 轮（第 2 轮是 F-002 的受阻尝试，由第 6 轮完成）。
+The DSH scheduled task "trading-model falsification round" runs every **Tuesday and Friday at 21:00 (Asia/Shanghai)**: each round registers and tests one `OPEN` claim, writes a round file and updates the registry. Manual runs are fine too. On 2026-11-27 rounds 1/3/4/5/6 were completed in one day (round 2 was F-002's blocked attempt, completed by round 6).
 
-## 新增主张
+## Adding a claim
 
-在 `claims.md` 追加一行，写清：ID、主张原文、来源（哪份文档/哪种流行说法）、可操作化定义、测试方式、状态。不要在已有轮次里改结论；要修正就新开一轮并标注"修正第 N 轮"。主张的"可操作化定义"必须能落成一段可复现的代码或公式，否则先留在 `OPEN`。
+Append a row to `claims.md` with: ID, verbatim claim, source (which document or which popular saying), operational definition, test method and status. Do not rewrite earlier conclusions; to correct one, open a new round and label it "correction to round N". The operational definition must be expressible as reproducible code or a formula; otherwise leave the claim `OPEN`.
 
-## 与仓库其它部分的关系
+## Relation to the rest of the repository
 
-- 工具行为契约仍以各 Skill 的 `references/` 和 `tests/` 为准；本目录只做"主张层面的证伪"。
-- 与 [docs/validation.md](../docs/validation.md) 的分工：那边记录"实现了什么、验证了什么"，本目录记录"哪些模型/假设被推翻、哪些仍站不住"。
-- 主 README 的入口：[English](../README.md) / [简体中文](../README.zh-CN.md) / [日本語](../README.ja.md)。
+- Tool behaviour contracts remain in each skill's `references/` and `tests/`; this directory only refutes claims.
+- Division of labour with [docs/validation.md](../docs/validation.md): that file records "what was implemented and verified"; this directory records "which models/assumptions were refuted and which still do not hold".
+- Entry points in the main READMEs: [English](../README.md) / [简体中文](../README.zh-CN.md) / [日本語](../README.ja.md).

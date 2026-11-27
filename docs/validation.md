@@ -86,7 +86,7 @@ python my-skills/framework-backtest/scripts/backtest.py --cache-dir examples/bac
 
 ## 交易模型证伪记录
 
-2026-11-27 起新增 [falsification/](../falsification/README.md)：把交易中的模型假设与流行说法写成可检验的主张，逐轮做可复现的计算尝试推翻，结论与证据登记在 [claims.md](../falsification/claims.md)。截至 2026-11-28 共 5 个轮次文件、9 条主张：**8 条 `REFUTED`、1 条 `AMBIGUOUS`**，没有 `OPEN`/`BLOCKED`。
+2026-11-27 起新增 [falsification/](../falsification/README.zh-CN.md)：把交易中的模型假设与流行说法写成可检验的主张，逐轮做可复现的计算尝试推翻，结论与证据登记在 [claims.md](../falsification/claims.md)。截至 2026-11-28 共 5 个轮次文件、9 条主张：**8 条 `REFUTED`、1 条 `AMBIGUOUS`**，没有 `OPEN`/`BLOCKED`。
 
 - 第 1 轮 [F-001](../falsification/rounds/2026-11-27.md)：公平 Black-76 定价下，胜率 21.6%–98.5% 的六档行权价卖方贴现期望损益都是 0，含 0.10 点成本后都是 −0.10；独立实现与仓库定价工具在 1e-6 内一致。
 - 第 3 轮 [F-003](../falsification/rounds/2026-11-27-round3.md)：同一快照斜率 12.0614% 下，三条斜率路径的做空实现毛收益 6.46%/11.94%/17.46%（极差 11.00 pp），成本再降 0.48–1.19 pp；年化斜率是快照描述，不能当可实现收益。

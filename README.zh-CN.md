@@ -317,7 +317,7 @@ python scripts/check_upstreams.py
 
 前三条构成离线验证；最后一条需要联网。质量与巡检工作流以 [待启用模板](docs/workflows) 交付，质量模板覆盖 Python 3.11 / 3.13。当前 GitHub 授权缺少 `workflow` 权限，尚未部署新工作流；获得相应权限后将模板放入 `.github/workflows/` 并推送到默认分支即可启用，详见 [维护说明](docs/maintenance.md)。
 
-交易模型证伪记录见 [falsification/](falsification/README.md)：截至 2026-11-28 共 5 个轮次文件、9 条主张（8 条 `REFUTED`、1 条 `AMBIGUOUS`），每轮一条主张、一次可复现检验、一个明确判定；模型级证伪不等于真实市场结论。
+交易模型证伪记录见 [falsification/](falsification/README.zh-CN.md)：截至 2026-11-28 共 5 个轮次文件、9 条主张（8 条 `REFUTED`、1 条 `AMBIGUOUS`），每轮一条主张、一次可复现检验、一个明确判定；模型级证伪不等于真实市场结论。
 
 本次升级日期：**2026-11-24**。第三方代码仍为历史快照；旧来源未记录提交号时，巡检如实标记，不能宣称已经同步最新版。[本次验证](docs/validation.md)与[历史运行记录](docs/historical-demos.md)分别查看。
 

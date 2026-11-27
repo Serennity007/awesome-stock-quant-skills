@@ -141,7 +141,7 @@ Claude Code では `~/.claude/skills/` を使えます。第三者の複数 skil
 - [第三者ソース一覧](README.zh-CN.md#第三方收录)と[権利表記](docs/NOTICE.md)。
 - [外部リソース索引](docs/resource-index.md)：star 数は記載日の古い集計です。
 - [過去の実行記録](docs/historical-demos.md)：今回再検証した行情や運用成績ではありません。
-- [取引モデルの反証記録](falsification/README.md)：2026-11-28 時点で 5 つのラウンド記録・9 主張（8 件 `REFUTED`、1 件 `AMBIGUOUS`）。1 ラウンド 1 主張、再現可能な検証と明示的な判定。モデル水準の反証であり、売買シグナルや市場予測ではありません。
+- [取引モデルの反証記録](falsification/README.ja.md)：2026-11-28 時点で 5 つのラウンド記録・9 主張（8 件 `REFUTED`、1 件 `AMBIGUOUS`）。1 ラウンド 1 主張、再現可能な検証と明示的な判定。モデル水準の反証であり、売買シグナルや市場予測ではありません。
 
 ## 検証と継続更新
 

@@ -33,7 +33,7 @@ python scripts/check_upstreams.py
 
 ## 交易模型证伪记录
 
-`falsification/` 每周二、五 21:00（北京时间）由定时任务更新一轮：每轮一条主张，先登记口径再计算，结论与边界分开写，更新 `claims.md` 与 `rounds/<日期>.md`。协议与防作弊规则见 [falsification/README.md](../falsification/README.md)；模型级证伪不等于真实市场结论。
+`falsification/` 每周二、五 21:00（北京时间）由定时任务更新一轮：每轮一条主张，先登记口径再计算，结论与边界分开写，更新 `claims.md` 与 `rounds/<日期>.md`。协议与防作弊规则见 [falsification/README.zh-CN.md](../falsification/README.zh-CN.md)；模型级证伪不等于真实市场结论。
 
 ## 官方参考
 
