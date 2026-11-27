@@ -154,6 +154,7 @@ Example: “Use quant-research-workflow to screen these companies for financial 
 - [Third-party sources](README.zh-CN.md#第三方收录), each with its own license and SOURCE.md.
 - [External resource index](docs/resource-index.md): legacy star counts are explicitly dated, not live rankings.
 - [Historical demo records](docs/historical-demos.md): prior maintainer observations, not revalidated market data or investment performance.
+- [Trading-model falsification journal](falsification/README.md): one claim per round, a reproducible test, and an explicit verdict; model-level refutations, not signals or forecasts.
 
 ## Verify and keep current
 
