@@ -1,0 +1,4 @@
+interface:
+  display_name: "可转债转股溢价与债底"
+  short_description: "用本地转债表计算转股价值、转股溢价率、纯债价值、YTM、双低值与强赎触发计数"
+  default_prompt: "使用 $convertible-bond-premium 读取这份转债表与可选的正股收盘序列，核对票息时点与到期赎回价的含息口径，计算转股溢价率、纯债价值、债底溢价率、YTM、双低值和强赎触发计数，并说明条款口径与风险边界。"

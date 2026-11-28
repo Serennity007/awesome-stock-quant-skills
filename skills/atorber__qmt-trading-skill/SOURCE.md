@@ -4,7 +4,7 @@
 - 作者: atorber
 - License: MIT
 - 收录日期: 2026-08-25
-- 备注: 收录 skills/ 目录（21个skills）
+- 备注: 收录 skills/ 目录（22个skills，另有 _shared）
 
 This is an unofficial mirror/collection copy for personal learning use; all credit to the original author.
 镜像日期: 2026-08-25

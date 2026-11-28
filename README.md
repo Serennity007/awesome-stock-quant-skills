@@ -12,11 +12,11 @@
 
 Investment research implemented as Agent Skills and Python scripts: financial screening, factor ranking, multi-framework consensus and backtesting with transaction costs. Covers A-share research and US hot-stock tracking.
 
-**34 original Skills · 23 investment-method reference frameworks · 36 Python scripts · 112 passing local tests.**
+**35 original Skills · 23 investment-method reference frameworks · 37 Python scripts · 136 passing local tests.**
 
 **51 Stars / 8 Forks** on GitHub as of 2026-11-24. Original implementations, third-party source snapshots and external links are maintained separately; 16 source directories contain 225 vendored `SKILL.md` files.
 
-<!-- inventory: originals=34 mirrors=16 vendored=225 -->
+<!-- inventory: originals=35 mirrors=16 vendored=225 -->
 
 **[One-command offline demo](docs/quickstart.md) · [Validation scope](docs/validation.md) · [Live-data record](examples/verification/2026-10-24/buffett-check.json)**
 
@@ -24,7 +24,7 @@ Investment research implemented as Agent Skills and Python scripts: financial sc
 
 ## First run: two offline examples
 
-The default branch now contains all 34 original Skills and the data/backtest checks. After installing demo dependencies, one command runs two independent synthetic scenarios: consensus ranking and backtest arithmetic. It writes a readable report, CSVs, provenance and logs.
+The default branch now contains all 35 original Skills and the data/backtest checks. After installing demo dependencies, one command runs two independent synthetic scenarios: consensus ranking and backtest arithmetic. It writes a readable report, CSVs, provenance and logs.
 
 ```bash
 git clone https://github.com/Serennity007/awesome-stock-quant-skills.git
@@ -80,7 +80,7 @@ The tools check annual reporting periods, valuation dates, TTM fields, missing f
 
 ## Hands-on validation
 
-On 2026-10-24, **AKShare 1.19.3** retrieved real financial data and completed screening for **600519**, spanning **FY2021–2025**, with a **2026-10-23** valuation observation. **112 behavioral tests** (2026-11-24) cover missing financials, valuation dates, consensus validation, turnover, costs and the offline futures/options calculators. Original JSON, CSV, scope and reproduction commands are public. This validates retrieval and calculation; investment performance requires separate evidence.
+On 2026-10-24, **AKShare 1.19.3** retrieved real financial data and completed screening for **600519**, spanning **FY2021–2025**, with a **2026-10-23** valuation observation. **136 behavioral tests** (2026-11-25) cover missing financials, valuation dates, consensus validation, turnover, costs, the offline futures/options calculators and the convertible-bond calculators. Original JSON, CSV, scope and reproduction commands are public. This validates retrieval and calculation; investment performance requires separate evidence.
 
 ## What makes it useful
 
@@ -101,7 +101,7 @@ The current pass strengthens Buffett screening, single-stock valuation, framewor
 
 Backtests rank using information at rebalance time, then evaluate selected holdings. Missing exit prices and benchmark data stop the run. Trading dates stay aligned, first-month losses count toward drawdown, and drift-aware turnover produces separate gross returns, costs, net returns and holding-level audit records.
 
-**112 behavior tests pass (2026-11-24). A single-stock live screen also passed with AKShare 1.19.3 on 2026-10-24**, using 2021–2025 annual periods and a 2026-10-23 valuation observation. See the [record](examples/verification/2026-10-24/buffett-check.json) and [CSV](examples/verification/2026-10-24/buffett-screen.csv). This verifies that path, not strategy profitability or every integration.
+**136 behavior tests pass (2026-11-25). A single-stock live screen also passed with AKShare 1.19.3 on 2026-10-24**, using 2021–2025 annual periods and a 2026-10-23 valuation observation. See the [record](examples/verification/2026-10-24/buffett-check.json) and [CSV](examples/verification/2026-10-24/buffett-screen.csv). This verifies that path, not strategy profitability or every integration.
 
 ## Quick start: no market API required
 
